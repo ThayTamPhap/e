@@ -3,14 +3,13 @@ import { setLastCursorFast, playCurrPos, resetTextAndPos } from "./cursor_helper
 import * as AudioPlayer from "./audio_player.js"
 
 var keysMap = {};
-
 const keysMapRegex = new RegExp('(?:' + 
 _keys_map.split("\n").map(x => {
 
   let splits = x.split(/^(.+?)\s+_/);
   let k = splits[1];
   let v = splits[2];
-  keysMap[k] = v;  
+  keysMap[k] = v;
 
   return k;
 }).slice(1,).join("|")+')(?=$)', 'i'); // need to match end of string
