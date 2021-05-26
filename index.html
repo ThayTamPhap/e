@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi-VN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link id="favicon" rel="icon" type="image/x-icon" href="/assets/dharma-wheel.png">
+<style type="text/css">
+  body, div, p, a { font-family: Arial, Helvetica, sans-serif; font-size: 22px; }
+
+  .header { position: fixed; left: 0; bottom: 0; width: 100%; padding: 0 0 1px .3em; }
+
+  .header audio#audioPlayer { width: 0%; float: left; height: 25px; }
+
+  .header a, #currentTime, #downloadButton { width: 14%; color: blue; 
+    background-color: #ccc; border-width: 1px; border-style: solid; padding: 0.35em 0em;
+    float: right; margin-right: 3px; text-align: center; 
+    text-decoration: none; border-radius: 6px; }
+
+  #downloadButton { position: fixed; top: 3px; right: 0; width: 3em; padding: 0.15em 0; }
+
+  div { margin-top: 1em; padding: 0em; color: #888; }
+  
+  p { padding-top: 0.5em; padding-bottom: 0.5em; margin: 0.1em; 
+      border-style: dotted; border-width: 1px; }
+  
+  p.edited { color: #000; }
+  
+  p:focus { border: 0px; border-style: none; color: #112699; }
+  
+  i { font-size: 12pt; color: #aaa; }
+</style>
+</head>
+<body style="padding-bottom: 6.5em;">
+  <div class="header">
+    <audio controls id="audioPlayer"></audio>
+
+    <a href="" onclick="
+      event.preventDefault(); event.code='ControlLeft';
+      handleKeyPress(event, FROM_VIRTUAL_BUTTON);"
+      style="margin-right:9px;width:16.5%;"> >| </a>
+
+    <a href="" onclick="
+      event.preventDefault(); event.code='AltRight';
+      handleKeyPress(event, FROM_VIRTUAL_BUTTON);"
+      style=""> >> </a>
+
+    <a href="" onclick="
+      event.preventDefault(); event.code='OSRight';
+      handleKeyPress(event, FROM_VIRTUAL_BUTTON);"
+      style=""> << </a>
+
+
+    <a href="" onclick="
+      event.preventDefault(); event.code='Enter';
+      handleKeyPress(event, FROM_VIRTUAL_BUTTON);"
+      style="float:left;width:18.5%;"> Next </a>
+
+    <a href="" id="playPauseBtn" onclick="
+      event.preventDefault(); event.code='AltLeft';
+      handleKeyPress(event, FROM_VIRTUAL_BUTTON);"
+      style="float:left;width:18.5%;"> > </a>
+  </div>
+
+  <a href="?" id="downloadButton">Save</a>  
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/localforage@1.9.0/dist/localforage.min.js"></script>
+<script src="./globals_helpers.js"></script>
+<script src="./storage.js"></script>
+
+<script type="module">
+    import "./vn_keyboard.js";
+    import "./event_handlers.js";
+
+    // Feed the audio player media file
+    import * as AudioPlayer from "./audio_player.js";
+    AudioPlayer.initSource(phapname);
+
+    import * as GenSubs from "./gen_subs.js";
+    GenSubs.run();
+
+    import "./download.js";
+
+</script>
+</html>
