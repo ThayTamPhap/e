@@ -9,9 +9,9 @@ var currSubIndex, subsCount;
 let adjustedDeltas = [];
 
 var phapname = location.search.replace("?","").split(".")[0];
-// phapname = "phaps/Tinh-Tan-fix";
-console.log('phapname', phapname);
-
+if (phapname === "") {
+  phapname = "phaps/Tinh-Tan-fix";
+} console.log('phapname', phapname);
 
 function keepTwoDigitsAfterPeriod(f) {
   return Math.round(f * 100) / 100;
