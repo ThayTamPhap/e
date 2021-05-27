@@ -1,14 +1,7 @@
-/**/export let _keys_map = `
- f   _ ph
-ie   _iê
-iee  _iê
- j   _ gi
-uo   _uô
-uoo  _uô
-ưuu  _ưu
-uu   _ưu
-wo   _ươ
-ưo   _ươ
-ye   _yê
-yee  _yê
-đ    _đ`
+ /**/export let _keys_map = `
+ blm__ ba-la-mật 
+ cx___ cũng 
+ dk___ đúng không
+ hk___ hiểu không
+ nx___ những 
+ đ_đ`

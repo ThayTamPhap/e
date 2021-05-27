@@ -6,9 +6,9 @@ var keysMap = {};
 const keysMapRegex = new RegExp('(?:' + 
 _keys_map.split("\n").map(x => {
 
-  let splits = x.split(/^(.+?)\s+_/);
-  let k = splits[1];
-  let v = splits[2];
+  let splits = x.split(/_+/);
+  let k = splits[0];
+  let v = splits[1];
   keysMap[k] = v;
 
   return k;
@@ -37,15 +37,15 @@ async function mapKeysForMe(event) {
         resetTextAndPos(" ");
         await playCurrPos();
         return;
-    }
 
-    // return;
+    } else {
 
-    let l = t.substr(0, i);
-    let newl = mapKeys(l);
-    if (newl.slice(-2) != l.slice(-2)) {
-        p.innerHTML = newl + t.substr(i,);
-        s.collapse(p.firstChild, setLastCursorFast(newl.length));
+        let l = t.substr(0, i);
+        let newl = mapKeys(l);
+        if (newl.slice(-2) != l.slice(-2)) {
+            p.innerHTML = newl + t.substr(i,);
+            s.collapse(p.firstChild, setLastCursorFast(newl.length));
+        }
     }
 }
 
@@ -61,9 +61,9 @@ function mapKeys(sent) {
     return v;
   });
 }
-console.assert(mapKeys(' j')===' gi');
-console.assert(mapKeys('dfdj')==='dfdj');
-console.assert(mapKeys('dfdj ')==='dfdj ');
+console.assert(mapKeys(' nx')===' những ');
+console.assert(mapKeys('nx')==='nx');
+console.assert(mapKeys('nx ')==='nx ');
 
 // Loại bỏ tất cả các kí tự không phải chữ cái và số
 const notAlphaOrDigitRegex = /[^0-9a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ\s]/gi;
