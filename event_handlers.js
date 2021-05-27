@@ -53,7 +53,6 @@ async function playAndUpdateSub(event) {
 
   switch (currKey) {
     case 'Enter':
-      saveLastCursor("Next button", 0);
       loadCurrAdjustedDeltas();
       saveCurrSubIndex(currSubIndex);
       AudioPlayer.saveCurrentTimeToIndex(currSubIndex);
@@ -153,7 +152,7 @@ async function handleKeyPress(event, from=null) {
         p.focus();
         p.parentNode.scrollIntoView();
         saveCurrSubIndex(currSubIndex);
-        lastCurrPos = 0;
+        saveLastCursor("Next button", 0);
         cooldown=2; let inter=setInterval(()=>(--cooldown==0) && clearInterval(inter),1000);
 
       } else {
