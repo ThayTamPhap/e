@@ -4,8 +4,8 @@ var goingToPause = false;
 
 export function initSource(phapname) {
   ap.innerHTML = 
-   `<source src="https://tiendung.github.io/${phapname}.ogg"/>
-    <source src="https://tiendung.github.io/${phapname}.mp3"/>`;
+   `<source src="https://thaytamphap.github.io/${phapname}.ogg"/>
+    <source src="https://thaytamphap.github.io/${phapname}.mp3"/>`;
 }
 
 export function normalizeTime(time) {
@@ -18,8 +18,10 @@ export function getDuration() {
   return ap.duration;
 }
 
-export function saveCurrentTimeToIndex(i) {
-  saveTime(currSubIndex, ap.currentTime);
+export async function saveCurrentTimeToIndex(i) {
+  if (!await isEditedIndex(i)) {
+    saveTime(currSubIndex, ap.currentTime);
+  }
 }
 
 export async function play() {
