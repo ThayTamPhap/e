@@ -17,6 +17,10 @@ function keepTwoDigitsAfterPeriod(f) {
   return Math.round(f * 100) / 100;
 }
 
+if (!console.assert) {
+  console.assert = function (x) {};
+}
+
 function twoDigitsFmt(d) {
   return `${d <= 9 ? '0' : ''}${d}`
 }
