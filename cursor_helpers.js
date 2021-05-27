@@ -70,10 +70,10 @@ export function resetTextAndPos(suffix=false) {
 
     // Add suffix first then normalize it
     let normText = currInnerText.substr(0, lastCurrPos) + suffix;
-    normText = TypingText.normalizeText(normText,false);
+    normText = TypingText.normalizeText(normText, false);
 
     let remain = currInnerText.substr(lastCurrPos,);
-    remain = TypingText.normalizeText(remain);
+    remain = TypingText.normalizeText(remain, false);
 
     currInnerText = normText + remain;
     lastCurrPos = normText.length;

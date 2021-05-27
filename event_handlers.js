@@ -93,6 +93,8 @@ async function handleKeyUp(event) {
   }
 }
 
+var fastMode = false;
+
 async function handleKeyPress(event, from=null) {
    let logStr = `keydown: key='${event.key}' | code='${event.code}' | keyCode=${event.keyCode}`;
   console.log(logStr); // alert(logStr);
@@ -108,10 +110,12 @@ async function handleKeyPress(event, from=null) {
   
   if (event.key == 'Enter' || event.keyCode == 13) { 
     event.preventDefault();
-    // Replace code don't work
-    // event.keyCode = 220; event.key = "\\"; event.code = "Backslash";
-    resetTextAndPos("\\");
+    fastMode = !fastMode;
+    document.getElementById("forwardButton").innerHTML = fastMode ? ">>>" : ">>";
+    document.getElementById("backwardButton").innerHTML = fastMode ? "<<<" : "<<";
+
 /*
+    // resetTextAndPos("\\");
     needToResetTextAndPos = true;
     resetTextAndPos(" ");
     await CursorHelpers.playCurrPos();
@@ -221,14 +225,15 @@ async function handleKeyPress(event, from=null) {
 
 async function adjust(x) {
   let delta = await Estimators.getCurrDelta();
-  var _time = await loadTime(currSubIndex) + delta, time;
+  var time, _time = await loadTime(currSubIndex) + delta;
   if (delta == 0 && CursorHelpers.getLastCurrPos() < 5) {
-    time = _time + 0.15 * x;
+    time = _time + (fastMode ? 1.5 : 0.15) * x;
     time = AudioPlayer.normalizeTime(time);
     saveTime(currSubIndex, time);
   } else {
-    Estimators.adjustDeltas(1.5 * x);
-    time = _time + 1.5 * x;
+    time = (fastMode ? 2 : 1) * x;
+    Estimators.adjustDeltas(time);
+    time = _time + time;
     time = AudioPlayer.normalizeTime(time);
   }
   console.log(`Adjust ap.currentTime`, time - _time);

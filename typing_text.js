@@ -53,7 +53,6 @@ export function normalizeText(value, completeSent=true) {
   // Strip begin, and end spacings
   let repStr = completeSent ? "" : " ";
   value = value.replace(/^\s+/, repStr).replace(/\s+$/, repStr);
-  // value = value.trim();
    // and strim in-between spacings
   value = value.replace(/\s+/g," ");
 
