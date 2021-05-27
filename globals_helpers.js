@@ -18,6 +18,7 @@ function keepTwoDigitsAfterPeriod(f) {
 }
 
 if (!console.assert) {
+  // So it works on other platform
   console.assert = function (x) {};
 }
 
