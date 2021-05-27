@@ -34,18 +34,23 @@ cbtm  của bản thân mình
 =>
 
 Human   Computer
-Typed   Showed
+type    show
+- - - - - - - - -
 bgct    (1) bao giờ chúng ta (2) bây giờ chúng ta
 cbtm    (1) cho bản thân mình (2) chính bản thân mình (3) của bản thân mình
 
+Then:
+
 Human   Computer
-Choose  Finalize
+choose  finalize
+- - - - - - - - -
 1       bao giờ chúng ta
 3       của bản thân mình
 
 Finally:
 
 Human   Computer
+- - - - - - - - -
 bgct1   bao giờ chúng ta
 cbtm3   của bản thân mình
 
