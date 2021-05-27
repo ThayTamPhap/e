@@ -152,7 +152,7 @@ async function handleKeyPress(event, from=null) {
         p.focus();
         p.parentNode.scrollIntoView();
         saveCurrSubIndex(currSubIndex);
-        saveLastCursor("Next button", 0);
+        CursorHelpers.saveLastCursor("Next button", 0);
         cooldown=2; let inter=setInterval(()=>(--cooldown==0) && clearInterval(inter),1000);
 
       } else {
