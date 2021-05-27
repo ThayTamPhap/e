@@ -89,7 +89,8 @@ async function handleKeyUp(event) {
 
   if (event.code == 'Space') {
     resetTextAndPos();
-    await CursorHelpers.playCurrPos();
+    AudioPlayer.pauseOrSeekAndPlay(-0.2);
+    // await CursorHelpers.playCurrPos();
   }
 }
 
