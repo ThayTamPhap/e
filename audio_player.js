@@ -8,6 +8,10 @@ export function initSource(phapname) {
     <source src="https://thaytamphap.github.io/${phapname}.mp3"/>`;
 }
 
+export function setPlaybackRate(fastMode) {
+  return ap.playbackRate = fastMode ? 1.3 : 1.0;
+}
+
 export function normalizeTime(time) {
   if (time > ap.duration) return ap.duration;
   if (time < 0) return 0;
