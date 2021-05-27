@@ -11,6 +11,7 @@ _keys_map.split("\n").map(x => {
   let v = splits[1];
   keysMap[k] = v;
 
+  // let s = k[0] == " " ? `[\\s.,:;]${k.substr(1,)}` : k;
   return k;
 }).slice(1,).join("|")+')(?=$)', 'i'); // need to match end of string
 
@@ -57,8 +58,8 @@ function playCurrent() {
 function mapKeys(sent) {
   return sent.replace(keysMapRegex, k => {
     let v = keysMap[k.toLowerCase()];
-    console.log(`\n!! mapKeys: '${k}'' => '${v}'`);
-    return v;
+    console.log(`\n!! mapKeys: '${k}' => '${v}'`);
+    return v ?? k;
   });
 }
 console.assert(mapKeys(' nx')===' những ');

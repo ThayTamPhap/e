@@ -1,5 +1,4 @@
- /**/export let _keys_map = `
- alh__ A-la-hán 
+ /**/export let _keys_map = ` alh__ A-la-hán 
  blm__ ba-la-mật 
  cx___ cũng 
  dc___ được 
@@ -19,5 +18,4 @@
  gg___ gi
  tt___ th
  nn___ ng
- \\s+____ 
  đ____ đ`
