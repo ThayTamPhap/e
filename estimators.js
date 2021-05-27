@@ -22,15 +22,15 @@ export async function getCurrDelta(wholeSent = false) {
   var q, currPos;
 
   if (wholeSent) { // estimate whole sentence duration in seconds
-    // Last sub play for 1 min
-    if (currSubIndex == subsCount - 1) return 60;
+    // Last sub
+    if (currSubIndex == subsCount - 1) { return 20; } // seconds 
 
     // Get all the text of current sub to estimate duration
     q = document.getElementById(currSubIndex).innerText;
     currPos = q.length;
 
     // Too short text (hard to estimate) also play from 1 min
-    if (currPos < 10) return 60;
+    if (currPos < 10) { return 20; } // seconds 
     
     // Don't re-estimate if only 10% diff from the last estimation
     var ratio = currPos / wholeSentLength;
@@ -39,7 +39,7 @@ export async function getCurrDelta(wholeSent = false) {
       var newEst = ratio * wholeSentDelta;
       console.log('wholeSentDelta (cached)', wholeSentDelta, 
         'ratio', ratio, 'newEst', newEst);
-      return wholeSentDelta;
+      return newEst;
     }
     
     // Remember the new wholeSentLength before estimate a new one
