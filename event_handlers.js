@@ -53,6 +53,7 @@ async function playAndUpdateSub(event) {
 
   switch (currKey) {
     case 'Enter':
+      saveLastCursor("Next button", 0);
       loadCurrAdjustedDeltas();
       saveCurrSubIndex(currSubIndex);
       AudioPlayer.saveCurrentTimeToIndex(currSubIndex);
