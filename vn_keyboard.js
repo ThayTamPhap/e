@@ -44,7 +44,7 @@ async function mapKeysForMe(event) {
     let c2 = prevC;
     prevC = c1;
     
-    // Default
+    // Default mapKeys
     let l = t.substr(0, i);
     let r = t.substr(i,);
     let newl = mapKeys(l);
