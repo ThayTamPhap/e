@@ -150,7 +150,13 @@ async function genSubs() {
     time = await loadTime(i);
     div.innerHTML = `<i>[${i}] ${secondsToTime(time)}</i>`;
     p = document.createElement('p');
-    p.innerHTML = TypingText.spellSpecialWords(await loadText(i));
+
+    text = await loadText(i);
+    if (text === null || text.length == 0) {
+      text = String.fromCharCode(160);
+    }
+    
+    p.innerHTML = TypingText.spellSpecialWords(text);
     p.id = i;
     if (await isEditedIndex(i) || i <= 1) {
       p.contentEditable = "true";

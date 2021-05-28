@@ -89,7 +89,6 @@ async function handleKeyPress(event, from=null) {
         p.focus();
         p.parentNode.scrollIntoView();
         CursorHelpers.saveLastCursor("Next button", 0);
-        cooldown=2; let inter=setInterval(()=>(--cooldown==0) && clearInterval(inter),1000);
 
       } else {
         // Add new sub element
@@ -99,6 +98,7 @@ async function handleKeyPress(event, from=null) {
         p.id = currSubIndex;
         p.contentEditable = "true";
         p.className = 'edited';
+        p.innerHTML = String.fromCharCode(160); // Space
         p.addEventListener("click", playSub);
         p.addEventListener("blur", saveTextIndex);
         div.appendChild(p);
@@ -110,10 +110,10 @@ async function handleKeyPress(event, from=null) {
         saveSubsCount(++subsCount);
       }
       
+      AudioPlayer.saveCurrentTimeToIndex(currSubIndex);
       // Reset cache and play new sub audio
       loadCurrAdjustedDeltas();
       saveCurrSubIndex(currSubIndex);
-      AudioPlayer.saveCurrentTimeToIndex(currSubIndex);
       AudioPlayer.adjustMaxPlayTime(null, 
         await Estimators.getCurrDelta('Whole sentence'));
       AudioPlayer.play();
