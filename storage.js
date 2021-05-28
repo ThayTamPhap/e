@@ -1,5 +1,3 @@
-import * as VnKeyboard from "./vn_keyboard.js"
-
 function finalKey(key) {
   return phapname + "_" + key; 
 }
@@ -53,7 +51,6 @@ async function saveTextIndex(i) {
 async function saveText(i, value) {
   value = normalizeText(value);
   await save(`text${i}`, value);
-  VnKeyboard.makeUseOfBiTriGramsFrom(value);
   return value;
 }
 
