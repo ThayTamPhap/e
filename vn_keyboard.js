@@ -125,10 +125,10 @@ async function mapKeysForMe(event) {
                 // hilite first choice
 
                 let openTag = (mIndex == 1) ?
-                    "<div style=\"text-decoration:underline;\">" :
-                    "<div>";
+                    "<span style=\"text-decoration:underline;\">" :
+                    "<span>";
 
-                htmls.push(`${openTag}${mIndex}: ${m}</div>`);
+                htmls.push(`${openTag}${mIndex}: ${m}</span>`);
                 console.log(mIndex, m);
             }
         });
@@ -136,7 +136,7 @@ async function mapKeysForMe(event) {
             htmls.push("0: " + triWords.join(" "));
             suggestionRegex = new RegExp(`${triWords.join("\\s+")}`);
             console.log(suggestionRegex);
-            suggestion.innerHTML = htmls.join("");
+            suggestion.innerHTML = htmls.join("<br />");
             suggestion.style = "display: true";
             // buttonBar.style.display = "none";
         }
