@@ -158,7 +158,6 @@ async function genSubs() {
     }
     // if p is click then p will get focus
     p.addEventListener("click", playSub);
-    p.addEventListener("focus", playAndUpdateSub);
     p.addEventListener("blur",  saveTextIndex);
     div.appendChild(p);
     document.body.appendChild(div);

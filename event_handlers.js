@@ -12,7 +12,6 @@ document.addEventListener("keyup", handleKeyUp);
 // Export to global to bind to elements
 window.handleKeyPress = handleKeyPress;
 window.playSub = playSub;
-window.playAndUpdateSub = playAndUpdateSub;
 
 function resetTextAndPos(suffix=false) {
   if (needToResetTextAndPos) {
@@ -42,47 +41,6 @@ async function playSub(event) {
     CursorHelpers.blinkCurPos();
   }
 }
-
-// Whenever a sub get focused (click, tab, enter) will call playAndUpdateSub()
-async function playAndUpdateSub(event) {
-  console.log("currSubIndex", currSubIndex);
-  // Save recent edited text
-  if (currSubIndex >  1) saveTextIndex(currSubIndex - 1);
-  if (currSubIndex >= 0) saveTextIndex(currSubIndex);
-  if (currSubIndex < subsCount - 1) saveTextIndex(currSubIndex + 1);
-
-  switch (currKey) {
-    case 'Enter':
-      loadCurrAdjustedDeltas();
-      saveCurrSubIndex(currSubIndex);
-      AudioPlayer.saveCurrentTimeToIndex(currSubIndex);
-      AudioPlayer.adjustMaxPlayTime(null, await Estimators.getCurrDelta('Whole sentence'));
-      AudioPlayer.play();
-      if (currSubIndex < subsCount - 1) {
-        document.getElementById(currSubIndex+1).contentEditable = true;
-      }
-      break;
-
-    case 'Tab':
-      loadCurrAdjustedDeltas();
-      await CursorHelpers.playCurrSubIndex();
-      CursorHelpers.blinkCurPos(0);
-
-      if (currSubIndex >= subsCount) {
-        // Play till the end
-        AudioPlayer.adjustMaxPlayTime(99999);
-      } else {
-        // Play till the end of the current sent
-        AudioPlayer.adjustMaxPlayTime(await loadTime(currSubIndex+1));
-      }
-      break;
-
-    default:
-  }
-
-  currKey = null;
-}
-
 
 async function handleKeyUp(event) {
   CursorHelpers.saveLastCursor('handleKeyUp');
@@ -115,19 +73,10 @@ async function handleKeyPress(event, from=null) {
     document.getElementById("forwardButton").innerHTML = fastMode ? ">>>" : ">>";
     document.getElementById("backwardButton").innerHTML = fastMode ? "<<<" : "<<";
     AudioPlayer.setPlaybackRate(fastMode);
-/*
-    // resetTextAndPos("\\");
-    needToResetTextAndPos = true;
-    resetTextAndPos(" ");
-    await CursorHelpers.playCurrPos();
-    let p = document.getElementById(currSubIndex); p.focus();
-    if (event.code == '') { CursorHelpers.blinkCurPos(); } // blinkCurPos for Android
-*/    
     return;
   }
 
   switch(currKey) {
-
     case 'AltLeft':
       event.preventDefault();
       CursorHelpers.getCursorback(from);
@@ -143,25 +92,22 @@ async function handleKeyPress(event, from=null) {
       }
       break;
 
-    case 'Enter':
+    case 'Tab':
       event.preventDefault();
       if (cooldown > 0) {
         CursorHelpers.getCursorback(from);
         break;
       }
-
       if (currSubIndex < subsCount-1) { 
-
         let p = document.getElementById(++currSubIndex);
         p.contentEditable = true;
         p.focus();
         p.parentNode.scrollIntoView();
-        saveCurrSubIndex(currSubIndex);
         CursorHelpers.saveLastCursor("Next button", 0);
         cooldown=2; let inter=setInterval(()=>(--cooldown==0) && clearInterval(inter),1000);
 
       } else {
-
+        // Add new sub element
         let div = document.createElement('div');
         let p = document.createElement('p');
         div.innerHTML = `<i>[${++currSubIndex}] ${secondsToTime(0)}</i>`;
@@ -169,21 +115,26 @@ async function handleKeyPress(event, from=null) {
         p.contentEditable = "true";
         p.className = 'edited';
         p.addEventListener("click", playSub);
-        p.addEventListener("focus", playAndUpdateSub);
         p.addEventListener("blur", saveTextIndex);
         div.appendChild(p);
         document.body.appendChild(div);
         p.focus();
-        // p.parentNode.scrollIntoView();
+        // Scroll to bottom to show newly added element
         window.scrollTo(0,document.body.scrollHeight);
+        // Increase & save subsCount
         saveSubsCount(++subsCount);
       }
-      break;
-
-    case 'Tab':
-      event.preventDefault();
-      if (await isEditedIndex(currSubIndex+1)) { 
-        document.getElementById(++currSubIndex).focus();
+      
+      // Reset cache and play new sub audio
+      loadCurrAdjustedDeltas();
+      saveCurrSubIndex(currSubIndex);
+      AudioPlayer.saveCurrentTimeToIndex(currSubIndex);
+      AudioPlayer.adjustMaxPlayTime(null, 
+        await Estimators.getCurrDelta('Whole sentence'));
+      AudioPlayer.play();
+      if (currSubIndex < subsCount - 1) {
+        // Prepare for the next tab
+        document.getElementById(currSubIndex+1).contentEditable = true;
       }
       break;
 
