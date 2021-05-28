@@ -66,9 +66,12 @@ async function mapKeysForMe(event) {
             newl = l.replace(suggestionRegex, matches[index]);
         }
         if (-1 <= index && index < matches.length) {
-            prevC = 160; p.innerHTML = newl + String.fromCharCode(160) + r;
+            prevC = 160;
+            newl += String.fromCharCode(160);
+            p.innerHTML = newl + r;
             s.collapse(p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
         }
+        matches = [];
     }
     if (c1 === 32 || c1 === 160) { // Android space char code is 160
         if (c2 === 32 || c2 === 160) { CursorHelpers.playCurrPos(); } 
