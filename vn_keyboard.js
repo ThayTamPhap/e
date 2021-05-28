@@ -19,12 +19,14 @@ console.log(keysMap, keysMapRegex);
 
 document.addEventListener("keyup", mapKeysForMe);
 
+var prevC;
 async function mapKeysForMe(event) {
     saveLastCursor('mapKeysForMe');
 
     // Android's keyCode: enter = 13; backspace = 8; others are all 229
     if (event.code == '' && (event.key == 'Backspace' || event.keyCode == 8)) { 
         event.code = 'Backspace';
+        prevC = null;
         return;
     }
 
@@ -33,18 +35,15 @@ async function mapKeysForMe(event) {
     var p = document.getElementById(currSubIndex);
     var t = p.innerText;
     let c1 = t.charCodeAt(i-1);
-    let c2 = t.charCodeAt(i-2);
+    let c2 = prevC;
+    prevC = c1;
 
-    if (c1 === 160) { // space on Android
-        // let log = `Typed char codes: "${c1}, ${c2}}"`; console.log(log); alert(log);
-        resetTextAndPos(" ");
-        return;
+    if (c1 === 32 || c1 === 160) {
+      if (c2 === 32 || c2 === 160) playCurrPos();
+      if (c1 === 160) resetTextAndPos();
+      return;
     }
-    // double space to play
-    if ((c1 === 32 || c1 === 160) && (c2 === 32 || c2 === 160)) { 
-        playCurrPos(); 
-        return;
-    } 
+    
     // Default
     let l = t.substr(0, i);
     let newl = mapKeys(l);

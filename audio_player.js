@@ -38,6 +38,10 @@ export async function pause() {
   ap.pause();
 }
 
+export function isPaused() {
+  return ap.paused;
+}
+
 export function adjustCurrentTime(time=null, delta=0) {
   ap.currentTime = (time ?? ap.currentTime) + delta;
 }
@@ -46,10 +50,14 @@ export function adjustMaxPlayTime(time=null, delta=0) {
   maxPlayTime = (time ?? maxPlayTime) + delta;
 }
 
-export function pauseOrSeekAndPlay(delta) {
-  if (ap.paused) { 
+export function seekAndPlay(delta) {
     adjustCurrentTime(null, delta);
     play();
+}
+
+export function pauseOrSeekAndPlay(delta) {
+  if (ap.paused) { 
+    seekAndPlay(delta);
   } else { 
     pause();
   };

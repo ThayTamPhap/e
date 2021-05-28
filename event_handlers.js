@@ -62,6 +62,7 @@ async function handleKeyPress(event, from=null) {
     document.getElementById("forwardButton").innerHTML = fastMode ? ">>>" : ">>";
     document.getElementById("backwardButton").innerHTML = fastMode ? "<<<" : "<<";
     AudioPlayer.setPlaybackRate(fastMode);
+    AudioPlayer.seekAndPlay(-0.8);
     return;
   }
 

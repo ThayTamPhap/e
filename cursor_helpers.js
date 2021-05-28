@@ -31,6 +31,10 @@ export async function playCurrPos() {
   playCurrSubIndex(await Estimators.getCurrDelta());
 }
 
+export async function pauseOrPlayCurrPos() {
+  AudioPlayer.isPaused() ?  playCurrPos() : AudioPlayer.pause();
+}
+
 export function getLastCurrPos() {
   return lastCurrPos;
 }
