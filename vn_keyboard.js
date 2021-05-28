@@ -23,6 +23,7 @@ document.addEventListener("keyup", mapKeysForMe);
 var prevC, matches = [];
 var buttonBar = document.getElementById("buttonBar");
 let suggestion = document.getElementById("suggestion");
+let suggestionRegex = null;
 
 async function mapKeysForMe(event) {
     CursorHelpers.saveLastCursor('mapKeysForMe');
@@ -60,21 +61,18 @@ async function mapKeysForMe(event) {
         let index = c1 - 49;
         if (c1 === 32 || c1 === 160) index = 0;
         if (index == -1) {
-            newl = l.substr(0, l.length-1) + String.fromCharCode(160); prevC = 160;            
-            p.innerHTML = newl + r;
-            s.collapse(p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
+            newl = l.substr(0, l.length-1);
         } else if (index < matches.length) {
-            let selected = matches[index];
-            newl = l.substr(0, l.length-selected.length-1) + selected 
-                + String.fromCharCode(160); prevC = 160;
-            p.innerHTML = newl + r;
+            newl = l.replace(suggestionRegex, matches[index]);
+        }
+        if (-1 <= index && index < matches.length) {
+            prevC = 160; p.innerHTML = newl + String.fromCharCode(160) + r;
             s.collapse(p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
         }
-        matches = [];
-    } else {
-        if (c1 === 32 || c1 === 160) // Android space char code is 160
-            if (c2 === 32 || c2 === 160) { CursorHelpers.playCurrPos(); } 
-            else { CursorHelpers.resetTextAndPos(); }
+    }
+    if (c1 === 32 || c1 === 160) { // Android space char code is 160
+        if (c2 === 32 || c2 === 160) { CursorHelpers.playCurrPos(); } 
+        if (c1 === 160) { CursorHelpers.resetTextAndPos(); };
     }
 
 
@@ -117,6 +115,8 @@ async function mapKeysForMe(event) {
             }
         });
         if (matches.length > 0) {
+            suggestionRegex = new RegExp(`${triWords.join("\\s+")}`);
+            console.log(suggestionRegex);
             suggestion.innerHTML = htmls.join(",&nbsp; ");
             suggestion.style = "display: true";
             buttonBar.style.display = "none";
