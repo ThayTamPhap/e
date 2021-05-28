@@ -96,7 +96,15 @@ export function resetTextAndPos(suffix=false) {
     /* https://javascript.info/selection-range#selecting-the-text-partially */
     // If node is a text node, then offset must be the position in its text.
     if (isEndOfSent || lastCurrPos > n) lastCurrPos = n;
-    sel.collapse(currP.firstChild, lastCurrPos);
+    
+  let range = new Range();  
+  range.setStart(currP.firstChild, lastCurrPos);
+  range.setEnd(currP.firstChild,lastCurrPos);
+  sel.removeAllRanges();
+  sel.addRange(range);
+  
+  
+  //  sel.collapse(currP.firstChild, lastCurrPos);
 }
 
 export function blinkCurPos(pos) {
