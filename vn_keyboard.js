@@ -72,7 +72,7 @@ async function mapKeysForMe(event) {
             let selected = matches[index];
             // console.log('Selected:', selected);
             newl = l.substr(0, l.length-selected.length-1) + selected 
-                + String.fromCharCode(160);
+                + String.fromCharCode(160); prevC = 160;
             p.innerHTML = newl + r;
             s.collapse(p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
             // console.log(index, newl);
