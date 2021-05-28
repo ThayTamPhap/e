@@ -155,18 +155,16 @@ async function mapKeysForMe(event) {
                 m = str;
                 matches.push(m);
                 mIndex++;
-                // hilite first choice
-                let openTag = (mIndex == 1) ?
-                    "<span style=\"text-decoration:underline;\">" :
-                    "<span>";
-
-                htmls.push(`${openTag}${mIndex}: ${m}</span>`);
+                let openTag = mIndex == 1 ? "<span class='default'>" : "<span>";
+                htmls.push(`${openTag}${mIndex}. ${m}</span>`);
                 console.log(mIndex, m);
             }
         });
 
         if (matches.length > 0) {
-            if (ww != null) { htmls.push("0: " + triWords.join(" ")); }
+            if (ww != null) { 
+                htmls.push("<span>0. " + triWords.join(" ")) + "</span>"; 
+            }
             suggestionRegex = new RegExp(`${triWords.join("\\s+")}`);
             console.log(suggestionRegex);
             suggestion.innerHTML = htmls.join("<br />");
