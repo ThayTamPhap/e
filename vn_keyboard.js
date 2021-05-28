@@ -69,43 +69,70 @@ async function mapKeysForMe(event) {
     // Select from previous matches
     if (matches.length > 0) {
         let index = c1 - 49;
-        if (index < matches.length) {
+        if (index < 0) {
+            newl = l.substr(0, l.length-1) + String.fromCharCode(160); prevC = 160;            
+            p.innerHTML = newl + r;
+            s.collapse(p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
+        } else if (index < matches.length) {
             let selected = matches[index];
-            // console.log('Selected:', selected);
             newl = l.substr(0, l.length-selected.length-1) + selected 
                 + String.fromCharCode(160); prevC = 160;
             p.innerHTML = newl + r;
             s.collapse(p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
-            // console.log(index, newl);
         }
         matches = [];
     }
 
     let lastPhrase = l.split(VN_PHRASE_BREAK_REGEX).pop();
-    let words = lastPhrase.trim().split(/\s+/).slice(-3);
-    let gram = words.join(" ").toLowerCase();
+    let triWords = lastPhrase.trim().split(/\s+/).slice(-3);
+    let lastWord = triWords[triWords.length-1];
+    // need at least two words
+    if (triWords.length <= 1) {
+        return;
+    }
+    let gram = triWords.join(" ").toLowerCase();
     gram = removeVienameseMarks(gram);
     let matched = _mappings[gram];
 
-    // console.log('Gram: ', gram);
-    
-    if (!matched) {
-        gram = words.slice(-2).join(" ").toLowerCase();
+    // 3-gram don't match => try bi-gram
+    if (!matched && triWords.length > 2) {
+        triWords.shift();
+        gram = triWords.join(" ").toLowerCase();
         gram = removeVienameseMarks(gram);
         matched = _mappings[gram];
     }
 
     if (matched) {
-        let htmls = [];
-        matches = matched.split("|");
-        for (i = 0; i < matches.length; i++) {
-            htmls.push(`${i+1}: ${matches[i]}`);
-            console.log(i+1, matches[i]);
-        }        
-        suggestion.innerHTML = htmls.join("; ");
-        suggestion.style = "display: true";
-        buttonBar.style.display = "none";
+        console.log(triWords.length, triWords, gram, matched);
+        matches = [];
+        let htmls = [], prefix;
+        matched.split("|").forEach((m,i) => {
+            let mWords = m.split(" ");
+            if (
+                okok(triWords[0], mWords[0]) &&
+                okok(triWords[1], mWords[1]) &&
+                okok(triWords[2], mWords[2])
+            ) {
+                matches.push(m);
+                htmls.push(`${i+1}: ${m}`);
+                console.log(i+1, m);
+            }
+        });
+        if (matches.length > 0) {
+            suggestion.innerHTML = htmls.join(",&nbsp; ");
+            suggestion.style = "display: true";
+            buttonBar.style.display = "none";
+        }
     }
+}
+
+function okok(w1, w2) {
+    if (typeof w1 === 'undefined') return true;
+    // console.log(w1, w2);
+    if (w1 == w2) return true;
+    let w0 = removeVienameseMarks(w1);
+    if (w0 == w1 && w0 == removeVienameseMarks(w2)) return true;
+    return false;
 }
 
 function playCurrent() {
