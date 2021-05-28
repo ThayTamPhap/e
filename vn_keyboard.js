@@ -56,15 +56,6 @@ async function mapKeysForMe(event) {
         if (c1 === 160) {
             CursorHelpers.resetTextAndPos();
         }
-        if (matches.length > 0) {
-            let selected = matches[0];
-            console.log('Selected:', selected);
-            newl = l.substr(0, l.length-selected.length-1) + selected 
-                + String.fromCharCode(160); prevC = 160;
-            p.innerHTML = newl + r;
-            s.collapse(p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
-            matches = [];
-        }
         return;
     }
     
