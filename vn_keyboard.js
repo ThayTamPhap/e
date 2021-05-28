@@ -21,14 +21,14 @@ _keys_map.split("\n").map(x => {
 document.addEventListener("keyup", mapKeysForMe);
 
 var prevC, matches = [];
-var buttonBar = document.getElementById("buttonBar");
 let suggestion = document.getElementById("suggestion");
-let suggestionRegex = null;
+let www, suggestionRegex = null;
+let autoReplaced = false;
+let gram, matched;
 
 async function mapKeysForMe(event) {
     CursorHelpers.saveLastCursor('mapKeysForMe');
     suggestion.style.display = "none";
-    // buttonBar.style = "display: true";
 
     // Android's keyCode: enter = 13; backspace = 8; others are all 229
     if (event.code == '' && (event.key == 'Backspace' || event.keyCode == 8)) { 
@@ -60,8 +60,25 @@ async function mapKeysForMe(event) {
         let index = c1 - 49;        
         // Select valid number from 0 to matches.length
         // then replace current char (c1 or prevC) by a space
-        if (-1 <= index && index < matches.length) { prevC = 160; }
-        else if (c1 < 97 || c1 > 122) { index = 0; } // Not a-z
+        if (-1 <= index && index < matches.length) { 
+            prevC = 160;
+            autoReplaced = false;
+            
+            if (index == -1) {
+                // Add new, selected pattern to the top
+                // _mappings[gram] = www.toLowerCase() + '|' + matched;
+            } else {
+                // Switch selected one to the top
+                let temp = matches[0];
+                matches[0] = matches[index];
+                matches[index] = temp;
+                _mappings[gram] = matches.join("|");
+            }
+        }
+        else if (c1 < 97 || c1 > 122) { // Not a-z
+            index = 0;
+            autoReplaced = true;
+        }
 
         if (index == -1) { // Select 0 will keep the original string
             newl = l.substr(0, l.length-1);
@@ -96,9 +113,9 @@ async function mapKeysForMe(event) {
     if (triWords.length <= 1) {
         return;
     }
-    let gram = triWords.join(" ").toLowerCase();
+    gram = triWords.join(" ").toLowerCase();
     gram = removeVienameseMarks(gram);
-    let matched = _mappings[gram];
+    matched = _mappings[gram];
 
     // 3-gram don't match => try bi-gram
     if (!matched && triWords.length > 2) {
@@ -112,14 +129,14 @@ async function mapKeysForMe(event) {
         console.log(triWords.length, gram, matched);
         matches = [];
         let htmls = [], mIndex = 0;
-        let www =triWords.join(" ");
+        www =triWords.join(" ");
         let ww = www.toLowerCase();
         matched.split("|").forEach((m,i) => {
             if (ww == m) ww = null;
             let mWords = m.split(" ");
             if (
                 okok(triWords[0], mWords[0]) &&
-                okok(triWords[1], mWords[1]) &&
+                okok(triWords[1], mWords[1], autoReplaced) &&
                 okok(triWords[2], mWords[2])
             ) {
                 for (var str = "", z = 0; z < www.length; z++) {
@@ -153,9 +170,10 @@ async function mapKeysForMe(event) {
     }
 }
 
-function okok(w1, w2) {
+function okok(w1, w2, autoReplaced=false) {
     if (typeof w1 === 'undefined') return true;
-    console.log("okok",w1, w2);
+    console.log("okok",w1, w2, autoReplaced);
+    if (autoReplaced) return true;
     w1 = w1.toLowerCase();
     if (w1 == w2) return true;
     let w0 = removeVienameseMarks(w1);
