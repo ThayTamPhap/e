@@ -7,9 +7,9 @@
 <style type="text/css">
   body, div, p, a { font-family: Arial, Helvetica, sans-serif; font-size: 22px; }
 
-  .header { position: fixed; left: 0; bottom: 0; width: 100%; padding: 0 0 1px .3em; }
+  .header { position: fixed; left: 0; bottom: 0; width: 100%; padding: 2px 2px 2px .3em; background-color: #ddd; color: #000;}
 
-  .header audio#audioPlayer { width: 0%; float: left; height: 25px; }
+  .header audio#audioPlayer { width: 0%; display: none;}
 
   .header a, #currentTime, #downloadButton { width: 14%; color: blue; 
     background-color: #ccc; border-width: 1px; border-style: solid; padding: 0.35em 0em;
@@ -31,7 +31,9 @@
 </style>
 </head>
 <body style="padding-bottom: 6.5em;">
-  <div class="header">
+  <div class="header" id="suggestion">
+  </div>
+  <div class="header" id="buttonBar">
     <audio controls id="audioPlayer"></audio>
 
     <a href="" onclick="

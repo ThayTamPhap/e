@@ -42,14 +42,7 @@ export async function getCurrDelta(wholeSent = false) {
 
     if (Math.abs(1 - ratio) < 0.1) {
       var newEst = ratio * wholeSentDelta;
-      console.log(
-        'wholeSentDelta (cached)',
-        wholeSentDelta,
-        'ratio',
-        ratio,
-        'newEst',
-        newEst
-      );
+      // console.log('wholeSentDelta (cached)',wholeSentDelta,'ratio',ratio,'newEst',newEst);
       return newEst;
     }
 
@@ -100,7 +93,7 @@ export async function getCurrDelta(wholeSent = false) {
     ad = adjustedDeltas[i];
     if (ad != 0 && ad != undefined) {
       delta += ad;
-      console.log('adjustedDeltas[', i, '] = ', ad);
+      // console.log('adjustedDeltas[', i, '] = ', ad);
     }
   }
 
@@ -114,26 +107,11 @@ export async function getCurrDelta(wholeSent = false) {
     delta = keepTwoDigitsAfterPeriod(delta * 1.35 + 3.5);
     // Remember newly estimated wholeSentDelta to use for the next case
     wholeSentDelta = delta;
-    console.log(wholeSent, words.length, delta1, delta2, delta);
+    // console.log(wholeSent, words.length, delta1, delta2, delta);
   } else {
-    console.log(
-      'currSub:',
-      currSubIndex,
-      'words',
-      words.length,
-      'delta1',
-      delta1,
-      'wordsCount',
-      wordsCount,
-      'delta2',
-      delta2,
-      'currPos',
-      currPos,
-      'adjustedDeltas',
-      adjustedDeltas.length,
-      'delta',
-      delta
-    );
+    // console.log('currSub:',currSubIndex,'words',words.length,'delta1',delta1,'wordsCount',
+    //   wordsCount,'delta2',delta2,'currPos',currPos,'adjustedDeltas',adjustedDeltas.length,
+    //   'delta',delta);
   }
 
   // Ensure delta always > 0 and return it
@@ -157,6 +135,6 @@ async function estimateSecondsPerWord(index) {
   secondsPerWord =
     avgWordDuration <= maxSecondsPerWord ? avgWordDuration : secondsPerWord;
 
-  console.log('secondsPerWord:', keepTwoDigitsAfterPeriod(secondsPerWord));
+  // console.log('secondsPerWord:', keepTwoDigitsAfterPeriod(secondsPerWord));
   return secondsPerWord;
 }

@@ -8,7 +8,7 @@ var selectedText = "";
 export function getCursorback(from) {
   if (from !== FROM_VIRTUAL_BUTTON) { return; }
   let p = document.getElementById(currSubIndex); p.focus();
-  console.log("\nlastCurrPos:", lastCurrPos);
+  // console.log("\nlastCurrPos:", lastCurrPos);
   let n = p.innerText.length;
   if (lastCurrPos > n) {
     lastCurrPos = n;
@@ -45,12 +45,12 @@ export function setLastCursorFast(i) {
 
 export function saveLastCursor(from="", pos=null) {
   lastCurrPos = pos ?? window.getSelection().anchorOffset;
-  console.log(`\n\nsaveLastCursor(${from}) => ${lastCurrPos}\n\n`);
+  // console.log(`\n\nsaveLastCursor(${from}) => ${lastCurrPos}\n\n`);
 }
 
 export function setLastCursor(from="", value) {
   lastCurrPos = value;
-  console.log(`\n\setLastCursor(${from}) => ${lastCurrPos}\n\n`);
+  // console.log(`\n\setLastCursor(${from}) => ${lastCurrPos}\n\n`);
 }
 
 export function getCurrPosStr() {
@@ -106,7 +106,7 @@ export function blinkCurPos(pos) {
   let sel = window.getSelection(); 
   selectedText = sel.getRangeAt(0).toString();
 
-  console.log('linkCurPos():\nselectedText', selectedText);
+  // console.log('blinkCurPos():\nselectedText', selectedText);
 
   if (selectedText.length > 0) {
     AudioPlayer.pause();
@@ -165,7 +165,7 @@ function autoCapitalizedFirstCharOf(p, auto=false) {
     let pp = p.parentNode.previousSibling.lastChild;
     yesDoIt = pp.firstChild.textContent.match(/[.?!\\/]\s*$/);
   }
-  console.log('yesDoIt', yesDoIt);
+  // console.log('yesDoIt', yesDoIt);
   if (auto && yesDoIt) {
     p.innerHTML = capitalizeFirstCharOf(p.innerText);
   }
