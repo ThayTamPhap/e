@@ -71,11 +71,12 @@ async function mapKeysForMe(event) {
             s.collapse(p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
         }
         matches = [];
+    } else {
+        if (c1 === 32 || c1 === 160) // Android space char code is 160
+            if (c2 === 32 || c2 === 160) { CursorHelpers.playCurrPos(); } 
+            else { CursorHelpers.resetTextAndPos(); }
     }
 
-    if (c1 === 32 || c1 === 160) // Android space char code is 160
-        if (c2 === 32 || c2 === 160) { CursorHelpers.playCurrPos(); } 
-        else { CursorHelpers.resetTextAndPos(); }
 
     // Not from a-z
     if (c1 < 97 || c1 > 122) { return; }
