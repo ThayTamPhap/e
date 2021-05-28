@@ -2,8 +2,7 @@ import * as CursorHelpers from "./cursor_helpers.js";
 import * as AudioPlayer from "./audio_player.js";
 import * as Estimators from "./estimators.js";
 
-var cooldown = 0;
-var currKey;
+var fastMode = false;
 var needToResetTextAndPos = true;
 
 document.addEventListener("keydown", handleKeyPress);
@@ -41,12 +40,10 @@ async function playSub(event) {
   }
 }
 
-var fastMode = false;
-
 async function handleKeyPress(event, from=null) {
    let logStr = `keydown: key='${event.key}' | code='${event.code}' | keyCode=${event.keyCode}`;
   console.log(logStr); // alert(logStr);
-  currKey = event.code;
+  let currKey = event.code;
   
   // key mapping for different browsers / systems
   // Android's keyCode: enter = 13; backspace = 8; others are all 229
@@ -84,10 +81,8 @@ async function handleKeyPress(event, from=null) {
 
     case 'Tab':
       event.preventDefault();
-      if (cooldown > 0) {
-        CursorHelpers.getCursorback(from);
-        break;
-      }
+      CursorHelpers.getCursorback(from);
+
       if (currSubIndex < subsCount-1) { 
         let p = document.getElementById(++currSubIndex);
         p.contentEditable = true;
@@ -122,11 +117,6 @@ async function handleKeyPress(event, from=null) {
       AudioPlayer.adjustMaxPlayTime(null, 
         await Estimators.getCurrDelta('Whole sentence'));
       AudioPlayer.play();
-      if (currSubIndex < subsCount - 1) {
-        // Prepare for the next tab
-        document.getElementById(currSubIndex+1).contentEditable = true;
-      }
-      break;
 
     /* ControlLeft = play, AltRight = forward, OSRight = backward */
 
