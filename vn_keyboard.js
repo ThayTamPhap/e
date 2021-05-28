@@ -112,7 +112,9 @@ async function mapKeysForMe(event) {
         console.log(triWords.length, gram, matched);
         matches = [];
         let htmls = [], mIndex = 0;
+        let ww =triWords.join(" ").toLowerCase();
         matched.split("|").forEach((m,i) => {
+            if (ww == m) return;
             let mWords = m.split(" ");
             if (
                 okok(triWords[0], mWords[0]) &&
@@ -181,7 +183,7 @@ function makeUseOfGram(gram) {
         // console.log(gram);
         // console.log("=>", value);
     } else {
-        _mappings[key] = value ? value + "|" + gram : gram
+        _mappings[key] = value ? gram + "|" + value : gram;
         // console.log(_mappings[key]);
     }
 }
