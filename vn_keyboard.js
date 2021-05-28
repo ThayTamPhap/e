@@ -69,10 +69,14 @@ async function mapKeysForMe(event) {
                 // _mappings[gram] = www.toLowerCase() + '|' + matched;
             } else {
                 // Switch selected one to the top
-                let temp = matches[0];
-                matches[0] = matches[index];
-                matches[index] = temp;
-                _mappings[gram] = matches.join("|");
+                let temp = matches[index].toLowerCase();
+                matched = matched.replace(temp, "").replace("||","|")
+                if (matched.length === 0) {
+                    _mappings[gram] = temp;
+                } else {
+                    _mappings[gram] = temp + "|" + matched;
+                }
+                
             }
         }
         else if (c1 < 97 || c1 > 122) { // Not a-z
@@ -83,6 +87,7 @@ async function mapKeysForMe(event) {
         if (index == -1) { // Select 0 will keep the original string
             newl = l.substr(0, l.length-1);
         } else if (index < matches.length) {
+            console.log("User select:", index, matches[index]);
             newl = l.replace(suggestionRegex, matches[index]);
             newl = newl.substr(0, newl.length-1);
         }
