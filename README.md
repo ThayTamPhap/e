@@ -1,3 +1,8 @@
+## Get more text to gen bi,tri-grams
+
+https://sutamphap.com/category/thu-thay-tro/
+
+
 ## https://vietnameseaccent.com/
 
 Automatically inserting accent marks for Vietnamese words.
