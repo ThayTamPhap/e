@@ -112,19 +112,28 @@ async function mapKeysForMe(event) {
         console.log(triWords.length, gram, matched);
         matches = [];
         let htmls = [], mIndex = 0;
-        let ww =triWords.join(" ").toLowerCase();
+        let www =triWords.join(" ");
+        let ww = www.toLowerCase();
         matched.split("|").forEach((m,i) => {
-            if (ww == m) return;
+            if (ww == m) ww = null;
             let mWords = m.split(" ");
             if (
                 okok(triWords[0], mWords[0]) &&
                 okok(triWords[1], mWords[1]) &&
                 okok(triWords[2], mWords[2])
             ) {
+                for (var str = "", z = 0; z < www.length; z++) {
+                    // char at z is upper case
+                    if (www[z].toUpperCase() === www[z]) {
+                        str += m[z].toUpperCase();
+                    } else {
+                        str += m[z];
+                    }
+                }   
+                m = str;
                 matches.push(m);
                 mIndex++;
                 // hilite first choice
-
                 let openTag = (mIndex == 1) ?
                     "<span style=\"text-decoration:underline;\">" :
                     "<span>";
@@ -133,22 +142,21 @@ async function mapKeysForMe(event) {
                 console.log(mIndex, m);
             }
         });
+
         if (matches.length > 0) {
-            htmls.push("0: " + triWords.join(" "));
+            if (ww != null) { htmls.push("0: " + triWords.join(" ")); }
             suggestionRegex = new RegExp(`${triWords.join("\\s+")}`);
             console.log(suggestionRegex);
             suggestion.innerHTML = htmls.join("<br />");
             suggestion.style = "display: true";
-            // buttonBar.style.display = "none";
         }
     }
 }
 
 function okok(w1, w2) {
     if (typeof w1 === 'undefined') return true;
-    // console.log(w1, w2);
+    console.log("okok",w1, w2);
     w1 = w1.toLowerCase();
-    w2 = w2.toLowerCase();
     if (w1 == w2) return true;
     let w0 = removeVienameseMarks(w1);
     if (w0 == w1 && w0 == removeVienameseMarks(w2)) return true;
