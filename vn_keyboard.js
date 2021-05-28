@@ -28,7 +28,7 @@ let suggestionRegex = null;
 async function mapKeysForMe(event) {
     CursorHelpers.saveLastCursor('mapKeysForMe');
     suggestion.style.display = "none";
-    buttonBar.style = "display: true";
+    // buttonBar.style = "display: true";
 
     // Android's keyCode: enter = 13; backspace = 8; others are all 229
     if (event.code == '' && (event.key == 'Backspace' || event.keyCode == 8)) { 
@@ -131,7 +131,7 @@ async function mapKeysForMe(event) {
             console.log(suggestionRegex);
             suggestion.innerHTML = htmls.join("<br />");
             suggestion.style = "display: true";
-            buttonBar.style.display = "none";
+            // buttonBar.style.display = "none";
         }
     }
 }
