@@ -44,15 +44,15 @@ async function mapKeysForMe(event) {
     let c2 = prevC;
     prevC = c1;
 
+    if (c1 === 160) {
+        CursorHelpers.resetTextAndPos();
+    }
+
     if (c1 === 32 || c1 === 160) { // Android space char code is 160
-        // console.log(">>> SPACE <<< ", matches);
+        // console.log(">>> SPACE <<< ");
         if (c2 === 32 || c2 === 160) {
             CursorHelpers.playCurrPos();
         }
-        if (c1 === 160) {
-            CursorHelpers.resetTextAndPos();
-        }
-        return;
     }
     
     // Default
@@ -69,6 +69,7 @@ async function mapKeysForMe(event) {
     // Select from previous matches
     if (matches.length > 0) {
         let index = c1 - 49;
+        if (c1 === 32 || c1 === 160) index = 0;
         if (index < 0) {
             newl = l.substr(0, l.length-1) + String.fromCharCode(160); prevC = 160;            
             p.innerHTML = newl + r;
@@ -82,6 +83,9 @@ async function mapKeysForMe(event) {
         }
         matches = [];
     }
+
+    // Not from a-z
+    if (c1 < 97 || c1 > 122) { return; }
 
     let lastPhrase = l.split(VN_PHRASE_BREAK_REGEX).pop();
     let triWords = lastPhrase.trim().split(/\s+/).slice(-3);
