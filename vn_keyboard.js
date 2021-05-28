@@ -112,7 +112,7 @@ async function mapKeysForMe(event) {
     if (matched) {
         console.log(triWords.length, gram, matched);
         matches = [];
-        let htmls = ["0: <bỏ qua>"], prefix;
+        let htmls = [], prefix;
         matched.split("|").forEach((m,i) => {
             let mWords = m.split(" ");
             if (
@@ -126,6 +126,7 @@ async function mapKeysForMe(event) {
             }
         });
         if (matches.length > 0) {
+            htmls.push("0: <bỏ qua>");
             suggestionRegex = new RegExp(`${triWords.join("\\s+")}`);
             console.log(suggestionRegex);
             suggestion.innerHTML = htmls.join("<br />");
