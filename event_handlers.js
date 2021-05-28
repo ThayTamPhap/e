@@ -13,8 +13,10 @@ window.handleKeyPress = handleKeyPress;
 window.playSub = playSub;
 window.updateIndexTime = updateIndexTime;
 
-function updateIndexTime() {
-  AudioPlayer.saveCurrentTimeToIndex(currSubIndex);
+async function updateIndexTime() {
+  var i = parseInt(this.id);
+  let value = await loadTime(i);
+  this.previousSibling.innerHTML = `[${i}] ${secondsToTime(value)}`;
 }
 
 function resetTextAndPos(suffix=false) {
@@ -82,6 +84,7 @@ async function handleKeyPress(event, from=null) {
         document.body.removeChild(document.getElementById(currSubIndex).parentNode);
         document.getElementById(--currSubIndex).focus();
         saveSubsCount(--subsCount);
+        saveTime(subsCount, 0);
       }
       break;
 
@@ -114,7 +117,7 @@ async function handleKeyPress(event, from=null) {
         // Increase & save subsCount
         saveSubsCount(++subsCount);
       }
-      
+      AudioPlayer.saveCurrentTimeToIndex(currSubIndex);      
       CursorHelpers.saveLastCursor("Next button", 0);
       // Reset cache and play new sub audio
       loadCurrAdjustedDeltas();

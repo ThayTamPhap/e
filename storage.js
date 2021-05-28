@@ -25,12 +25,12 @@ async function isEditedIndex(i) {
 }
 
 async function saveTime(i, value) {
-  await save(`time${i}`, value);
   var el = document.getElementById(i);
   if (el) {
     el.previousSibling.innerHTML = `[${i}] ${secondsToTime(value)}`;
     el.className = 'edited';
   }
+  await save(`time${i}`, value);
 }
 
 async function loadTime(i) {
