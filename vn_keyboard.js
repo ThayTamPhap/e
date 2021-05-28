@@ -58,16 +58,20 @@ async function mapKeysForMe(event) {
 
     // Select from previous matches
     if (matches.length > 0) {
-        let index = c1 - 49;
-        if (c1 === 32 || c1 === 160) index = 0;
-        if (index == -1) {
+        let index = c1 - 49;        
+        // Select valid number from 0 to matches.length
+        // then replace current char (c1 or prevC) by a space
+        if (-1 <= index && index < matches.length) { prevC = 160; }
+        else if (c1 < 97 || c1 > 122) { index = 0; } // Not a-z
+
+        if (index == -1) { // Select 0 will keep the original string
             newl = l.substr(0, l.length-1);
         } else if (index < matches.length) {
             newl = l.replace(suggestionRegex, matches[index]);
+            newl = newl.substr(0, newl.length-1);
         }
         if (-1 <= index && index < matches.length) {
-            prevC = 160;
-            newl += String.fromCharCode(160);
+            newl += String.fromCharCode(prevC);
             p.innerHTML = newl + r;
             s.collapse(p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
         }
