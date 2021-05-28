@@ -126,7 +126,7 @@ async function mapKeysForMe(event) {
             }
         });
         if (matches.length > 0) {
-            htmls.push("0: <bỏ qua>");
+            htmls.push("0: [bỏ qua]");
             suggestionRegex = new RegExp(`${triWords.join("\\s+")}`);
             console.log(suggestionRegex);
             suggestion.innerHTML = htmls.join("<br />");
