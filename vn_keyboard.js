@@ -73,11 +73,18 @@ async function mapKeysForMe(event) {
         }
         matches = [];
     }
-    if (c1 === 32 || c1 === 160) { // Android space char code is 160
-        if (c2 === 32 || c2 === 160) { CursorHelpers.playCurrPos(); } 
-        if (c1 === 160) { CursorHelpers.resetTextAndPos(); };
-    }
 
+    if (c1 === 32 || c1 === 160) { // Android space
+        CursorHelpers.resetTextAndPos(); 
+        CursorHelpers.playCurrPos();
+    };
+/*
+    if (c1 === 32 || c1 === 160) { // Android space char code is 160
+        if (c2 === 32 || c2 === 160) { // Double spaces
+            CursorHelpers.playCurrPos(); 
+         } 
+    }
+*/
 
     // Not from a-z
     if (c1 < 97 || c1 > 122) { return; }
