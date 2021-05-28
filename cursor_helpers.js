@@ -163,7 +163,7 @@ function autoCapitalizedFirstCharOf(p, auto=false) {
   let yesDoIt = (p.id == "0");
   if (yesDoIt === false) {
     let pp = p.parentNode.previousSibling.lastChild;
-    yesDoIt = pp.firstChild.textContent.match(/[.?!\\/]\s*$/);
+    yesDoIt = pp.firstChild.textContent && pp.firstChild.textContent.match(/[.?!\\/]\s*$/);
   }
   // console.log('yesDoIt', yesDoIt);
   if (auto && yesDoIt) {

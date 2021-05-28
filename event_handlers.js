@@ -77,7 +77,7 @@ async function handleKeyPress(event, from=null) {
 
     case 'Backspace':
       if (currSubIndex > 0 && currSubIndex == subsCount - 1 
-        && document.getElementById(currSubIndex).innerText=="") {
+        && document.getElementById(currSubIndex).innerText.length === 0) {
         document.body.removeChild(document.getElementById(currSubIndex).parentNode);
         document.getElementById(--currSubIndex).focus();
         saveSubsCount(--subsCount);

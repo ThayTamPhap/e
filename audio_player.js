@@ -23,9 +23,7 @@ export function getDuration() {
 }
 
 export async function saveCurrentTimeToIndex(i) {
-  if (!await isEditedIndex(i)) {
-    saveTime(currSubIndex, ap.currentTime);
-  }
+  saveTime(currSubIndex, await isEditedIndex(i) ?  await loadTime(i) : ap.currentTime);
 }
 
 export async function play() {
