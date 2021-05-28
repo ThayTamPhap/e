@@ -34,7 +34,6 @@ async function mapKeysForMe(event) {
     if (event.code == '' && (event.key == 'Backspace' || event.keyCode == 8)) { 
         event.code = 'Backspace';
         prevC = null;
-        // return;
     }
 
     var s = window.getSelection();
@@ -152,6 +151,39 @@ function okok(w1, w2) {
     let w0 = removeVienameseMarks(w1);
     if (w0 == w1 && w0 == removeVienameseMarks(w2)) return true;
     return false;
+}
+
+export function makeUseOfBiTriGramsFrom(txt) {
+    let phrases = txt.toLowerCase().split(VN_PHRASE_BREAK_REGEX);
+    phrases.forEach((phrase) => {
+        extractBiTriGrams(phrase);
+    });
+}
+
+function extractBiTriGrams(phrase) {
+    var w0 = "_", w1 = "_", s2, s3;
+    var words = phrase.trim().split(/\s+/);
+    words.forEach(w2 => {
+        s2 = `${w1} ${w2}`;
+        s3 = `${w0} ${s2}`;
+        w0 = w1; w1 = w2;
+        makeUseOfGram(s2);
+        makeUseOfGram(s3);
+    });
+}
+
+function makeUseOfGram(gram) {
+    if (gram.includes("_")) return;
+    // console.log(gram);
+    let key = removeVienameseMarks(gram);
+    let value = _mappings[key];
+    if (value && value.includes(gram)) {
+        // console.log(gram);
+        // console.log("=>", value);
+    } else {
+        _mappings[key] = value ? value + "|" + gram : gram
+        // console.log(_mappings[key]);
+    }
 }
 
 function playCurrent() {

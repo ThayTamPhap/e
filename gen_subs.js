@@ -1,4 +1,5 @@
 import * as TypingText from "./typing_text.js"
+import * as VnKeyboard from "./vn_keyboard.js"
 
 const IDEAL_LINE_CHARS = 45*5;
 const MAX_LINE_CHARS = 60*5;
@@ -157,6 +158,8 @@ async function genSubs() {
     }
     
     p.innerHTML = TypingText.spellSpecialWords(text);
+    VnKeyboard.makeUseOfBiTriGramsFrom(p.innerText);
+
     p.id = i;
     if (await isEditedIndex(i) || i <= 1) {
       p.contentEditable = "true";
