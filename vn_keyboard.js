@@ -44,6 +44,10 @@ async function mapKeysForMe(event) {
     let c2 = prevC;
     prevC = c1;
 
+    let l = t.substr(0, i);
+    let r = t.substr(i,);
+    let newl;
+
     if (c1 === 32 || c1 === 160) { // Android space char code is 160
         if (c2 === 32 || c2 === 160) {
             CursorHelpers.playCurrPos();
@@ -62,9 +66,7 @@ async function mapKeysForMe(event) {
     }
     
     // Default
-    let l = t.substr(0, i);
-    let r = t.substr(i,);
-    let newl = mapKeys(l);
+    newl = mapKeys(l);
 
     if (newl.slice(-2) != l.slice(-2)) {
         p.innerHTML = newl + r;
