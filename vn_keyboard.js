@@ -43,17 +43,6 @@ async function mapKeysForMe(event) {
     let c1 = t.charCodeAt(i-1);
     let c2 = prevC;
     prevC = c1;
-
-    if (c1 === 160) {
-        CursorHelpers.resetTextAndPos();
-    }
-
-    if (c1 === 32 || c1 === 160) { // Android space char code is 160
-        // console.log(">>> SPACE <<< ");
-        if (c2 === 32 || c2 === 160) {
-            CursorHelpers.playCurrPos();
-        }
-    }
     
     // Default
     let l = t.substr(0, i);
@@ -84,6 +73,11 @@ async function mapKeysForMe(event) {
         matches = [];
     }
 
+    if (c1 === 160) {
+        CursorHelpers.resetTextAndPos();
+    }
+    if ((c1 === 32 || c1 === 160) && // Android space char code is 160
+        (c2 === 32 || c2 === 160)) { CursorHelpers.playCurrPos(); }    
     // Not from a-z
     if (c1 < 97 || c1 > 122) { return; }
 
