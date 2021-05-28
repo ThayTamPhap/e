@@ -70,7 +70,7 @@ async function mapKeysForMe(event) {
     if (matches.length > 0) {
         let index = c1 - 49;
         if (c1 === 32 || c1 === 160) index = 0;
-        if (index < 0) {
+        if (index == -1) {
             newl = l.substr(0, l.length-1) + String.fromCharCode(160); prevC = 160;            
             p.innerHTML = newl + r;
             s.collapse(p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
@@ -107,7 +107,7 @@ async function mapKeysForMe(event) {
     }
 
     if (matched) {
-        console.log(triWords.length, triWords, gram, matched);
+        console.log(triWords.length, gram, matched);
         matches = [];
         let htmls = [], prefix;
         matched.split("|").forEach((m,i) => {
