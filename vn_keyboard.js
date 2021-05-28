@@ -36,18 +36,22 @@ async function mapKeysForMe(event) {
 
     if (c1 === 160) { // space on Android
         // let log = `Typed char codes: "${c1}, ${c2}, ${t.charCodeAt(i-3)}"`; console.log(log); alert(log);
-        if ( c2 === 32 || c2 === 160) { playCurrPos(); } // double space to play
         resetTextAndPos(" ");
         return;
+    }
+    // double space to play
+    if ((c1 === 32 || c1 === 160) && (c2 === 32 || c2 === 160)) { 
+        playCurrPos(); 
+        return;
+    } 
 
-    } else {
 
-        let l = t.substr(0, i);
-        let newl = mapKeys(l);
-        if (newl.slice(-2) != l.slice(-2)) {
-            p.innerHTML = newl + t.substr(i,);
-            s.collapse(p.firstChild, setLastCursorFast(newl.length));
-        }
+
+    let l = t.substr(0, i);
+    let newl = mapKeys(l);
+    if (newl.slice(-2) != l.slice(-2)) {
+        p.innerHTML = newl + t.substr(i,);
+        s.collapse(p.firstChild, setLastCursorFast(newl.length));
     }
 }
 
