@@ -45,7 +45,7 @@ async function playSub(event) {
 async function handleKeyUp(event) {
   CursorHelpers.saveLastCursor('handleKeyUp');
 
-  if (event.code == 'Space') {
+  if (event.code === 'Space') {
     resetTextAndPos();
     AudioPlayer.pauseOrSeekAndPlay(-0.2);
     // await CursorHelpers.playCurrPos();

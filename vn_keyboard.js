@@ -34,10 +34,9 @@ async function mapKeysForMe(event) {
     let c1 = t.charCodeAt(i-1);
     let c2 = t.charCodeAt(i-2);
 
-    // let log = `Typed char: "${c}"`;console.log(); alert(log);
     if (c1 === 160) { // space on Android
-        if ( c2 === 160 || c2 == ' '
-        ) { playCurrPos(); } // double space to play
+        // let log = `Typed char: "${c2}"`; console.log(log); alert(log);
+        if ( c2 === 32) { playCurrPos(); } // double space to play
         resetTextAndPos(" ");
         return;
 
