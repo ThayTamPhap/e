@@ -112,7 +112,7 @@ async function mapKeysForMe(event) {
     if (matched) {
         console.log(triWords.length, gram, matched);
         matches = [];
-        let htmls = ["0: " + triWords.join(" ")], prefix;
+        let htmls = [], mIndex = 0;
         matched.split("|").forEach((m,i) => {
             let mWords = m.split(" ");
             if (
@@ -121,14 +121,22 @@ async function mapKeysForMe(event) {
                 okok(triWords[2], mWords[2])
             ) {
                 matches.push(m);
-                htmls.push(`${i+1}: ${m}`);
-                console.log(i+1, m);
+                mIndex++;
+                // hilite first choice
+
+                let openTag = (mIndex == 1) ?
+                    "<div style=\"text-decoration:underline;\">" :
+                    "<div>";
+
+                htmls.push(`${openTag}${mIndex}: ${m}</div>`);
+                console.log(mIndex, m);
             }
         });
         if (matches.length > 0) {
+            htmls.push("0: " + triWords.join(" "));
             suggestionRegex = new RegExp(`${triWords.join("\\s+")}`);
             console.log(suggestionRegex);
-            suggestion.innerHTML = htmls.join("<br />");
+            suggestion.innerHTML = htmls.join("");
             suggestion.style = "display: true";
             // buttonBar.style.display = "none";
         }
@@ -138,6 +146,8 @@ async function mapKeysForMe(event) {
 function okok(w1, w2) {
     if (typeof w1 === 'undefined') return true;
     // console.log(w1, w2);
+    w1 = w1.toLowerCase();
+    w2 = w2.toLowerCase();
     if (w1 == w2) return true;
     let w0 = removeVienameseMarks(w1);
     if (w0 == w1 && w0 == removeVienameseMarks(w2)) return true;
