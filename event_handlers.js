@@ -10,6 +10,11 @@ document.addEventListener("keydown", handleKeyPress);
 // Export to global to bind to elements
 window.handleKeyPress = handleKeyPress;
 window.playSub = playSub;
+window.updateIndexTime = updateIndexTime;
+
+function updateIndexTime() {
+  AudioPlayer.saveCurrentTimeToIndex(currSubIndex);
+}
 
 function resetTextAndPos(suffix=false) {
   if (needToResetTextAndPos) {
@@ -81,14 +86,12 @@ async function handleKeyPress(event, from=null) {
 
     case 'Tab':
       event.preventDefault();
-      CursorHelpers.getCursorback(from);
 
       if (currSubIndex < subsCount-1) { 
         let p = document.getElementById(++currSubIndex);
         p.contentEditable = true;
         p.focus();
         p.parentNode.scrollIntoView();
-        CursorHelpers.saveLastCursor("Next button", 0);
 
       } else {
         // Add new sub element
@@ -101,6 +104,7 @@ async function handleKeyPress(event, from=null) {
         p.innerHTML = String.fromCharCode(160); // Space
         p.addEventListener("click", playSub);
         p.addEventListener("blur", saveTextIndex);
+        p.addEventListener("focus", updateIndexTime);
         div.appendChild(p);
         document.body.appendChild(div);
         p.focus();
@@ -110,7 +114,7 @@ async function handleKeyPress(event, from=null) {
         saveSubsCount(++subsCount);
       }
       
-      AudioPlayer.saveCurrentTimeToIndex(currSubIndex);
+      CursorHelpers.saveLastCursor("Next button", 0);
       // Reset cache and play new sub audio
       loadCurrAdjustedDeltas();
       saveCurrSubIndex(currSubIndex);
