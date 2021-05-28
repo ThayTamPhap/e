@@ -7,7 +7,6 @@ var currKey;
 var needToResetTextAndPos = true;
 
 document.addEventListener("keydown", handleKeyPress);
-document.addEventListener("keyup", handleKeyUp);
 
 // Export to global to bind to elements
 window.handleKeyPress = handleKeyPress;
@@ -39,16 +38,6 @@ async function playSub(event) {
     CursorHelpers.saveLastCursor('playSub: Click on current sub');
     await CursorHelpers.playCurrPos();
     CursorHelpers.blinkCurPos();
-  }
-}
-
-async function handleKeyUp(event) {
-  CursorHelpers.saveLastCursor('handleKeyUp');
-
-  if (event.code === 'Space') {
-    resetTextAndPos();
-    AudioPlayer.pauseOrSeekAndPlay(-0.2);
-    // await CursorHelpers.playCurrPos();
   }
 }
 
