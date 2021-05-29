@@ -18,6 +18,15 @@ _keys_map.split("\n").map(x => {
 }).slice(1,).join("|")+')(?=$)', 'i'); // need to match end of string
 // console.log(keysMap, keysMapRegex);
 
+
+function collapse(sel, elem, n) {
+    let range = new Range();  
+    range.setStart(elem, n);
+    range.setEnd(elem, n);
+    sel.removeAllRanges();
+    sel.addRange(range);    
+}
+
 document.addEventListener("keyup", mapKeysForMe);
 
 var prevC, matches = [];
@@ -42,7 +51,7 @@ async function mapKeysForMe(event) {
     let i = s.anchorOffset;
     var p = document.getElementById(currSubIndex);
     var t = p.innerText;
-    let c1 = t.charCodeAt(i-1);
+    let c1 = event.keyCode == 32 ? 32 : t.charCodeAt(i-1);
     let c2 = prevC;
     prevC = c1;
     
@@ -53,7 +62,7 @@ async function mapKeysForMe(event) {
 
     if (newl.slice(-2) != l.slice(-2)) {
         p.innerHTML = newl + r;
-        s.collapse(p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
+        collapse(s, p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
         l = newl;
     }
 
@@ -67,12 +76,11 @@ async function mapKeysForMe(event) {
             autoReplaced = false;
             
             if (index == -1) {
-                // Add new, selected pattern to the top
-                // _mappings[gram] = www.toLowerCase() + '|' + matched;
+                // newly selected pattern to the top
             } else {
                 // Switch selected one to the top
                 let temp = matches[index].toLowerCase();
-                matched = matched.replace(temp, "").replace("||","|")
+                matched = matched.replace(temp,"").replace("||","|").replace(/\|$/,"");
                 if (matched.length === 0) {
                     _mappings[gram] = temp;
                 } else {
@@ -96,38 +104,25 @@ async function mapKeysForMe(event) {
         if (-1 <= index && index < matches.length) {
             newl += String.fromCharCode(prevC);
             p.innerHTML = newl + r;
-            s.collapse(p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
+            collapse(s, p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
         }
         matches = [];
     }
 
+    console.log("keyup", c1, c2);
     if (c1 === 32 || c1 === 160) { // Android space char code is 160
         if (c2 === 32 || c2 === 160) { // Double-space
-            CursorHelpers.playCurrPos(); 
+            console.log("> > > Double-space < < <");
+            CursorHelpers.pauseOrPlayCurrPos(); 
         } else { // Mono-space
-            CursorHelpers.resetTextAndPos();
+            CursorHelpers.resetTextAndPos(String.fromCharCode(160));
         }
     }
 
 
     // Not from a-z
     if (c1 < 97 || c1 > 122) { return; }
-/*
-    for (var pe = l.length - 1; pe >= 0 && l[pe].match(/\s/); pe--);
-    var pb=pe - 1, char, triWords = [];
-    while (pb >= 0) {
-        char = l[pb];
-        if (",:;.".includes(char)) { break; }
-        if (char.match(/\s/) || pb === 0) {
-            triWords.unshift(l.substr(pb === 0?0:pb+1, pe-pb+1));
-            console.log(pb, char, pe, l[pe], triWords);
-            if (triWords.length == 3) { break; }
-            for (pe = pb; pe >= 0 && l[pe].match(/\s/); pe--);
-            pb=pe;
-        }
-        if (pb > 0) pb--; 
-    }
-*/ 
+
     let lastPhrase = l.split(VN_PHRASE_BREAK_REGEX).pop();
     let triWords = lastPhrase.trim().split(/\s+/).slice(-3);
     // need at least two words
@@ -237,19 +232,19 @@ function makeUseOfGram(gram) {
     if (value && value.includes(gram)) {
         // console.log(gram);
         // console.log("=>", value);
-        _mappings[key] = gram + "|" + 
-            value.replace(gram, "").replace("||","|").replace(/\|$/,"");
+        value = value.replace(gram, "").replace("||","|").replace(/\|$/,"");
+        if (value.length === 0) {
+            _mappings[key] = gram;
+        } else {    
+            _mappings[key] = gram + "|" + value;
+        }
+            
     } else {
          value = value ? gram + "|" + value : gram;
          value.replace(/\|$/,"");
          _mappings[key] = value;
         // console.log(_mappings[key]);
     }
-}
-
-function playCurrent() {
-    AudioPlayer.adjustMaxPlayTime(null, 60);
-    AudioPlayer.play();
 }
 
 function mapKeys(sent) {
