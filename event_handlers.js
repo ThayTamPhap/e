@@ -38,9 +38,9 @@ async function playSub(event) {
     // First click on sub
     CursorHelpers.saveLastCursor('playSub: First click on sub', 0);
     saveCurrSubIndex(index);
+    CursorHelpers.blinkCurPos(0);
     await loadCurrAdjustedDeltas();
     await CursorHelpers.playCurrSubIndex();
-    CursorHelpers.blinkCurPos(0);
   }  else { 
     // Click on current sub
     CursorHelpers.saveLastCursor('playSub: Click on current sub');
@@ -141,7 +141,7 @@ async function handleKeyPress(event, from=null) {
       event.preventDefault();
       CursorHelpers.getCursorback(from);
       // resetTextAndPos();
-      // CursorHelpers.blinkCurPos();
+      CursorHelpers.blinkCurPos();
       adjust(+1);
       break;
 
@@ -149,7 +149,7 @@ async function handleKeyPress(event, from=null) {
       event.preventDefault();
       CursorHelpers.getCursorback(from);
       // resetTextAndPos();
-      // CursorHelpers.blinkCurPos();
+      CursorHelpers.blinkCurPos();
       adjust(-1);
       break;
 

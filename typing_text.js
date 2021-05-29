@@ -163,7 +163,7 @@ function convertShortcuts(txt, completeSent=true) {
     // console.log("Found:", x, splits);
     let k = splits[2], md;
     let v = typingShortcuts[k.toLowerCase()];
-    if (md = k.match(/(^\d+)/)) { 
+    if (md = k.match(/(^\d+)[a-z]+?/)) { 
       k = k.replace(/^\d+/, "\\d+");
       v = typingShortcuts[k].replace("\\d+", md[1]);
     }

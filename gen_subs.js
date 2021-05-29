@@ -27,7 +27,7 @@ export function run() {
           initSubs(this.responseText).then(genSubs);
         }
       };
-      xmlhttp.open("GET", `https://thaytamphap.github.io/${phapname}.lab`, true);
+      xmlhttp.open("GET", `/${phapname}.lab`, true);
       xmlhttp.send();
     }
   });
@@ -43,7 +43,7 @@ function loadTextGrid() {
       initTextGrid(txt).then(genSubs);
     }
   };
-  xmlhttp.open("GET", `https://thaytamphap.github.io/${phapname}.txt`, true);
+  xmlhttp.open("GET", `/${phapname}.txt`, true);
   xmlhttp.send();
 }
 
@@ -57,7 +57,7 @@ async function initTextGrid(txt) {
     inter = intervals[i];
     time = inter.match(/xmin = ([\d\.]+)/)[1]
     text = inter.match(/text = "(.*)"/)[1]
-
+    console.log(i, text);
     await saveTime(i, time);
     await saveText(i, text);
   }
