@@ -169,10 +169,11 @@ async function mapKeysForMe(event) {
                     if (www[z] === str[z]) { simi++; }
                 }
                 matches.push([str, simi]);
-                console.log(mIndex, str);
+                console.log(i, str);
             }
         });
-console.log("matches:",matches);
+
+        console.log("matches:",matches);
         if (matches.length > 0) {
             let htmls = [];
             matches = matches.sort((a,b) => b[1] - a[1]).map(x => x[0]);
@@ -196,6 +197,7 @@ function okok(w1, w2, autoReplaced=false) {
     console.log("okok",w1, w2, autoReplaced);
     if (autoReplaced) return true;
     w1 = w1.toLowerCase();
+    w2 = w2.toLowerCase();
     if (w1 == w2) return true;
     let w0 = removeVienameseMarks(w1);
     if (w0 == w1 && w0 == removeVienameseMarks(w2)) return true;
@@ -229,10 +231,8 @@ function makeUseOfGram(gram) {
     if (value && value.includes(gram)) {
         // console.log(gram);
         // console.log("=>", value);
-        return;
         _mappings[key] = gram + "|" + 
-          value.replace(gram, "").
-            replace("||","|");
+            value.replace(gram, "").replace("||","|");
     } else {
         _mappings[key] = value ? gram + "|" + value : gram;
         // console.log(_mappings[key]);
