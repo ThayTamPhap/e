@@ -85,14 +85,14 @@ export async function getCurrDelta(wholeSent = false) {
   var delta = (delta1 + delta2) / 2;
 
   // Take into account of adjustedDeltas (by press '<<', '>>' button manually)
-  var ad,
-    i,
-    n = adjustedDeltas.length - 1;
+  var ad, i, n = adjustedDeltas.length - 1;
   if (n > currPos) n = currPos;
   for (i = 0; i <= n; i++) {
     ad = adjustedDeltas[i];
     if (ad != 0 && ad != undefined) {
-      delta += ad;
+      let newD = ad + delta;
+      if (newD > 0 && ad < delta + 3) { delta += ad; 
+      }
       // console.log('adjustedDeltas[', i, '] = ', ad);
     }
   }
@@ -107,11 +107,11 @@ export async function getCurrDelta(wholeSent = false) {
     delta = keepTwoDigitsAfterPeriod(delta * 1.35 + 3.5);
     // Remember newly estimated wholeSentDelta to use for the next case
     wholeSentDelta = delta;
-    // console.log(wholeSent, words.length, delta1, delta2, delta);
+    console.log(wholeSent, words.length, delta1, delta2, delta);
   } else {
-    // console.log('currSub:',currSubIndex,'words',words.length,'delta1',delta1,'wordsCount',
-    //   wordsCount,'delta2',delta2,'currPos',currPos,'adjustedDeltas',adjustedDeltas.length,
-    //   'delta',delta);
+    console.log('currSub:',currSubIndex,'words',words.length,'delta1',delta1,'wordsCount',
+      wordsCount,'delta2',delta2,'currPos',currPos,'adjustedDeltas',adjustedDeltas.length,
+      'delta',delta);
   }
 
   // Ensure delta always > 0 and return it

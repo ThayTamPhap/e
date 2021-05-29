@@ -17,6 +17,7 @@ async function updateIndexTime() {
   var i = parseInt(this.id);
   let value = await loadTime(i);
   this.previousSibling.innerHTML = `[${i}] ${secondsToTime(value)}`;
+  await loadCurrAdjustedDeltas();
 }
 
 function resetTextAndPos(suffix=false) {
@@ -37,7 +38,7 @@ async function playSub(event) {
     // First click on sub
     CursorHelpers.saveLastCursor('playSub: First click on sub', 0);
     saveCurrSubIndex(index);
-    loadCurrAdjustedDeltas();
+    await loadCurrAdjustedDeltas();
     await CursorHelpers.playCurrSubIndex();
     CursorHelpers.blinkCurPos(0);
   }  else { 
@@ -121,7 +122,6 @@ async function handleKeyPress(event, from=null) {
       AudioPlayer.saveCurrentTimeToIndex(currSubIndex);      
       CursorHelpers.saveLastCursor("Next button", 0);
       // Reset cache and play new sub audio
-      loadCurrAdjustedDeltas();
       saveCurrSubIndex(currSubIndex);
       AudioPlayer.adjustMaxPlayTime(null, 
         await Estimators.getCurrDelta('Whole sentence'));
@@ -142,7 +142,7 @@ async function handleKeyPress(event, from=null) {
       CursorHelpers.getCursorback(from);
       resetTextAndPos();
       adjust(+1);
-      CursorHelpers.blinkCurPos();
+      // CursorHelpers.blinkCurPos();
       break;
 
     case 'AltRight':
@@ -150,7 +150,7 @@ async function handleKeyPress(event, from=null) {
       CursorHelpers.getCursorback(from);
       resetTextAndPos();
       adjust(-1);
-      CursorHelpers.blinkCurPos();
+      // CursorHelpers.blinkCurPos();
       break;
 
     case 'Space':
@@ -177,7 +177,7 @@ async function adjust(x) {
     time = _time + time;
     time = AudioPlayer.normalizeTime(time);
   }
-  console.log(`Adjust ap.currentTime`, time - _time);
+  console.log(`Adjust ap.currentTime`, _time, time - _time, delta);
   AudioPlayer.adjustCurrentTime(time);
   AudioPlayer.adjustMaxPlayTime(time+60);
   await AudioPlayer.play();
