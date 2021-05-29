@@ -36,7 +36,7 @@ async function mapKeysForMe(event) {
         prevC = null;
     }
     
-    if ("CtrlLeft,AltLeft,Tab,Enter,ShiftRight,AltRight".includes(event.code)) { return; 
+    if ("CtrlLeft,AltLeft,Tab,Enter,ShiftRight,AltRight".includes(event.code)) { return; }
 
     var s = window.getSelection();
     let i = s.anchorOffset;
