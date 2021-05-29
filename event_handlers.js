@@ -140,17 +140,17 @@ async function handleKeyPress(event, from=null) {
     case 'ShiftRight':
       event.preventDefault();
       CursorHelpers.getCursorback(from);
-      resetTextAndPos();
+      // resetTextAndPos();
+      CursorHelpers.blinkCurPos();
       adjust(+1);
-      // CursorHelpers.blinkCurPos();
       break;
 
     case 'AltRight':
       event.preventDefault();
       CursorHelpers.getCursorback(from);
-      resetTextAndPos();
+      // resetTextAndPos();
+      CursorHelpers.blinkCurPos();
       adjust(-1);
-      // CursorHelpers.blinkCurPos();
       break;
 
     case 'Space':
