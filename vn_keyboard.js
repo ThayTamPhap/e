@@ -87,7 +87,7 @@ async function mapKeysForMe(event) {
         if (index == -1) { // Select 0 will keep the original string
             newl = l.substr(0, l.length-1);
         } else if (index < matches.length) {
-            console.log("User select:", index, matches[index]);
+            // console.log("User select:", index, matches[index]);
             newl = l.replace(suggestionRegex, matches[index]);
             newl = newl.substr(0, newl.length-1);
         }
@@ -136,7 +136,7 @@ async function mapKeysForMe(event) {
     gram = removeVienameseMarks(gram);
     matched = _mappings[gram];
 
-    console.log(triWords, gram, matched);
+    // console.log(triWords, gram, matched);
     // 3-gram don't match => try bi-gram
     if (!matched && triWords.length > 2) {
         triWords.shift();
@@ -146,7 +146,7 @@ async function mapKeysForMe(event) {
     }
 
     if (matched) {
-        console.log(triWords.length, gram, matched);
+        // console.log(triWords.length, gram, matched);
         matches = [];
         www =triWords.join(" ");
         let ww = www.toLowerCase();
@@ -173,7 +173,6 @@ async function mapKeysForMe(event) {
             }
         });
 
-        console.log("matches:",matches);
         if (matches.length > 0) {
             let htmls = [];
             matches = matches.sort((a,b) => b[1] - a[1]).map(x => x[0]);
