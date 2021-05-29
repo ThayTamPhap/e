@@ -8,7 +8,7 @@ const END_SENT_REGEX =            /(\s*(?:[\n\\\.\?\!]\s*)+)/gm;
 var currSubIndex, subsCount;
 let adjustedDeltas = [];
 
-var phapname = location.search.replace("?","").split(".")[0];
+var phapname = location.search.replace("?","").split("&")[0].split(".")[0];
 if (phapname === "") {
   phapname = "phaps/Tinh-Tan-fix";
 } console.log('phapname', phapname);

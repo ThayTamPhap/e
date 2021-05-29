@@ -24,8 +24,7 @@ export function run() {
           if (!textGridLoaded) loadTextGrid();
         } else
         if (this.readyState == 4 && this.status == 200) {
-          txt = this.responseText;
-          initSubs(txt).then(genSubs);
+          initSubs(this.responseText).then(genSubs);
         }
       };
       xmlhttp.open("GET", `https://thaytamphap.github.io/${phapname}.lab`, true);
