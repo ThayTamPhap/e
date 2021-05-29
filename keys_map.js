@@ -11,5 +11,4 @@
  pr___ phải
  dp___ Đức Phật 
  cng__ con người
- vc___ việc
- đ____ đ`
+ vc___ việc`

@@ -74,7 +74,7 @@ async function handleKeyPress(event, from=null) {
   }
 
   switch(currKey) {
-    case 'AltLeft':
+    case 'ShiftLeft':
       event.preventDefault();
       CursorHelpers.getCursorback(from);
       AudioPlayer.pauseOrSeekAndPlay(-0.8);
@@ -137,7 +137,7 @@ async function handleKeyPress(event, from=null) {
       CursorHelpers.blinkCurPos();
       break;
 
-    case 'ShiftRight':
+    case 'AltLeft':
       event.preventDefault();
       CursorHelpers.getCursorback(from);
       // resetTextAndPos();

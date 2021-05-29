@@ -103,7 +103,7 @@ async function mapKeysForMe(event) {
 
     if (c1 === 32 || c1 === 160) { // Android space char code is 160
         if (c2 === 32 || c2 === 160) { // Double-space
-            CursorHelpers.pauseOrPlayCurrPos(); 
+            CursorHelpers.playCurrPos(); 
         } else { // Mono-space
             CursorHelpers.resetTextAndPos();
         }
