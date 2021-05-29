@@ -137,7 +137,7 @@ async function handleKeyPress(event, from=null) {
       CursorHelpers.blinkCurPos();
       break;
 
-    case 'AltLeft':
+    case 'AltRight':
       event.preventDefault();
       CursorHelpers.getCursorback(from);
       // resetTextAndPos();
@@ -145,7 +145,7 @@ async function handleKeyPress(event, from=null) {
       adjust(+1);
       break;
 
-    case 'AltRight':
+    case 'AltLeft':
       event.preventDefault();
       CursorHelpers.getCursorback(from);
       // resetTextAndPos();

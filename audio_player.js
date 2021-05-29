@@ -28,7 +28,7 @@ export async function saveCurrentTimeToIndex(i) {
   }
 }
 
-export async function play() {
+export async function play(delay=0) {
   goingToPause = false;
   await ap.play();  
 }
