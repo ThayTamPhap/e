@@ -185,7 +185,6 @@ khkh  khó khăn
 kk    khó khăn
 km    khi mình
 kn    không nói
-ko    không
 kp    không phải
 kpl   không phải là
 kt    không thể
