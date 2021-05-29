@@ -179,5 +179,6 @@ async function adjust(x) {
   }
   console.log(`Adjust ap.currentTime`, time - _time);
   AudioPlayer.adjustCurrentTime(time);
+  AudioPlayer.adjustMaxPlayTime(time+60);
   await AudioPlayer.play();
 }
