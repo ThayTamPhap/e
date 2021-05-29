@@ -35,6 +35,8 @@ async function mapKeysForMe(event) {
         event.code = 'Backspace';
         prevC = null;
     }
+    
+    if ("CtrlLeft,AltLeft,Tab,Enter,ShiftRight,AltRight".includes(event.code)) { return; 
 
     var s = window.getSelection();
     let i = s.anchorOffset;
