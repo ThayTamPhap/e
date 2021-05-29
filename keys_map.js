@@ -2,6 +2,7 @@
  blm__ ba-la-mật
  cx___ cũng
  dc___ được
+ ko___ không
  dk___ đúng không
  hk___ hiểu không
  nx___ những
