@@ -148,7 +148,6 @@ async function mapKeysForMe(event) {
     if (matched) {
         console.log(triWords.length, gram, matched);
         matches = [];
-        let htmls = [], mIndex = 0;
         www =triWords.join(" ");
         let ww = www.toLowerCase();
         matched.split("|").forEach((m,i) => {
@@ -159,24 +158,28 @@ async function mapKeysForMe(event) {
                 okok(triWords[1], mWords[1], autoReplaced) &&
                 okok(triWords[2], mWords[2])
             ) {
-                for (var str = "", z = 0; z < www.length; z++) {
+                var str = "", z = 0, simi = 0;
+                for (; z < www.length; z++) {
                     // char at z is upper case
                     if (www[z].toUpperCase() === www[z]) {
                         str += m[z].toUpperCase();
                     } else {
                         str += m[z];
                     }
-                }   
-                m = str;
-                matches.push(m);
-                mIndex++;
-                let openTag = mIndex == 1 ? "<span class='default'>" : "<span>";
-                htmls.push(`${openTag}${mIndex}. ${m}</span>`);
-                console.log(mIndex, m);
+                    if (www[z] === str[z]) { simi++; }
+                }
+                matches.push([str, simi]);
+                console.log(mIndex, str);
             }
         });
-
+console.log("matches:",matches);
         if (matches.length > 0) {
+            let htmls = [];
+            matches = matches.sort((a,b) => b[1] - a[1]).map(x => x[0]);
+            
+            matches.forEach((m, i)=> {
+              htmls.push(`<span class="${i==0?"default":""}">${i}. ${m}</span>`)
+            });
             if (ww != null) { 
                 htmls.push("<span>0. " + triWords.join(" ")) + "</span>"; 
             }
@@ -226,6 +229,10 @@ function makeUseOfGram(gram) {
     if (value && value.includes(gram)) {
         // console.log(gram);
         // console.log("=>", value);
+        return;
+        _mappings[key] = gram + "|" + 
+          value.replace(gram, "").
+            replace("||","|");
     } else {
         _mappings[key] = value ? gram + "|" + value : gram;
         // console.log(_mappings[key]);

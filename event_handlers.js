@@ -56,6 +56,7 @@ async function handleKeyPress(event, from=null) {
   // key mapping for different browsers / systems
   // Android's keyCode: enter = 13; backspace = 8; others are all 229
   if (currKey == 'MetaRight') { currKey = 'OSRight'; }
+  if (currKey == 'CapsLock') { currKey = 'Tab'; }
   if (currKey == '' && (event.key == 'Backspace' || event.keyCode == 8)) { 
     currKey = 'Backspace'; 
   }
@@ -136,7 +137,7 @@ async function handleKeyPress(event, from=null) {
       CursorHelpers.blinkCurPos();
       break;
 
-    case 'AltRight':
+    case 'ShiftRight':
       event.preventDefault();
       CursorHelpers.getCursorback(from);
       resetTextAndPos();
@@ -144,7 +145,7 @@ async function handleKeyPress(event, from=null) {
       CursorHelpers.blinkCurPos();
       break;
 
-    case 'OSRight':
+    case 'AltRight':
       event.preventDefault();
       CursorHelpers.getCursorback(from);
       resetTextAndPos();
