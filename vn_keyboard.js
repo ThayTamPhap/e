@@ -177,7 +177,7 @@ async function mapKeysForMe(event) {
             matches = matches.sort((a,b) => b[1] - a[1]).map(x => x[0]);
             let lastWord = triWords[triWords.length-1];
             if (removeVienameseMarks(lastWord) !== lastWord) {
-                close.log('len la len', www);
+                console.log('len la len', www);
                 matches = matches.filter(m => m !== www);
                 matches.unshift(www);
                 ww = null;
