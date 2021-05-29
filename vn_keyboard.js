@@ -256,9 +256,9 @@ function mapKeys(sent) {
     return v ?? k;
   });
 }
-console.assert(mapKeys(' nx')===' những ');
-console.assert(mapKeys('nx')==='nx');
-console.assert(mapKeys('nx ')==='nx ');
+assertEqual(mapKeys(' nx'), ' những');
+assertEqual(mapKeys('nx'), 'nx');
+assertEqual(mapKeys('nx '), 'nx ');
 
 
 const VN_PHRASE_BREAK_REGEX = /[^\sqwertyuiopasdfghjklzxcvbnmàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]+/gi;

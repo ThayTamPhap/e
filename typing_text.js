@@ -58,10 +58,10 @@ export function normalizeText(value, completeSent=true) {
 
   return value;
 }
-console.assert(normalizeText("x .  x , x : x ] x } x )  x  …  x !  x ?  ") === "x. X, x: x] x} x) x… x! X?");
-console.assert(normalizeText("g g.  hom nay") === "g g. Hom nay");
-console.assert(normalizeText("  d  . ", false)===" d. ");
-console.assert(normalizeText("  d { d f   fd !}  d ,   f .  H? ")==="d {d f fd!} d, f. Hiểu không?");
+assertEqual(normalizeText("x .  x , x : x ] x } x )  x  …  x !  x ?  ") ,  "x. X, x: x] x} x) x… x! X?");
+assertEqual(normalizeText("g g.  hom nay") ,  "g g. Hom nay");
+assertEqual(normalizeText("  d  . ", false), " d. ");
+assertEqual(normalizeText("  d { d f   fd !}  d ,   f .  H? "), "d {d f fd!} d, f. Hiểu không?");
 
 
 export function spellSpecialWords(txt) {
@@ -79,12 +79,12 @@ export function spellSpecialWords(txt) {
     return `|${spellNumber(m[1])}|${m[1]}|${m[2]}`;
   });
 } 
-console.assert(spellSpecialWords("100%|") == "100%|");
-console.assert(spellSpecialWords("100%") == "|một trăm phần trăm|100%|");
-console.assert(spellSpecialWords("10") == "10");
-console.assert(spellSpecialWords("10|") == "10|");
-console.assert(spellSpecialWords("15q") == "|mười lăm|15|q");
-console.assert(spellSpecialWords("12") == "|mười hai|12|");
+assertEqual(spellSpecialWords("100%|") ,  "100%|");
+assertEqual(spellSpecialWords("100%") ,  "|một trăm phần trăm|100%|");
+assertEqual(spellSpecialWords("10") ,  "10");
+assertEqual(spellSpecialWords("10|") ,  "10|");
+assertEqual(spellSpecialWords("15q") ,  "|mười lăm|15|q");
+assertEqual(spellSpecialWords("12") ,  "|mười hai|12|");
 
 
 function spellNumber(x) {
@@ -148,10 +148,10 @@ function spellNumber(x) {
     case '9': return `chín`;
   }
 }
-console.assert(spellNumber("15") == "mười lăm");
-console.assert(spellNumber("12") == "mười hai");
-console.assert(spellNumber("102") == "một trăm lẻ hai");
-console.assert(spellNumber("1004") == "một nghìn không trăm lẻ bốn");
+assertEqual(spellNumber("15") ,  "mười lăm");
+assertEqual(spellNumber("12") ,  "mười hai");
+assertEqual(spellNumber("102") ,  "một trăm lẻ hai");
+assertEqual(spellNumber("1004") ,  "một nghìn không trăm lẻ bốn");
 
 
 function convertShortcuts(txt, completeSent=true) {
@@ -174,8 +174,8 @@ function convertShortcuts(txt, completeSent=true) {
 
   return completeSent ? txt.slice(0, txt.length - 1) : txt;
 }
-console.assert(convertShortcuts('Byg',false)==='Byg');
-console.assert(convertShortcuts('byg')==='bây giờ');
-console.assert(convertShortcuts('323d')==='323 ngày');
-console.assert(convertShortcuts('Byg chúng ta nc về nx cng đang ở đây')===
+assertEqual(convertShortcuts('Byg',false), 'Byg');
+assertEqual(convertShortcuts('byg'), 'bây giờ');
+assertEqual(convertShortcuts('323d'), '323 ngày');
+assertEqual(convertShortcuts('Byg chúng ta nc về nx cng đang ở đây'),
   'Bây giờ chúng ta nước về những con người đang ở đây');
