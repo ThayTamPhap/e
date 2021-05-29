@@ -176,9 +176,16 @@ async function mapKeysForMe(event) {
         if (matches.length > 0) {
             let htmls = [];
             matches = matches.sort((a,b) => b[1] - a[1]).map(x => x[0]);
-            
+            let lastToTop = false, lastWord = triWords[triWords.length-1];
+            if (removeVienameseMarks(lastWord) !== lastWord) {
+                matches.unshift(www);
+                lastToTop = true;
+                ww = null;
+            }
             matches.forEach((m, i)=> {
-              htmls.push(`<span class="${i==0?"default":""}">${i+1}. ${m}</span>`)
+                if (lastToTop && www != m) {
+                    htmls.push(`<span class="${i==0?"default":""}">${i+1}. ${m}</span>`);
+                }
             });
             if (ww != null) { 
                 htmls.push("<span>0. " + triWords.join(" ")) + "</span>"; 
