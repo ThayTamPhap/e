@@ -110,10 +110,24 @@ async function mapKeysForMe(event) {
 
     // Not from a-z
     if (c1 < 97 || c1 > 122) { return; }
-
+/*
+    for (var pe = l.length - 1; pe >= 0 && l[pe].match(/\s/); pe--);
+    var pb=pe - 1, char, triWords = [];
+    while (pb >= 0) {
+        char = l[pb];
+        if (",:;.".includes(char)) { break; }
+        if (char.match(/\s/) || pb === 0) {
+            triWords.unshift(l.substr(pb === 0?0:pb+1, pe-pb+1));
+            console.log(pb, char, pe, l[pe], triWords);
+            if (triWords.length == 3) { break; }
+            for (pe = pb; pe >= 0 && l[pe].match(/\s/); pe--);
+            pb=pe;
+        }
+        if (pb > 0) pb--; 
+    }
+*/ 
     let lastPhrase = l.split(VN_PHRASE_BREAK_REGEX).pop();
     let triWords = lastPhrase.trim().split(/\s+/).slice(-3);
-    let lastWord = triWords[triWords.length-1];
     // need at least two words
     if (triWords.length <= 1) {
         return;
@@ -122,6 +136,7 @@ async function mapKeysForMe(event) {
     gram = removeVienameseMarks(gram);
     matched = _mappings[gram];
 
+    console.log(triWords, gram, matched);
     // 3-gram don't match => try bi-gram
     if (!matched && triWords.length > 2) {
         triWords.shift();
