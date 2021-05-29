@@ -365,7 +365,7 @@ tcx   ta cũng
 td    thay đổi
 tg    thời gian
 tgx   thư giãn
-th    thầy
+th    Thầy
 thc   thành công
 thcg  thành công
 thch  thậm chí
