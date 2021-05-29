@@ -141,7 +141,7 @@ async function handleKeyPress(event, from=null) {
       event.preventDefault();
       CursorHelpers.getCursorback(from);
       // resetTextAndPos();
-      CursorHelpers.blinkCurPos();
+      // CursorHelpers.blinkCurPos();
       adjust(+1);
       break;
 
@@ -149,7 +149,7 @@ async function handleKeyPress(event, from=null) {
       event.preventDefault();
       CursorHelpers.getCursorback(from);
       // resetTextAndPos();
-      CursorHelpers.blinkCurPos();
+      // CursorHelpers.blinkCurPos();
       adjust(-1);
       break;
 
