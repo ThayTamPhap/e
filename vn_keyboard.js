@@ -24,7 +24,7 @@ function collapse(sel, elem, n) {
     range.setStart(elem, n);
     range.setEnd(elem, n);
     sel.removeAllRanges();
-    sel.addRange(range);    
+    sel.addRange(range);
 }
 
 document.addEventListener("keyup", mapKeysForMe);
@@ -115,7 +115,9 @@ async function mapKeysForMe(event) {
             console.log("> > > Double-space < < <");
             CursorHelpers.pauseOrPlayCurrPos(); 
         } else { // Mono-space
-            CursorHelpers.resetTextAndPos(String.fromCharCode(160));
+            
+            CursorHelpers.resetTextAndPos();
+            // CursorHelpers.blinkCurPos();
         }
     }
 

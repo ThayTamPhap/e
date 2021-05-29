@@ -12,5 +12,6 @@
  pr___ phải
  dp___ Đức Phật 
  cng__ con người
+ nl___ năng lượng
  ,,___ [??]
  vc___ việc`

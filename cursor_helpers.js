@@ -139,7 +139,7 @@ export function blinkCurPos(pos) {
 
   let count = 0;
   let interval = window.setInterval(function() {
-    if (++count > 2) { 
+    if (++count > 0) { 
       clearInterval(interval); 
       sel.collapse(currP.firstChild, currPos);
     }
@@ -151,14 +151,14 @@ export function blinkCurPos(pos) {
     }
 
     if (count % 2 == 0) {
-      range.setStart(currP.firstChild, b == 0 ? 0 : b+1);
+      range.setStart(currP.firstChild, b );
       range.setEnd(currP.firstChild, e);
       sel.removeAllRanges();
       sel.addRange(range);
     } else {
       sel.collapse(currP.firstChild, currPos);
     }
-  }, 80);
+  }, 50);
 }
 
 function capitalizeFirstCharOf(sent) {
