@@ -232,9 +232,11 @@ function makeUseOfGram(gram) {
         // console.log(gram);
         // console.log("=>", value);
         _mappings[key] = gram + "|" + 
-            value.replace(gram, "").replace("||","|");
+            value.replace(gram, "").replace("||","|").replace(/\|$/,"");
     } else {
-        _mappings[key] = value ? gram + "|" + value : gram;
+         value = value ? gram + "|" + value : gram;
+         value.replace(/\|$/,"");
+         _mappings[key] = value;
         // console.log(_mappings[key]);
     }
 }
