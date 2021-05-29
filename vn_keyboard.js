@@ -136,7 +136,7 @@ async function mapKeysForMe(event) {
     gram = removeVienameseMarks(gram);
     matched = _mappings[gram];
 
-    // console.log(triWords, gram, matched);
+    console.log(triWords, gram, matched);
     // 3-gram don't match => try bi-gram
     if (!matched && triWords.length > 2) {
         triWords.shift();
@@ -150,7 +150,7 @@ async function mapKeysForMe(event) {
         matches = [];
         www =triWords.join(" ");
         let ww = www.toLowerCase();
-        matched.split("|").forEach((m,i) => {
+        matched.split("|").forEach((m) => {
             if (ww == m) ww = null;
             let mWords = m.split(" ");
             if (
@@ -169,23 +169,21 @@ async function mapKeysForMe(event) {
                     if (www[z] === str[z]) { simi++; }
                 }
                 matches.push([str, simi]);
-                console.log(i, str);
             }
         });
 
         if (matches.length > 0) {
             let htmls = [];
             matches = matches.sort((a,b) => b[1] - a[1]).map(x => x[0]);
-            let lastToTop = false, lastWord = triWords[triWords.length-1];
+            let lastWord = triWords[triWords.length-1];
             if (removeVienameseMarks(lastWord) !== lastWord) {
+                close.log('len la len', www);
+                matches = matches.filter(m => m !== www);
                 matches.unshift(www);
-                lastToTop = true;
                 ww = null;
             }
             matches.forEach((m, i)=> {
-                if (lastToTop && www != m) {
-                    htmls.push(`<span class="${i==0?"default":""}">${i+1}. ${m}</span>`);
-                }
+                htmls.push(`<span class="${i==0?"default":""}">${i+1}. ${m}</span>`);
             });
             if (ww != null) { 
                 htmls.push("<span>0. " + triWords.join(" ")) + "</span>"; 
@@ -200,13 +198,13 @@ async function mapKeysForMe(event) {
 
 function okok(w1, w2, autoReplaced=false) {
     if (typeof w1 === 'undefined') return true;
-    console.log("okok",w1, w2, autoReplaced);
+    // console.log("okok",w1, w2, autoReplaced);
     if (autoReplaced) return true;
     w1 = w1.toLowerCase();
     w2 = w2.toLowerCase();
     if (w1 == w2) return true;
     let w0 = removeVienameseMarks(w1);
-    if (w0 == w1 && w0 == removeVienameseMarks(w2)) return true;
+    if (w0 == removeVienameseMarks(w2)) return true;
     return false;
 }
 
