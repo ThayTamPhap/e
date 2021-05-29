@@ -178,7 +178,7 @@ async function mapKeysForMe(event) {
             matches = matches.sort((a,b) => b[1] - a[1]).map(x => x[0]);
             
             matches.forEach((m, i)=> {
-              htmls.push(`<span class="${i==0?"default":""}">${i}. ${m}</span>`)
+              htmls.push(`<span class="${i==0?"default":""}">${i+1}. ${m}</span>`)
             });
             if (ww != null) { 
                 htmls.push("<span>0. " + triWords.join(" ")) + "</span>"; 
