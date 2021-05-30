@@ -83,7 +83,7 @@ for (var k in vowelsMap) {
     vowelsMap[k.toUpperCase()] = vowelsMap[k].toUpperCase();
 }
 
-const _syllLeft = /(^|qu|[qrtpsdđghklxcvbnm]+)((?:uy|u|o|ư|i)?[aăâeêuưoơôiy])(.*)/i;
+const _syllLeft = /(^|qu|[qrtpsdđghklxcvbnm]+)((?:uy|u|o|ư|i|)?[aăâeêuưoơôiy])(.*)/i;
 
 let tonesMap = {
     "as":"á", "af":"à", "ax":"ã", "ar":"ả", "aj":"ạ",
@@ -195,6 +195,7 @@ export function changeMark(s, mark) {
 
     return news !== s ? news : changeTone(naked, tone) + mark;
 }
+assertEqual(changeMark("ye","e"), "yê");
 assertEqual(changeMark("đu","o"), "đuo");
 assertEqual(changeMark("à","o"), "ào");
 assertEqual(changeMark("a","a"), "â");
