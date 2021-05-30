@@ -1,4 +1,4 @@
-import * as TypingText from "./typing_text.js"
+import * as TypedText from "./typed_text.js"
 import * as VnHelpers from "./vn_helpers.js"
 
 const IDEAL_LINE_CHARS = 45*5;
@@ -156,7 +156,7 @@ async function genSubs() {
       text = String.fromCharCode(160);
     }
     
-    p.innerHTML = TypingText.spellSpecialWords(text);
+    p.innerHTML = TypedText.spellSpecialWords(text);
     VnHelpers.makeUseOfBiTriGramsFrom(p.innerText);
 
     p.id = i;

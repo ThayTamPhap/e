@@ -1,6 +1,6 @@
 import * as AudioPlayer from "./audio_player.js";
 import * as Estimators from "./estimators.js";
-import * as TypingText from "./typing_text.js"
+import * as TypedText from "./typed_text.js"
 
 var lastCurrPos = 0;
 var selectedText = "";
@@ -74,10 +74,10 @@ export function resetTextAndPos(suffix=false) {
 
     // Add suffix first then normalize it
     let normText = currInnerText.substr(0, lastCurrPos) + suffix;
-    normText = TypingText.normalizeText(normText, false);
+    normText = TypedText.normalizeText(normText, false);
 
     let remain = currInnerText.substr(lastCurrPos,);
-    remain = TypingText.normalizeText(remain, false);
+    remain = TypedText.normalizeText(remain, false);
 
     currInnerText = normText + remain;
     lastCurrPos = normText.length;
