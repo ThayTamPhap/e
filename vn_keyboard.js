@@ -133,7 +133,8 @@ async function mapKeysForMe(event) {
 
         newl = l.substr(0,l.length - lastWord.length) + newWord;
         p.firstChild.textContent = newl + r;
-        collapse(s, p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
+        CursorHelpers.collapse(s, p.firstChild, 
+            CursorHelpers.setLastCursorFast(newl.length));
         l = newl;
     }
 

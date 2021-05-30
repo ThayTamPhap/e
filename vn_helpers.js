@@ -83,7 +83,7 @@ for (var k in vowelsMap) {
     vowelsMap[k.toUpperCase()] = vowelsMap[k].toUpperCase();
 }
 
-const _syllLeft = /(^|qu|[qrtpsdđghklxcvbnm]+)((?:uy|u|o|ư|i|)?[aăâeêuưoơôiy])(.*)/i;
+const _syllLeft = /(^|qu|[qrtpsdđghklxcvbnm]+)((?:uy|u|o|ư|i|y)?[aăâeêuưoơôiy])(.*)/i;
 
 let tonesMap = {
     "as":"á", "af":"à", "ax":"ã", "ar":"ả", "aj":"ạ",
