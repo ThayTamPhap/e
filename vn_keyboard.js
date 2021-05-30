@@ -129,9 +129,13 @@ async function mapKeysForMe(event) {
         : lastWord.slice(-1) === lastChar ? lastChar : null;
     // console.log('lastChar',lastChar, lastWord.slice(-1), String.fromCharCode(c1));
 
-    if (lastChar && "sfrxjz".includes(lastChar)) { // tone char
-        lastWord = VnHelpers.changeTone(lastWord.slice(0,-1), lastWord.slice(-1));
-        newl = l.substr(0,l.length - lastWord.length-1) + lastWord;
+    if (c2 != 32 && c2 != 160 && lastChar && "dsfrxjzaeow".includes(lastChar)) { // tone char
+
+        let newWord = "aeow".includes(lastChar) 
+            ? VnHelpers.changeMark(lastWord.slice(0,-1), lastChar)
+            : VnHelpers.changeTone(lastWord.slice(0,-1), lastChar);
+
+        newl = l.substr(0,l.length - lastWord.length) + newWord;
         p.innerHTML = newl + r;
         collapse(s, p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
         l = newl;

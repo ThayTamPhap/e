@@ -5,6 +5,7 @@
  cta__ chúng ta
  cx___ cũng
  dc___ được
+dd___đ
  dk___ đúng không
  dp___ Đức Phật 
  hk___ hiểu không

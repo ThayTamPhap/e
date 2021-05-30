@@ -88,7 +88,7 @@ const _syllLeft = /(^|qu|[qrtsdđghklxcvbnm]+)((?:uy|u|ư|i)?[aăâeêuưoơôiy
 let tonesMap = {
     "as":"á", "af":"à", "ax":"ã", "ar":"ả", "aj":"ạ",
     "âs":"ấ", "âf":"ầ", "âx":"ẫ", "âr":"ẩ", "âj":"ậ",
-    "ăs":"ắ", "âf":"ằ", "ăx":"ẵ", "ăr":"ẳ", "ăj":"ặ",
+    "ăs":"ắ", "ăf":"ằ", "ăx":"ẵ", "ăr":"ẳ", "ăj":"ặ",
     "es":"é", "ef":"è", "ex":"ẽ", "er":"ẻ", "ej":"ẹ",
     "ês":"ế", "êf":"ề", "êx":"ễ", "êr":"ể", "êj":"ệ",
     "os":"ó", "of":"ò", "ox":"õ", "or":"ỏ", "oj":"ọ",
@@ -107,7 +107,11 @@ for (var k in tonesMap) {
 export function changeTone(s, tone) {
     let ss = _removeTone(s);
     if (tone === 'z')return ss;
-
+    if (tone === 'd') {
+        if (s[0] == 'd') return 'đ' + ss.slice(1,);
+        if (s[0] == 'D') return 'Đ' + ss.slice(1,);
+        return s;
+    }
     let sss, m = ss.match(_syllLeft);
     // console.log(3, m[1], m[2], m[3]);
 
@@ -125,6 +129,7 @@ export function changeTone(s, tone) {
     // same tone will clear tone & return tone char
     return sss !== s ? sss : ss + tone;
 }
+assertEqual(changeTone("da","d"), "đa");
 assertEqual(changeTone("quá","f"), "quà");
 assertEqual(changeTone("cua","f"), "cùa");
 assertEqual(changeTone("cửa","j"), "cựa");
@@ -140,23 +145,32 @@ assertEqual(changeTone("khuâng","r"), "khuẩng");
 assertEqual(changeTone("ươi","f"),"ười");
 assertEqual(changeTone("vit","j"),"vịt");
 assertEqual(changeTone("khong","f"),"khòng");
+assertEqual(changeTone("răng","f"),"rằng");
 
 
 export function changeMark(s, mark) {
     let tone = _getTone(s);
     let unTone = _removeTone(s);
-    let naked = removeMarks(unTone);
+    let naked = removeMarks(unTone, 'keep đ/Đ');
     if (mark === "z") return naked;
 
+    console.log('changeMark:', s, tone, naked, mark); 
+
     let m = naked.match(_syllLeft);
-    console.log(s, tone, naked); console.log(3, m[1], m[2], m[3]);
+    if (!m) return s + mark;
+
+    console.log(3, m[1], m[2], m[3]);
+
+    if (mark !== "w" && mark !== removeMarks(m[2].slice(-1))) 
+        return s + mark;
 
     var news, vowel;
 
     if (m[2].length === 2 && m[2][1] === "a" //  ua
             && mark !== "a") { // "cửa","a" => "cuẩ"
 
-        vowel = vowelsMap[ m[2][0] + mark ];
+        vowel = m[2][0];
+        vowel = vowelsMap[ vowel + mark ] ?? vowel;
         vowel = tonesMap[ vowel + tone ] ?? vowel;
         news = m[1] + vowel + m[2][1] + m[3];
 
@@ -168,24 +182,29 @@ export function changeMark(s, mark) {
 
     } else {
         
-        vowel = vowelsMap[ m[2].slice(-1) + mark ];
+        vowel = m[2].slice(-1);
+        vowel = vowelsMap[ vowel + mark ] ?? vowel;
         vowel = tonesMap[ vowel + tone ] ?? vowel;
         news = m[1] + m[2].slice(0, -1) + vowel + m[3];
     }
 
-    return news !== s ? news : changeTone(naked, tone);
+    return news !== s ? news : changeTone(naked, tone) + mark;
 }
+assertEqual(changeMark("đu","o"), "đuo");
+assertEqual(changeMark("à","o"), "ào");
+assertEqual(changeMark("a","a"), "â");
+assertEqual(changeMark("a","w"), "ă");
 assertEqual(changeMark("quá","a"), "quấ");
 assertEqual(changeMark("cua","w"), "cưa");
 assertEqual(changeMark("cửa","a"), "cuẩ");
-assertEqual(changeMark("tuyền","e"), "tuyèn");
+assertEqual(changeMark("tuyền","e"), "tuyène");
 assertEqual(changeMark("thuổng","w"), "thưởng");
 assertEqual(changeMark("thuổng","z"), "thuong");
-assertEqual(changeMark("kiếm","e"), "kiém");
+assertEqual(changeMark("kiếm","e"), "kiéme");
 assertEqual(changeMark("thương","o"), "thuông");
 assertEqual(changeMark("kiếm","z"), "kiem");
 assertEqual(changeMark("khuang","w"), "khưang");
-assertEqual(changeMark("ươi","w"),"uoi");
+assertEqual(changeMark("ươi","w"),"uoiw");
 assertEqual(changeMark("khong","o"),"không");
 
 
@@ -216,7 +235,7 @@ function _removeTone(s) {
         replace(/[ỳýỵỷỹ]/g,  "y");
 }
 
-export function removeMarks(str) {
+export function removeMarks(str, keepDd=false) {
     // https://kipalog.com/posts/Mot-so-ki-thuat-xu-li-tieng-Viet-trong-Javascript
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
     str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
@@ -224,13 +243,15 @@ export function removeMarks(str) {
     str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
     str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
     str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-    str = str.replace(/đ/g, "d");
     str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
     str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
     str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
     str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
     str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
     str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
-    str = str.replace(/Đ/g, "D");
+    if (!keepDd) {
+        str = str.replace(/đ/g, "d");
+        str = str.replace(/Đ/g, "D");
+    }
     return str;
 }
