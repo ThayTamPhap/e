@@ -4,8 +4,8 @@ var goingToPause = false;
 
 export function initSource(phapname) {
   ap.innerHTML = 
-   `<source src="https://thaytamphap.github.io/${phapname}.ogg"/>
-    <source src="https://thaytamphap.github.io/${phapname}.mp3"/>`;
+   `<source src="https:/thaytamphap.github.io/${phapname}.ogg"/>
+    <source src="https:/thaytamphap.github.io/${phapname}.mp3"/>`;
 }
 
 export function setPlaybackRate(fastMode) {

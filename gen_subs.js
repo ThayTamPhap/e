@@ -1,5 +1,5 @@
-import * as TypingText from "./typing_text.js"
-import * as VnKeyboard from "./vn_keyboard.js"
+import * as TypedText from "./typed_text.js"
+import * as VnHelpers from "./vn_helpers.js"
 
 const IDEAL_LINE_CHARS = 45*5;
 const MAX_LINE_CHARS = 60*5;
@@ -27,7 +27,7 @@ export function run() {
           initSubs(this.responseText).then(genSubs);
         }
       };
-      xmlhttp.open("GET", `https://thaytamphap.github.io/${phapname}.lab`, true);
+      xmlhttp.open("GET", `/${phapname}.lab`, true);
       xmlhttp.send();
     }
   });
@@ -43,7 +43,7 @@ function loadTextGrid() {
       initTextGrid(txt).then(genSubs);
     }
   };
-  xmlhttp.open("GET", `https://thaytamphap.github.io/${phapname}.txt`, true);
+  xmlhttp.open("GET", `/${phapname}.txt`, true);
   xmlhttp.send();
 }
 
@@ -57,7 +57,7 @@ async function initTextGrid(txt) {
     inter = intervals[i];
     time = inter.match(/xmin = ([\d\.]+)/)[1]
     text = inter.match(/text = "(.*)"/)[1]
-
+    console.log(i, text);
     await saveTime(i, time);
     await saveText(i, text);
   }
@@ -156,8 +156,8 @@ async function genSubs() {
       text = String.fromCharCode(160);
     }
     
-    p.innerHTML = TypingText.spellSpecialWords(text);
-    VnKeyboard.makeUseOfBiTriGramsFrom(p.innerText);
+    p.innerHTML = TypedText.spellSpecialWords(text);
+    VnHelpers.makeUseOfBiTriGramsFrom(p.innerText);
 
     p.id = i;
     if (await isEditedIndex(i) || i <= 1) {

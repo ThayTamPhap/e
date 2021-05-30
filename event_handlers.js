@@ -1,7 +1,7 @@
 import * as CursorHelpers from "./cursor_helpers.js";
 import * as AudioPlayer from "./audio_player.js";
 import * as Estimators from "./estimators.js";
-import * as VnKeyboard from "./vn_keyboard.js"
+import * as VnHelpers from "./vn_helpers.js"
 
 var fastMode = false;
 var needToResetTextAndPos = true;
@@ -38,20 +38,20 @@ async function playSub(event) {
     // First click on sub
     CursorHelpers.saveLastCursor('playSub: First click on sub', 0);
     saveCurrSubIndex(index);
+    CursorHelpers.blinkCurPos(0);
     await loadCurrAdjustedDeltas();
     await CursorHelpers.playCurrSubIndex();
-    CursorHelpers.blinkCurPos(0);
   }  else { 
     // Click on current sub
     CursorHelpers.saveLastCursor('playSub: Click on current sub');
-    await CursorHelpers.playCurrPos();
     CursorHelpers.blinkCurPos();
+    await CursorHelpers.playCurrPos();
   }
 }
 
 async function handleKeyPress(event, from=null) {
-   let logStr = `keydown: key='${event.key}' | code='${event.code}' | keyCode=${event.keyCode}`;
-  console.log(logStr); // alert(logStr);
+  // let logStr = `keydown: key='${event.key}' | code='${event.code}' | keyCode=${event.keyCode}`;
+  // console.log(logStr); // alert(logStr);
   let currKey = event.code;
   
   // key mapping for different browsers / systems
@@ -126,7 +126,7 @@ async function handleKeyPress(event, from=null) {
       AudioPlayer.adjustMaxPlayTime(null, 
         await Estimators.getCurrDelta('Whole sentence'));
       AudioPlayer.play();
-      VnKeyboard.makeUseOfBiTriGramsFrom(await loadText(currSubIndex-1));
+      VnHelpers.makeUseOfBiTriGramsFrom(await loadText(currSubIndex-1));
     /* ControlLeft = play, AltRight = forward, OSRight = backward */
 
     case 'ControlLeft':
@@ -141,7 +141,7 @@ async function handleKeyPress(event, from=null) {
       event.preventDefault();
       CursorHelpers.getCursorback(from);
       // resetTextAndPos();
-      // CursorHelpers.blinkCurPos();
+      CursorHelpers.blinkCurPos();
       adjust(+1);
       break;
 
@@ -149,7 +149,7 @@ async function handleKeyPress(event, from=null) {
       event.preventDefault();
       CursorHelpers.getCursorback(from);
       // resetTextAndPos();
-      // CursorHelpers.blinkCurPos();
+      CursorHelpers.blinkCurPos();
       adjust(-1);
       break;
 
