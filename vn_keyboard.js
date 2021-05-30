@@ -104,7 +104,7 @@ async function mapKeysForMe(event) {
     }
 
     // Press space will auto-complete sent, double space to pause / play audio
-    console.log("keyup", c1, c2);
+    // console.log("keyup", c1, c2);
     if (c1 === 32 || c1 === 160) { // Android space char code is 160
         if (c2 === 32 || c2 === 160) { // Double-space
             console.log("> > > Double-space < < <");
@@ -149,7 +149,7 @@ async function mapKeysForMe(event) {
     gram = VnHelpers.removeMarks(gram);
     matched = _mappings[gram];
 
-    console.log(triWords, gram, matched);
+    // console.log(triWords, gram, matched);
     // 3-gram don't match => try bi-gram
     if (!matched && triWords.length > 2) {
         triWords.shift();
@@ -202,7 +202,7 @@ async function mapKeysForMe(event) {
                 htmls.push("<span>0. " + triWords.join(" ")) + "</span>"; 
             }
             suggestionRegex = new RegExp(`${triWords.join("\\s+")}`);
-            console.log(suggestionRegex);
+            // console.log(suggestionRegex);
             suggestion.innerHTML = htmls.join("<br />");
             suggestion.style = "display: true";
         }

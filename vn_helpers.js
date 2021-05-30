@@ -62,7 +62,7 @@ function makeUseOfGram(gram) {
 export function mapKeys(sent) {
   return sent.replace(keysMapRegex, k => {
     let v = keysMap[k.toLowerCase()];
-    console.log(`\n!! mapKeys: '${k}' => '${v}'`);
+    // console.log(`\n!! mapKeys: '${k}' => '${v}'`);
     return v ?? k;
   });
 }
@@ -83,7 +83,7 @@ for (var k in vowelsMap) {
     vowelsMap[k.toUpperCase()] = vowelsMap[k].toUpperCase();
 }
 
-const _syllLeft = /(^|qu|[qrtsdđghklxcvbnm]+)((?:uy|u|o|ư|i)?[aăâeêuưoơôiy])(.*)/i;
+const _syllLeft = /(^|qu|[qrtpsdđghklxcvbnm]+)((?:uy|u|o|ư|i)?[aăâeêuưoơôiy])(.*)/i;
 
 let tonesMap = {
     "as":"á", "af":"à", "ax":"ã", "ar":"ả", "aj":"ạ",
@@ -114,7 +114,7 @@ export function changeTone(s, tone) {
     }
     let sss, m = ss.match(_syllLeft);
     if (!m) return s + tone;
-    console.log(3, m[1], m[2], m[3]);
+    // console.log(3, m[1], m[2], m[3]);
 
     if (m[2].length === 2 && "aiy".includes(m[2][1]) 
         && m[3].length === 0) {
@@ -131,6 +131,7 @@ export function changeTone(s, tone) {
     // same tone will clear tone & return tone char
     return sss !== s ? sss : ss + tone;
 }
+assertEqual(changeTone("phai","r"), "phải");
 assertEqual(changeTone("hoan","f"), "hoàn");
 assertEqual(changeTone("nui","s"), "núi");
 assertEqual(changeTone("da","d"), "đa");
@@ -163,7 +164,7 @@ export function changeMark(s, mark) {
     let m = naked.match(_syllLeft);
     if (!m) return s + mark;
 
-    console.log(3, m[1], m[2], m[3]);
+    // console.log(3, m[1], m[2], m[3]);
 
     if (mark !== "w" && mark !== removeMarks(m[2].slice(-1))) 
         return s + mark;

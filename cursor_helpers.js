@@ -93,7 +93,7 @@ export function resetTextAndPos(suffix=false) {
       currInnerText = capitalizeFirstCharOf(currInnerText);
     }
     currP.innerHTML = currInnerText;
-    console.log(`n=${n}, lastCurrPos=${lastCurrPos}\nnormText="${normText}", remain="${remain}"`);
+    // console.log(`n=${n}, lastCurrPos=${lastCurrPos}\nnormText="${normText}", remain="${remain}"`);
 
     /* https://javascript.info/selection-range#selecting-the-text-partially */
     // If node is a text node, then offset must be the position in its text.
