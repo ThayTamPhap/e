@@ -1,5 +1,6 @@
  /**/export let _keys_map = ` alh__ A-la-hán
  blm__ ba-la-mật
+ kq___ kết quả
  cx___ cũng
  dc___ được
  ko___ không
