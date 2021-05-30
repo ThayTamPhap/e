@@ -83,7 +83,7 @@ for (var k in vowelsMap) {
     vowelsMap[k.toUpperCase()] = vowelsMap[k].toUpperCase();
 }
 
-const _syllLeft = /(^|qu|[qrtsdđghklxcvbnm]+)((?:uy|u|ư|i)?[aăâeêuưoơôiy])(.*)/i;
+const _syllLeft = /(^|qu|[qrtsdđghklxcvbnm]+)((?:uy|u|o|ư|i)?[aăâeêuưoơôiy])(.*)/i;
 
 let tonesMap = {
     "as":"á", "af":"à", "ax":"ã", "ar":"ả", "aj":"ạ",
@@ -114,9 +114,10 @@ export function changeTone(s, tone) {
     }
     let sss, m = ss.match(_syllLeft);
     if (!m) return s + tone;
-    // console.log(3, m[1], m[2], m[3]);
+    console.log(3, m[1], m[2], m[3]);
 
-    if (m[2].length === 2 && "aiy".includes(m[2][1])) {
+    if (m[2].length === 2 && "aiy".includes(m[2][1]) 
+        && m[3].length === 0) {
         sss = m[1] + 
               tonesMap[m[2][0]+tone] + m[2][1] + 
               m[3];
@@ -130,6 +131,7 @@ export function changeTone(s, tone) {
     // same tone will clear tone & return tone char
     return sss !== s ? sss : ss + tone;
 }
+assertEqual(changeTone("hoan","f"), "hoàn");
 assertEqual(changeTone("nui","s"), "núi");
 assertEqual(changeTone("da","d"), "đa");
 assertEqual(changeTone("quá","f"), "quà");
@@ -156,7 +158,7 @@ export function changeMark(s, mark) {
     let naked = removeMarks(unTone, 'keep đ/Đ');
     if (mark === "z") return naked;
 
-    console.log('changeMark:', s, tone, naked, mark); 
+    // console.log('changeMark:', s, tone, naked, mark); 
 
     let m = naked.match(_syllLeft);
     if (!m) return s + mark;
@@ -255,7 +257,7 @@ export function telexFinalize(s) {
     });
 }
 assertEqual(telexFinalize("tons"), "tón");
-assertEqual(telexFinalize("tonos mooj khôngr"), "tốn mộ khổng");
+assertEqual(telexFinalize("tonos mooj khôngr"), "tốn moọ khổng");
 
 export function removeMarks(str, keepDd=false) {
     // https://kipalog.com/posts/Mot-so-ki-thuat-xu-li-tieng-Viet-trong-Javascript
