@@ -13,7 +13,6 @@ _keys_map.split("\n").map(x => {
   let v = splits[1];
   keysMap[k] = v;
 
-  // let s = k[0] == " " ? `[\\s.,:;]${k.substr(1,)}` : k;
   return k;
 }).slice(1,).join("|")+')(?=$)', 'i'); // need to match end of string
 // console.log(keysMap, keysMapRegex);
@@ -114,10 +113,8 @@ async function mapKeysForMe(event) {
         if (c2 === 32 || c2 === 160) { // Double-space
             console.log("> > > Double-space < < <");
             CursorHelpers.pauseOrPlayCurrPos(); 
-        } else { // Mono-space
-            
-            CursorHelpers.resetTextAndPos();
-            // CursorHelpers.blinkCurPos();
+        } else { // Mono-space            
+            CursorHelpers.resetTextAndPos(c1===32 && String.fromCharCode(160));
         }
     }
 
