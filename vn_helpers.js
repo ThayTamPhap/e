@@ -1,5 +1,5 @@
-import { _keys_map } from "./keys_map.js"
-import { _mappings } from "./mappings.js"
+import { _keys_map } from "./vn_keys_map.js"
+import { _mappings } from "./vn_mappings.js"
 
 export const VN_PHRASE_BREAK_REGEX = /[^\sqwertyuiopasdfghjklzxcvbnmàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]+/gi;
 
@@ -123,6 +123,7 @@ export function changeTone(s, tone) {
               m[3];
     }
 
+    // same tone will clear tone & return tone char
     return sss !== s ? sss : ss + tone;
 }
 assertEqual(changeTone("quá","f"), "quà");

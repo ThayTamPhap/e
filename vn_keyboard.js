@@ -1,8 +1,7 @@
-import { _mappings } from "./mappings.js"
-
 import * as CursorHelpers from "./cursor_helpers.js"
 import * as AudioPlayer from "./audio_player.js"
 import * as VnHelpers from "./vn_helpers.js"
+import { _mappings } from "./vn_mappings.js"
 
 function collapse(sel, elem, n) {
     let range = new Range();  

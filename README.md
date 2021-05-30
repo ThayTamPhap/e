@@ -2,8 +2,11 @@
 
 https://sutamphap.com/category/thu-thay-tro/
 
+[ DONE ]
 
-## https://vietnameseaccent.com/
+## Auto-masking
+
+e.g: https://vietnameseaccent.com/
 
 Automatically inserting accent marks for Vietnamese words.
 The free Web interface supports text up to 1000 characters.
@@ -12,15 +15,8 @@ The free Web interface supports text up to 1000 characters.
 
 "trong cuộc sống chúng ta phải biết trân trọng những điều nhỏ nhặt nhất, có lẽ là không nên làm gi cả""
 
-view-source:https://vietnameseaccent.com/static/diacriticsmarker/insert_diacritics.js
-
-
-=> Data to-do auto-masking mappings.js
-
 
 [ SKIP ]
-
-See shortcuts_mappings.js for data. Also need manually remove non-sense wordsx
 
 ## Two-phrase-matching shortcuts
 
