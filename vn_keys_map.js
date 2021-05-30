@@ -1,21 +1,21 @@
- /**/export let _keys_map = ` alh__ A-la-hán
+ /**/export let _keys_map = ` ,,___ [??]
+ alh__ A-la-hán
  blm__ ba-la-mật
- kq___ kết quả
+ cng__ con người
+ cta__ chúng ta
  cx___ cũng
  dc___ được
- ko___ không
  dk___ đúng không
+ dp___ Đức Phật 
  hk___ hiểu không
- nx___ những
+ ko___ không
+ kq___ kết quả
  ll___ luôn luôn
+ nl___ năng lượng
+ nta__ người ta
+ nx___ những
+ pr___ phải
  rl___ rất là
  rln__ rất là nhiều
- cta__ chúng ta
- nta__ người ta
- pr___ phải
- dp___ Đức Phật 
- cng__ con người
- nl___ năng lượng
- ,,___ [??]
- vx___ vẫn
- vc___ việc`
+ vc___ việc
+ vx___ vẫn`
