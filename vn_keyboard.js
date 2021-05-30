@@ -118,13 +118,21 @@ async function mapKeysForMe(event) {
     // Not from a-z
     if (c1 < 97 || c1 > 122) { return; }
 
-    // Process syllable level first
-
-
-    // Process phrase level second
+    // Process phrase level
     let lastPhrase = l.split(VnHelpers.VN_PHRASE_BREAK_REGEX).pop();
     let triWords = lastPhrase.trim().split(/\s+/).slice(-3);
-    // need at least two words
+    let lastWord = triWords[triWords.length - 1];
+
+    // Process last syllable first
+    if ("sfrxjz".includes(lastWord.slice(-1))) { // tone char
+        lastWord = VnHelpers.changeTone(lastWord.slice(0,-1), lastWord.slice(-1));
+        newl = l.substr(0,l.length - lastWord.length-1) + lastWord;
+        p.innerHTML = newl + r;
+        collapse(s, p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
+        l = newl;
+    }
+
+    // Need at least two words to match to bi,tri-grams
     if (triWords.length <= 1) {
         return;
     }
@@ -173,7 +181,7 @@ async function mapKeysForMe(event) {
             matches = matches.sort((a,b) => b[1] - a[1]).map(x => x[0]);
             let lastWord = triWords[triWords.length-1];
             if (VnHelpers.removeVienameseMarks(lastWord) !== lastWord) {
-                console.log('len la len', www);
+                // console.log('len la len', www);
                 matches = matches.filter(m => m !== www);
                 matches.unshift(www);
                 ww = null;

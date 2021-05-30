@@ -70,23 +70,57 @@ assertEqual(mapKeys(' nx'), ' những');
 assertEqual(mapKeys('nx'), 'nx');
 assertEqual(mapKeys('nx '), 'nx ');
 
+/* 
+let vowelsMap = {
+    "aa":"â", "aw":"ă", 
+    "ee":"ê", 
+    "oo":"ô", "ow":"ơ",
+    "uw":"ư", 
+    "ww":"ư",
+}
+for (var k in vowelsMap) {
+    vowelsMap[k[0].toUpperCase()+k[1]] = vowelsMap[k].toUpperCase();
+    vowelsMap[k[0]+k[1].toUpperCase()] = vowelsMap[k].toUpperCase();
+}
+*/
 
-const _syllLeft = /(^|qu|[qrtsdđghklxcbnm]+)((?:uy|u|ư|i)?[aăâeêuưoơôiy])(.*)/i;
+let tonesMap = {
+    "as":"á", "af":"à", "ax":"ã", "ar":"ả", "aj":"ạ",
+    "âs":"ấ", "âf":"ầ", "âx":"ẫ", "âr":"ẩ", "âj":"ậ",
+    "ăs":"ắ", "âf":"ằ", "ăx":"ẵ", "ăr":"ẳ", "ăj":"ặ",
+    "es":"é", "ef":"è", "ex":"ẽ", "er":"ẻ", "ej":"ẹ",
+    "ês":"ế", "êf":"ề", "êx":"ễ", "êr":"ể", "êj":"ệ",
+    "os":"ó", "of":"ò", "ox":"õ", "or":"ỏ", "oj":"ọ",
+    "ôs":"ố", "ôf":"ồ", "ôx":"ỗ", "ôr":"ổ", "ôj":"ộ",
+    "ơs":"ớ", "ơf":"ờ", "ơx":"ỡ", "ơr":"ở", "ơj":"ợ",
+    "us":"ú", "uf":"ù", "ux":"ũ", "ur":"ủ", "uj":"ụ",
+    "ưs":"ứ", "ưf":"ừ", "ưx":"ữ", "ưr":"ử", "ưj":"ự",
+    "is":"í", "if":"ì", "ix":"ĩ", "ir":"ỉ", "ij":"ị",
+    "ys":"ý", "yf":"ỳ", "yx":"ỹ", "yr":"ỷ", "yj":"ỵ",
+};
+// window.tonesMap = tonesMap;
+for (var k in tonesMap) {
+    tonesMap[k[0].toUpperCase()+k[1]] = tonesMap[k].toUpperCase();
+}
+
+const _syllLeft = /(^|qu|[qrtsdđghklxcvbnm]+)((?:uy|u|ư|i)?[aăâeêuưoơôiy])(.*)/i;
+
 export function changeTone(s, tone) {
     s = _removeTone(s);
-
+    if (tone === 'z')return s;
+     
     // console.log(s);
     let m = s.match(_syllLeft);
     console.log(3, m[1], m[2], m[3]);
 
     if (m[2].length === 2 && m[2][1] === "a") {
         s = m[1] + 
-            _addTone(m[2][0], tone) + m[2][1] + 
+            tonesMap[m[2][0]+tone] + m[2][1] + 
             m[3];
 
     } else {
         s = m[1] + 
-            m[2].slice(0, -1) + _addTone(m[2].slice(-1), tone) + 
+            m[2].slice(0, -1) + tonesMap[m[2].slice(-1)+tone] + 
             m[3];
     }
     return s;
@@ -97,26 +131,11 @@ assertEqual(changeTone("cửa","j"), "cựa");
 assertEqual(changeTone("tuyền","x"), "tuyễn");
 assertEqual(changeTone("thuổng","s"), "thuống");
 assertEqual(changeTone("kiếm","j"), "kiệm");
+assertEqual(changeTone("kiếm","z"), "kiêm");
 assertEqual(changeTone("khuâng","r"), "khuẩng");
 assertEqual(changeTone("ươi","f"),"ười");
-
-
-function _addTone(s, tone) {
-    return {
-        "as":"á", "af":"à", "ax":"ã", "ar":"ả", "aj":"ạ",
-        "âs":"ấ", "âf":"ầ", "âx":"ẫ", "âr":"ẩ", "âj":"ậ",
-        "ăs":"ắ", "âf":"ằ", "ăx":"ẵ", "ăr":"ẳ", "ăj":"ặ",
-        "es":"é", "ef":"è", "ex":"ẽ", "er":"ẻ", "ej":"ẹ",
-        "ês":"ế", "êf":"ề", "êx":"ễ", "êr":"ể", "êj":"ệ",
-        "os":"ó", "of":"ò", "ox":"õ", "or":"ỏ", "oj":"ọ",
-        "ôs":"ố", "of":"ồ", "ôx":"ỗ", "ôr":"ổ", "ôj":"ộ",
-        "ơs":"ớ", "ơf":"ờ", "ơx":"ỡ", "ơr":"ở", "ơj":"ợ",
-        "us":"ú", "uf":"ù", "ux":"ũ", "ur":"ủ", "uj":"ụ",
-        "ưs":"ứ", "ưf":"ừ", "ưx":"ữ", "ưr":"ử", "ưj":"ự",
-        "is":"í", "if":"ì", "ix":"ĩ", "ir":"ỉ", "ij":"ị",
-        "ys":"ý", "yf":"ỳ", "yx":"ỹ", "yr":"ỷ", "yj":"ỵ",
-    }[s + tone];
-}
+assertEqual(changeTone("vit","j"),"vịt");
+assertEqual(changeTone("khong","f"),"khòng");
 
 function _removeTone(s) {
     return s.
