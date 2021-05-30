@@ -110,7 +110,7 @@ export function changeTone(s, tone) {
     if (tone === 'd') {
         if (s[0] == 'd') return 'đ' + ss.slice(1,);
         if (s[0] == 'D') return 'Đ' + ss.slice(1,);
-        return s;
+        return s + tone;
     }
     let sss, m = ss.match(_syllLeft);
     if (!m) return s + tone;
