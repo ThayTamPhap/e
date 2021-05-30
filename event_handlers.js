@@ -50,8 +50,8 @@ async function playSub(event) {
 }
 
 async function handleKeyPress(event, from=null) {
-   let logStr = `keydown: key='${event.key}' | code='${event.code}' | keyCode=${event.keyCode}`;
-  console.log(logStr); // alert(logStr);
+  // let logStr = `keydown: key='${event.key}' | code='${event.code}' | keyCode=${event.keyCode}`;
+  // console.log(logStr); // alert(logStr);
   let currKey = event.code;
   
   // key mapping for different browsers / systems

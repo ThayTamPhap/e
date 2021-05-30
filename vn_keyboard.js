@@ -34,6 +34,8 @@ let www, suggestionRegex = null;
 let autoReplaced = false;
 let gram, matched;
 
+const controlKeys = "Tab,Enter,ControlLeft,AltLeft,ShiftLeft,AltRight";
+
 async function mapKeysForMe(event) {
     CursorHelpers.saveLastCursor('mapKeysForMe');
     suggestion.style.display = "none";
@@ -44,7 +46,14 @@ async function mapKeysForMe(event) {
         prevC = null;
     }
     
-    if (event.code != "" && "CtrlLeft,AltLeft,Tab,Enter,ShiftRight,AltRight".includes(event.code)) { return; }
+    let logStr = `keyup: key='${event.key}' | code='${event.code}' | keyCode=${event.keyCode}`;
+    console.log(logStr); // alert(logStr);
+    // console.log(controlKeys.includes(event.code));
+
+    if (event.code != "" && controlKeys.includes(event.code)) { 
+        console.log("controlKey found:", event.code);
+        return; 
+    }
 
     var s = window.getSelection();
     let i = s.anchorOffset;
