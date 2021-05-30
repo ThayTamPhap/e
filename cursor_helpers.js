@@ -60,21 +60,16 @@ export function getCurrPosStr() {
   return currInnerText.substr(0, window.getSelection().anchorOffset);
 }
 
-export function resetTextAndPos(suffix=false) {
+export function resetTextAndPos() {
     // Reset HTML to plain text to select correct cursor position
     var sel = window.getSelection();
     var currP = document.getElementById(currSubIndex);
     var currInnerText = currP.innerText;
 
-    if (suffix != "\\") {
-      if (suffix && currInnerText[lastCurrPos-1] != " ") { suffix = " "; }
-      else { suffix = ""; }
-    }
-
     let isEndOfSent = lastCurrPos >= currInnerText.length;
 
     // Add suffix first then normalize it
-    let normText = currInnerText.substr(0, lastCurrPos) + suffix;
+    let normText = currInnerText.substr(0, lastCurrPos);
     // normText = VnHelpers.telexFinalize(normText);
     normText = TypedText.normalizeText(normText, false);
 
@@ -84,28 +79,19 @@ export function resetTextAndPos(suffix=false) {
     currInnerText = normText + remain;
     lastCurrPos = normText.length;
 
-    let n = currInnerText.length;
-    if (currInnerText[n-1] == " ") {
-     currInnerText = currInnerText.slice(0, n-1) + "&nbsp;";
-    }
-
     if (autoCapitalizedFirstCharOf(currP, false)) {
       currInnerText = capitalizeFirstCharOf(currInnerText);
     }
-    currP.innerHTML = currInnerText;
-    // console.log(`n=${n}, lastCurrPos=${lastCurrPos}\nnormText="${normText}", remain="${remain}"`);
 
-    /* https://javascript.info/selection-range#selecting-the-text-partially */
-    // If node is a text node, then offset must be the position in its text.
-    if (isEndOfSent || lastCurrPos > n) lastCurrPos = n;
-    
-    let range = new Range();  
-    range.setStart(currP.firstChild, lastCurrPos);
-    range.setEnd(currP.firstChild,lastCurrPos);
-    sel.removeAllRanges();
-    sel.addRange(range);  
-  //  sel.collapse(currP.firstChild, lastCurrPos);
+    let n = currInnerText.length;
+    if (isEndOfSent || lastCurrPos > n) {
+      lastCurrPos = n;
+    }
+    currP.firstChild.textContent = currInnerText;
+    // console.log(`n=${n}, lastCurrPos=${lastCurrPos}\nnormText="${normText}", remain="${remain}"`);
+    sel.collapse(currP.firstChild, lastCurrPos);
 }
+
 
 export function blinkCurPos(pos) {
   var currP = document.getElementById(currSubIndex);
@@ -175,7 +161,7 @@ function autoCapitalizedFirstCharOf(p, auto=false) {
   }
   // console.log('yesDoIt', yesDoIt);
   if (auto && yesDoIt) {
-    p.innerHTML = capitalizeFirstCharOf(p.innerText);
+    p.firstChild.textContent = capitalizeFirstCharOf(p.innerText);
   }
   return yesDoIt;
 }

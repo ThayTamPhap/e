@@ -43,7 +43,7 @@ async function mapKeysForMe(event) {
     var s = window.getSelection();
     let i = s.anchorOffset;
     var p = document.getElementById(currSubIndex);
-    var t = p.innerText;
+    var t = p.firstChild.textContent;
     let c1 = event.keyCode == 32 ? 32 : t.charCodeAt(i-1);
     let c2 = prevC;
     prevC = c1;
@@ -54,8 +54,8 @@ async function mapKeysForMe(event) {
     let newl = VnHelpers.mapKeys(l);
 
     if (newl.slice(-2) != l.slice(-2)) {
-        p.innerHTML = newl + r;
-        collapse(s, p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
+        p.firstChild.textContent = newl + r;
+        s.collapse(p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
         l = newl;
         c1 = null;
     }
@@ -97,8 +97,8 @@ async function mapKeysForMe(event) {
         }
         if (-1 <= index && index < matches.length) {
             newl += String.fromCharCode(prevC);
-            p.innerHTML = newl + r;
-            collapse(s, p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
+            p.firstChild.textContent = newl + r;
+            s.collapse(p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
         }
         matches = [];
     }
@@ -110,8 +110,10 @@ async function mapKeysForMe(event) {
             console.log("> > > Double-space < < <");
             CursorHelpers.pauseOrPlayCurrPos(); 
         } else { // Mono-space            
-            CursorHelpers.resetTextAndPos(c1===32 && String.fromCharCode(160));
+            console.log("> > Mono-space < <");
+            CursorHelpers.resetTextAndPos();
         }
+        return;
     }
 
 
@@ -136,7 +138,7 @@ async function mapKeysForMe(event) {
             : VnHelpers.changeTone(lastWord.slice(0,-1), lastChar);
 
         newl = l.substr(0,l.length - lastWord.length) + newWord;
-        p.innerHTML = newl + r;
+        p.firstChild.textContent = newl + r;
         collapse(s, p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
         l = newl;
     }
