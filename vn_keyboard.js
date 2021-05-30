@@ -142,7 +142,7 @@ async function mapKeysForMe(event) {
         return;
     }
     gram = triWords.join(" ").toLowerCase();
-    gram = VnHelpers.removeVienameseMarks(gram);
+    gram = VnHelpers.removeMarks(gram);
     matched = _mappings[gram];
 
     console.log(triWords, gram, matched);
@@ -150,7 +150,7 @@ async function mapKeysForMe(event) {
     if (!matched && triWords.length > 2) {
         triWords.shift();
         gram = triWords.join(" ").toLowerCase();
-        gram = VnHelpers.removeVienameseMarks(gram);
+        gram = VnHelpers.removeMarks(gram);
         matched = _mappings[gram];
     }
 
@@ -185,7 +185,7 @@ async function mapKeysForMe(event) {
             let htmls = [];
             matches = matches.sort((a,b) => b[1] - a[1]).map(x => x[0]);
             let lastWord = triWords[triWords.length-1];
-            if (VnHelpers.removeVienameseMarks(lastWord) !== lastWord) {
+            if (VnHelpers.removeMarks(lastWord) !== lastWord) {
                 // console.log('len la len', www);
                 matches = matches.filter(m => m !== www);
                 matches.unshift(www);
@@ -212,7 +212,7 @@ function okok(w1, w2, autoReplaced=false) {
     w1 = w1.toLowerCase();
     w2 = w2.toLowerCase();
     if (w1 == w2) return true;
-    let w0 = VnHelpers.removeVienameseMarks(w1);
-    if (w0 == VnHelpers.removeVienameseMarks(w2)) return true;
+    let w0 = VnHelpers.removeMarks(w1);
+    if (w0 == VnHelpers.removeMarks(w2)) return true;
     return false;
 }
