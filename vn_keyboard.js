@@ -35,7 +35,7 @@ async function mapKeysForMe(event) {
     var s = window.getSelection();
     let i = s.anchorOffset;
     var p = document.getElementById(currSubIndex);
-    var t = p.firstChild.textContent;
+    var t = p.innerText;
     let c1 = event.keyCode == 32 ? 32 : t.charCodeAt(i-1);
     let c2 = prevC;
     prevC = c1;
@@ -47,7 +47,8 @@ async function mapKeysForMe(event) {
 
     if (newl.slice(-2) != l.slice(-2)) {
         p.firstChild.textContent = newl + r;
-        s.collapse(p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
+        CursorHelpers.collapse(s, p.firstChild, 
+            CursorHelpers.setLastCursorFast(newl.length));
         l = newl;
         c1 = null;
     }
@@ -90,7 +91,8 @@ async function mapKeysForMe(event) {
         if (-1 <= index && index < matches.length) {
             newl += String.fromCharCode(prevC);
             p.firstChild.textContent = newl + r;
-            s.collapse(p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
+            CursorHelpers.collapse(s, p.firstChild, 
+                CursorHelpers.setLastCursorFast(newl.length));
         }
         matches = [];
     }

@@ -14,7 +14,7 @@ export function getCursorback(from) {
   if (lastCurrPos > n) {
     lastCurrPos = n;
   }
-  window.getSelection().collapse(p.firstChild, lastCurrPos);
+  collapse(window.getSelection(), p.firstChild, lastCurrPos);
 }
 
 export async function playCurrSubIndex(delta = 0) {
@@ -60,6 +60,14 @@ export function getCurrPosStr() {
   return currInnerText.substr(0, window.getSelection().anchorOffset);
 }
 
+export function collapse(sel, elem, n) {
+    let range = new Range();
+    range.setStart(elem, n);
+    range.setEnd(elem, n);
+    sel.removeAllRanges();
+    sel.addRange(range);
+}
+
 export function resetTextAndPos() {
     // Reset HTML to plain text to select correct cursor position
     var sel = window.getSelection();
@@ -89,7 +97,7 @@ export function resetTextAndPos() {
     }
     currP.firstChild.textContent = currInnerText;
     // console.log(`n=${n}, lastCurrPos=${lastCurrPos}\nnormText="${normText}", remain="${remain}"`);
-    sel.collapse(currP.firstChild, lastCurrPos);
+    collapse(sel, currP.firstChild, lastCurrPos);
 }
 
 
@@ -129,7 +137,7 @@ export function blinkCurPos(pos) {
   let interval = window.setInterval(function() {
     if (++count > 0) { 
       clearInterval(interval); 
-      sel.collapse(currP.firstChild, currPos);
+      collapse(sel, currP.firstChild, currPos);
     }
 
     if (selectedText.length > 0) {
@@ -139,12 +147,12 @@ export function blinkCurPos(pos) {
     }
 
     if (count % 2 == 0) {
-      range.setStart(currP.firstChild, b );
+      range.setStart(currP.firstChild, b);
       range.setEnd(currP.firstChild, e);
       sel.removeAllRanges();
       sel.addRange(range);
     } else {
-      sel.collapse(currP.firstChild, currPos);
+      collapse(sel, currP.firstChild, currPos);
     }
   }, 50);
 }
