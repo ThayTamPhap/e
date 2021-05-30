@@ -106,29 +106,30 @@ for (var k in tonesMap) {
 const _syllLeft = /(^|qu|[qrtsdđghklxcvbnm]+)((?:uy|u|ư|i)?[aăâeêuưoơôiy])(.*)/i;
 
 export function changeTone(s, tone) {
-    s = _removeTone(s);
-    if (tone === 'z')return s;
-     
-    // console.log(s);
-    let m = s.match(_syllLeft);
-    console.log(3, m[1], m[2], m[3]);
+    let ss = _removeTone(s);
+    if (tone === 'z')return ss;
+
+    let sss, m = ss.match(_syllLeft);
+    // console.log(3, m[1], m[2], m[3]);
 
     if (m[2].length === 2 && m[2][1] === "a") {
-        s = m[1] + 
-            tonesMap[m[2][0]+tone] + m[2][1] + 
-            m[3];
+        sss = m[1] + 
+              tonesMap[m[2][0]+tone] + m[2][1] + 
+              m[3];
 
     } else {
-        s = m[1] + 
-            m[2].slice(0, -1) + tonesMap[m[2].slice(-1)+tone] + 
-            m[3];
+        sss = m[1] + 
+              m[2].slice(0, -1) + tonesMap[m[2].slice(-1)+tone] + 
+              m[3];
     }
-    return s;
+
+    return sss !== s ? sss : ss + tone;
 }
 assertEqual(changeTone("quá","f"), "quà");
 assertEqual(changeTone("cua","f"), "cùa");
 assertEqual(changeTone("cửa","j"), "cựa");
 assertEqual(changeTone("tuyền","x"), "tuyễn");
+assertEqual(changeTone("tuyền","f"), "tuyênf");
 assertEqual(changeTone("thuổng","s"), "thuống");
 assertEqual(changeTone("kiếm","j"), "kiệm");
 assertEqual(changeTone("kiếm","z"), "kiêm");

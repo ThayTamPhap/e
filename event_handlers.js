@@ -1,7 +1,7 @@
 import * as CursorHelpers from "./cursor_helpers.js";
 import * as AudioPlayer from "./audio_player.js";
 import * as Estimators from "./estimators.js";
-import * as VnKeyboard from "./vn_keyboard.js"
+import * as VnHelpers from "./vn_helpers.js"
 
 var fastMode = false;
 var needToResetTextAndPos = true;
@@ -126,7 +126,7 @@ async function handleKeyPress(event, from=null) {
       AudioPlayer.adjustMaxPlayTime(null, 
         await Estimators.getCurrDelta('Whole sentence'));
       AudioPlayer.play();
-      VnKeyboard.makeUseOfBiTriGramsFrom(await loadText(currSubIndex-1));
+      VnHelpers.makeUseOfBiTriGramsFrom(await loadText(currSubIndex-1));
     /* ControlLeft = play, AltRight = forward, OSRight = backward */
 
     case 'ControlLeft':

@@ -58,6 +58,7 @@ async function mapKeysForMe(event) {
         p.innerHTML = newl + r;
         collapse(s, p.firstChild, CursorHelpers.setLastCursorFast(newl.length));
         l = newl;
+        c1 = null;
     }
 
     // Select from previous matches
@@ -124,7 +125,12 @@ async function mapKeysForMe(event) {
     let lastWord = triWords[triWords.length - 1];
 
     // Process last syllable first
-    if ("sfrxjz".includes(lastWord.slice(-1))) { // tone char
+    let lastChar = String.fromCharCode(c1);
+    lastChar = event.code === "backspace" ? null 
+        : lastWord.slice(-1) === lastChar ? lastChar : null;
+    // console.log('lastChar',lastChar, lastWord.slice(-1), String.fromCharCode(c1));
+
+    if (lastChar && "sfrxjz".includes(lastChar)) { // tone char
         lastWord = VnHelpers.changeTone(lastWord.slice(0,-1), lastWord.slice(-1));
         newl = l.substr(0,l.length - lastWord.length-1) + lastWord;
         p.innerHTML = newl + r;
