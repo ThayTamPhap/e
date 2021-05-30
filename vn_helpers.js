@@ -116,7 +116,7 @@ export function changeTone(s, tone) {
     if (!m) return s + tone;
     // console.log(3, m[1], m[2], m[3]);
 
-    if (m[2].length === 2 && m[2][1] === "a") {
+    if (m[2].length === 2 && "aiy".includes(m[2][1])) {
         sss = m[1] + 
               tonesMap[m[2][0]+tone] + m[2][1] + 
               m[3];
@@ -130,6 +130,7 @@ export function changeTone(s, tone) {
     // same tone will clear tone & return tone char
     return sss !== s ? sss : ss + tone;
 }
+assertEqual(changeTone("nui","s"), "núi");
 assertEqual(changeTone("da","d"), "đa");
 assertEqual(changeTone("quá","f"), "quà");
 assertEqual(changeTone("cua","f"), "cùa");
@@ -235,6 +236,26 @@ function _removeTone(s) {
         replace(/[ìíịỉĩ]/g,  "i").
         replace(/[ỳýỵỷỹ]/g,  "y");
 }
+
+const VN_SYLLABLE_REGEX = /[qwertyuiopasdfghjklzxcvbnmàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]+/gi;
+export function telexFinalize(s) {
+    var c;
+    return s.replace(VN_SYLLABLE_REGEX, w => {
+        c = w.slice(-1);
+        if ("dsfrxj".includes(c)) {
+            w = changeTone(w.slice(0,-1), c);
+        }
+
+        c = w.slice(-1);
+        if ("aeow".includes(c)) {
+            w = changeMark(w.slice(0,-1), c);
+        }
+
+        return w;
+    });
+}
+assertEqual(telexFinalize("tons"), "tón");
+assertEqual(telexFinalize("tonos mooj khôngr"), "tốn mộ khổng");
 
 export function removeMarks(str, keepDd=false) {
     // https://kipalog.com/posts/Mot-so-ki-thuat-xu-li-tieng-Viet-trong-Javascript
