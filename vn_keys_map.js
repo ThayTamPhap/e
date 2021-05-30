@@ -12,12 +12,9 @@ dd___đ
  ko___ không
  kq___ kết quả
  ll___ luôn luôn
-<<<<<<< HEAD:keys_map.js
  rln__ rất là nhiều
  cta__ chúng ta
-=======
  nl___ năng lượng
->>>>>>> 0b85f5f6bfcd3836c13997f0f7be67dc54687ced:vn_keys_map.js
  nta__ người ta
  nx___ những
  pr___ phải

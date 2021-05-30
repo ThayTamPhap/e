@@ -113,6 +113,7 @@ export function changeTone(s, tone) {
         return s;
     }
     let sss, m = ss.match(_syllLeft);
+    if (!m) return s + tone;
     // console.log(3, m[1], m[2], m[3]);
 
     if (m[2].length === 2 && m[2][1] === "a") {
