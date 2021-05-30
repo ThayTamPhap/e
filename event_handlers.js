@@ -44,8 +44,8 @@ async function playSub(event) {
   }  else { 
     // Click on current sub
     CursorHelpers.saveLastCursor('playSub: Click on current sub');
-    await CursorHelpers.playCurrPos();
     CursorHelpers.blinkCurPos();
+    await CursorHelpers.playCurrPos();
   }
 }
 
