@@ -3,14 +3,6 @@ import * as AudioPlayer from "./audio_player.js"
 import * as VnHelpers from "./vn_helpers.js"
 import { _mappings } from "./vn_mappings.js"
 
-function collapse(sel, elem, n) {
-    let range = new Range();  
-    range.setStart(elem, n);
-    range.setEnd(elem, n);
-    sel.removeAllRanges();
-    sel.addRange(range);
-}
-
 document.addEventListener("keyup", mapKeysForMe);
 
 var prevC, matches = [];
