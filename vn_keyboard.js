@@ -12,9 +12,7 @@ _keys_map.split("\n").map(x => {
   let k = splits[0];
   let v = splits[1];
   keysMap[k] = v;
-
-  // let s = k[0] == " " ? `[\\s.,:;]${k.substr(1,)}` : k;
-  return k;
+  return k.replace(" ","\\s");
 }).slice(1,).join("|")+')(?=$)', 'i'); // need to match end of string
 // console.log(keysMap, keysMapRegex);
 

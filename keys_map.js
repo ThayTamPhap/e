@@ -7,7 +7,6 @@
  hk___ hiểu không
  nx___ những
  ll___ luôn luôn
- rl___ rất là
  rln__ rất là nhiều
  cta__ chúng ta
  nta__ người ta
