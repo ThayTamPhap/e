@@ -75,7 +75,7 @@ export function resetTextAndPos(suffix=false) {
 
     // Add suffix first then normalize it
     let normText = currInnerText.substr(0, lastCurrPos) + suffix;
-    normText = VnHelpers.telexFinalize(normText);
+    // normText = VnHelpers.telexFinalize(normText);
     normText = TypedText.normalizeText(normText, false);
 
     let remain = currInnerText.substr(lastCurrPos,);
