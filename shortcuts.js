@@ -43,7 +43,7 @@ cch   của chúng
 ccn   có chánh niệm
 ccta  của chúng ta
 cd    cuộc đời
-cdd   cái điều đó
+cdd   cái điều
 cdg   cúng dường
 cdl   cái đó là
 cdo   cái đó
@@ -92,8 +92,8 @@ dc    được
 dcd   đắc đạo
 dd    dễ duôi
 ddd   được điều đó
-ddo   điều đó
 df    điều
+dfk   điều kiện
 dg    đơn giản
 dgl   đấy gọi là
 dk    đúng không
