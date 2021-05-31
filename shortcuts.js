@@ -128,11 +128,13 @@ kh    không hiểu
 kn    không nói
 kp    không phải
 kpl   không phải là
+kth   kiến thức
 kcc   kích cỡ
 kct   kích thước
 kk    khó khăn
 km    khi mình
 kq    kết quả
+kt    kiểm tra
 kti   kiếm tiền
 ktn   không thể nào
 ktr   kiểm tra
@@ -267,5 +269,7 @@ vq    vượt qua
 vt    vì thế
 vx    vẫn
 xd    xứng đáng
+xcd   xác định
+xyd   xây dựng
 yhn   y hệt như
 yo    yếu ớt`
