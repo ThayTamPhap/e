@@ -112,24 +112,25 @@ async function mapKeysForMe(event) {
     console.log(triWords.length, triWords);
 
     // Process shortcuts
-    let scToText = TypedText.typingShortcuts[lastWord];
-    let html = "";
-    if (scToText) {
-        html += `<sub><span class="default">${lastWord}</span> = </sub>
-             <span class="default">${scToText}</span>`;
-    }
+    var htmls = [];
     let others = TypedText.suffixShortcuts[lastWord];
     if (others) {
-        html += others.map(x =>
-            `<br/><sub>${x} = </sub> ${TypedText.typingShortcuts[x]}`
-        ).join("");
+        htmls = others.map(x =>
+            `<sub>${x} = </sub> ${TypedText.typingShortcuts[x]}`
+        );
     }
-    if (html.length > 0) {
-        suggestion.innerHTML = html;
+    let scToText = TypedText.typingShortcuts[lastWord];
+    if (scToText) {
+        htmls.unshift(`<sub><span class="default">${lastWord}</span> = </sub>
+             <span class="default">${scToText}</span>`);
+    }
+    if (htmls.length > 0) {
+        suggestion.innerHTML = htmls.join("<br/>");;
         suggestion.style = "display: true";
     }
     if (scToText) { return; }
 
+    // Hint for special words like 100% ...
     scToText = TypedText.spellSpecialWords(lastWord);
     if (scToText != lastWord) {
         suggestion.innerHTML = `<span class="default">${scToText}</span>`;

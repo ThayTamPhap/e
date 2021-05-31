@@ -119,23 +119,20 @@ hl    hoặc là
 hp    hạnh phúc
 ht    hoàn toàn
 hth   hành thiền
+ko    không
 kb    không biết
 kbg   không bao giờ
-kc    không có
-kcc   kích cỡ
-kct   kích thước
 kd    không được
 kdg   không đúng
 kh    không hiểu
-kk    khó khăn
-km    khi mình
 kn    không nói
-ko    không
 kp    không phải
 kpl   không phải là
+kcc   kích cỡ
+kct   kích thước
+kk    khó khăn
+km    khi mình
 kq    kết quả
-kt    không thể
-kth   không thể
 kti   kiếm tiền
 ktn   không thể nào
 ktr   kiểm tra
@@ -143,28 +140,28 @@ l1    là một
 l1c   là một cái
 l1n   là một người
 lbv   là bởi vì
-lc    lựa chọn
-lch   làm cho
-lcm   làm cho mình
-ld    làm được
-ldo   lúc đó
 lg    là gì
-li    lợi ích
 lk    là không
-ll    luôn luôn
 lm    là mình
 lmp   là mình phải
-ln    lúc nào
 lng   là người
 lnh   là nhiều
 lnx   là những
+lqt   là quan trọng
+lch   làm cho
+lcm   làm cho mình
+ld    làm được
 lp    làm phước
 lpcd  làm phước cúng dường
-lqt   là quan trọng
 ls    làm sao
 lsm   làm sao mà
-lt    lập tức
 lv    làm việc
+lc    lựa chọn
+ldo   lúc đó
+ln    lúc nào
+li    lợi ích
+ll    luôn luôn
+lt    lập tức
 mcth  mình có thể
 mct   mà chúng ta
 mcx   mình cũng
