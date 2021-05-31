@@ -119,8 +119,7 @@ async function mapKeysForMe(event) {
         let others = TypedText.suffixShortcuts[lastWord];
         if (others) {
             html += others.map(x =>
-                `<br/><sub><span class="default">${lastWord}</span>${x.replace(lastWord,"")} = </sub>
-                 ${TypedText.typingShortcuts[x]}`
+                `<br/><sub>${x} = </sub> ${TypedText.typingShortcuts[x]}`
             ).join("");
         }
         suggestion.innerHTML = html;

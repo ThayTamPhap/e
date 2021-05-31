@@ -153,7 +153,8 @@ export function changeMark(s, mark) {
     var news, vowel;
 
     if (m[2].length === 2 && m[2][1] === "a" //  ua
-            && mark !== "a") { // "cửa","a" => "cuẩ"
+            && mark !== "a" && !(mark === "w" && m[2][0] === "o")) { 
+            // cửa+a=cuẩ hoa+w=hoă
 
         vowel = m[2][0];
         vowel = vowelsMap[ vowel + mark ] ?? vowel;
@@ -176,6 +177,7 @@ export function changeMark(s, mark) {
 
     return news !== s ? news : changeTone(naked, tone) + mark;
 }
+assertEqual(changeMark("hoa","w"), "hoă");
 assertEqual(changeMark("xòa","i"), "xoài");
 assertEqual(changeMark("dể","d"), "để");
 assertEqual(changeMark("da","d"), "đa");

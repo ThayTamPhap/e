@@ -32,7 +32,15 @@ _shortcuts.split("\n").map(x => {
   if (k.length > 2) {
     let prevSc = k.slice(0,-1);
     suffixShortcuts[prevSc] = suffixShortcuts[prevSc] ?? [];
-    suffixShortcuts[prevSc].push(k);
+    if (!suffixShortcuts[prevSc].includes(k)) {
+      suffixShortcuts[prevSc].push(k); 
+    }
+
+    prevSc = k[0] + k.slice(-1,);
+    suffixShortcuts[prevSc] = suffixShortcuts[prevSc] ?? [];
+    if (!suffixShortcuts[prevSc].includes(k)) {
+      suffixShortcuts[prevSc].push(k); 
+    }
   }
 
   typingShortcuts[k] = v;  
