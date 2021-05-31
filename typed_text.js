@@ -45,8 +45,8 @@ window.normalizeText = normalizeText; // Hack: make it available in storage.js
 export function normalizeText(value, completeSent=true) {
   value = value.replace("...","…").replace(" \""," “").replace("\" ","”");
   value = value.replace(/[ ]/," ")
-  value = convertShortcuts(value, completeSent);
 
+  value = convertShortcuts(value, completeSent);
   value = spellSpecialWords(value);
 
   value = value.replace(/[[{(]\s+/g, x => " "+x.replace(/\s+/g,""));

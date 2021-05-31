@@ -97,8 +97,8 @@ async function mapKeysForMe(event) {
             CursorHelpers.pauseOrPlayCurrPos(); 
         } else { // Mono-space            
             console.log("> > Mono-space < <");
-            CursorHelpers.resetTextAndPos();
         }
+        CursorHelpers.resetTextAndPos();
         return;
     }    
 
