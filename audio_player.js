@@ -3,9 +3,22 @@ var maxPlayTime = ap.duration;
 var goingToPause = false;
 
 export function initSource(phapname) {
-  ap.innerHTML = 
-   `<source src="https:/thaytamphap.github.io/${phapname}.ogg"/>
-    <source src="https:/thaytamphap.github.io/${phapname}.mp3"/>`;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        let phaps = JSON.parse(this.responseText).phaps;
+        for (var n = phaps.length, i = 0; i < n; i++) {
+            if (phaps[i].audio.includes(phapname)) {
+              ap.innerHTML = 
+`<source src="https:/thaytamphap.github.io/${phapname}.ogg"/>
+<source src="${phaps[i].audio.split("?")[1]}"/>`
+              return; break;
+            }
+        }
+      }
+    };
+    xmlhttp.open("GET", 'https://thaytamphap.github.io/assets/audios.json', true);
+    xmlhttp.send();
 }
 
 export function setPlaybackRate(fastMode) {
