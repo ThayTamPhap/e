@@ -171,7 +171,7 @@ async function mapKeysForMe(event) {
             let mWords = m.split(" ");
             if (
                 okok(triWords[0], mWords[0]) &&
-                okok(triWords[1], mWords[1], autoReplaced) &&
+                okok(triWords[1], mWords[1]) &&
                 okok(triWords[2], mWords[2])
             ) {
                 var str = "", z = 0, simi = 0;
