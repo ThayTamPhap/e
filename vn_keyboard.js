@@ -72,6 +72,7 @@ async function mapKeysForMe(event) {
             autoReplaced = true;
         }
 
+        var newl;
         if (index == -1) { // Select 0 will keep the original string
             newl = l.substr(0, l.length-1);
         } else if (index < matches.length) {
@@ -101,15 +102,11 @@ async function mapKeysForMe(event) {
         return;
     }
 
-
-    // Not from a-z
-    // console.log(c1,c2,prevC);
-    if (c1 < 97 || c1 > 122) { return; }
-
     // Process phrase level
-    let lastPhrase = l.split(VnHelpers.VN_PHRASE_BREAK_REGEX).pop();
-    let triWords = lastPhrase.trim().split(/\s+/).slice(-3);
+    let triWords = l.trim().split(/\s+/).slice(-3);
     let lastWord = triWords[triWords.length - 1];
+
+    console.log(triWords.length, triWords);
 
     // Process shortcuts
     let scToText = typingShortcuts[lastWord];
@@ -135,6 +132,10 @@ async function mapKeysForMe(event) {
             l = newl;
         }
     }
+
+    // console.log(c1,c2,prevC);
+    // Skip bi,tri-gram checking if not from a-z
+    if (c1 < 97 || c1 > 122) { return; }
 
     // Need at least two words to match to bi,tri-grams
     if (triWords.length <= 1) {
