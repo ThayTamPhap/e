@@ -41,7 +41,7 @@ cc    có cái
 ccg   các cảm giác
 cch   của chúng
 ccn   có chánh niệm
-ccta  của chúng ta
+cct    của chúng ta
 cd    cuộc đời
 cdd   cái điều
 cdg   cúng dường
@@ -51,8 +51,8 @@ cg    cảm giác
 cgd   cái gì đó
 ch    chúng
 chko  chứ không
-chc   chỉ cần
-chch  cho chúng
+crc   chỉ cần
+chc   cho chúng
 chct  cho chúng ta
 chk   chánh kiến
 chm   cho mình
@@ -67,20 +67,18 @@ cla   chỉ là
 cm    của mình
 cmn   cả mọi người
 cn    chánh niệm
+cnd   con đường
 cng   con người
 cnh   cảm nhận
 cny   cái này
-cond  con đường
-conng con người
-conx  có những
-coth  có thể
+cnx   có những
+cth   có thể
 cr    có rất
 crn   có rất nhiều
 cs    cuộc sống
 csc   cuộc sống của
 ct    cái tâm
 cta   chúng ta
-ctam  cái tâm
 ctg   chư Tăng
 ctt   chánh tinh tấn
 cv    cái việc
@@ -101,7 +99,7 @@ dkh   đau khổ
 dlm   đấy là một
 dlc   đó là cái
 dmt   đủ mọi thứ
-dndn  dần dần
+dfd   dần dần
 dp    Đức Phật
 drl   đó rất là
 dt    đầu tiên
@@ -125,7 +123,7 @@ kb    không biết
 kbg   không bao giờ
 kc    không có
 kcc   kích cỡ
-kcth  kích thước
+kct   kích thước
 kd    không được
 kdg   không đúng
 kh    không hiểu
@@ -146,14 +144,12 @@ l1c   là một cái
 l1n   là một người
 lbv   là bởi vì
 lc    lựa chọn
-lcho  làm cho
+lch   làm cho
 lcm   làm cho mình
-lco   là có
 ld    làm được
 ldo   lúc đó
 lg    là gì
 li    lợi ích
-lii   lợi ích
 lk    là không
 ll    luôn luôn
 lm    là mình
@@ -169,8 +165,8 @@ ls    làm sao
 lsm   làm sao mà
 lt    lập tức
 lv    làm việc
-mct   mình có thể
-mcta  mà chúng ta
+mcth  mình có thể
+mct   mà chúng ta
 mcx   mình cũng
 md    mình đang
 mf    mình
@@ -180,12 +176,11 @@ mm    mạnh mẽ
 mph   mình phải
 nc    nước
 nch   nói chuyện
-ncn   nói chuyện
 nco   nó có
 nd    nào đó
 nf    nhiều
 ng    người
-ngkh  người khác
+ngk   người khác
 ngt   người ta
 ngth  ngồi thiền
 nhng  nhiều người
@@ -211,7 +206,6 @@ p     Phật
 pc    phước
 pb    phước báu
 ph    Pháp
-phr   phải
 pr    phải
 pl    phải là
 pn    phiền não
@@ -233,13 +227,11 @@ sn    suy nghĩ
 sp    số phận
 st    sự thật
 t     Tăng
-tact  ta có thể
-tacx  ta cũng
-tath  ta thấy
 tb    Tam Bảo
 tc    tất cả
 tcc   tích cực
 tcs   trong cuộc sống
+tct   ta có thể
 td    thay đổi
 tg    thời gian
 tgx   thư giãn
@@ -279,5 +271,4 @@ vt    vì thế
 vx    vẫn
 xd    xứng đáng
 yhn   y hệt như
-yo    yếu ớt
-đđ    đúng đắn`
+yo    yếu ớt`

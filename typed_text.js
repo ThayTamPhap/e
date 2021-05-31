@@ -30,17 +30,13 @@ _shortcuts.split("\n").map(x => {
   }
 
   if (k.length > 2) {
-    let prevSc = k.slice(0,-1);
-    suffixShortcuts[prevSc] = suffixShortcuts[prevSc] ?? [];
-    if (!suffixShortcuts[prevSc].includes(k)) {
-      suffixShortcuts[prevSc].push(k); 
+    _addToSuffixShortcuts(k.slice(0,-1), k);
+    _addToSuffixShortcuts(k[0] + k[2], k);
+    if  (k.length > 3) {
+      _addToSuffixShortcuts(k[0] + k[3], k);
     }
-
-    prevSc = k[0] + k.slice(-1,);
-    suffixShortcuts[prevSc] = suffixShortcuts[prevSc] ?? [];
-    if (!suffixShortcuts[prevSc].includes(k)) {
-      suffixShortcuts[prevSc].push(k); 
-    }
+  } else if (k.length === 2) {
+    _addToSuffixShortcuts(k[0], k);
   }
 
   typingShortcuts[k] = v;  
@@ -48,6 +44,12 @@ _shortcuts.split("\n").map(x => {
 
 }).slice(1,).join("|")+')(?=[\\s!?.,;:|\\]})])', 'gi'); 
 
+function _addToSuffixShortcuts(k, v) {
+    suffixShortcuts[k] = suffixShortcuts[k] ?? [];
+    if (!suffixShortcuts[k].includes(v)) {
+      suffixShortcuts[k].push(v); 
+    }  
+}
 
 window.normalizeText = normalizeText; // Hack: make it available in storage.js
 export function normalizeText(value, completeSent=true) {

@@ -27,8 +27,8 @@ async function mapKeysForMe(event) {
         prevC = null;
     }
     
-    let logStr = `keyup: key='${event.key}' | code='${event.code}' | keyCode=${event.keyCode}`;
-    console.log(logStr); // console.log(controlKeys.includes(event.code));
+    // let logStr = `keyup: key='${event.key}' | code='${event.code}' | keyCode=${event.keyCode}`;
+    // console.log(logStr); // console.log(controlKeys.includes(event.code));
 
     // Skip control keys
     if (event.code != "" && controlKeys.includes(event.code)) { 
@@ -113,19 +113,22 @@ async function mapKeysForMe(event) {
 
     // Process shortcuts
     let scToText = TypedText.typingShortcuts[lastWord];
+    let html = "";
     if (scToText) {
-        let html = `<sub><span class="default">${lastWord}</span> = </sub>
+        html += `<sub><span class="default">${lastWord}</span> = </sub>
              <span class="default">${scToText}</span>`;
-        let others = TypedText.suffixShortcuts[lastWord];
-        if (others) {
-            html += others.map(x =>
-                `<br/><sub>${x} = </sub> ${TypedText.typingShortcuts[x]}`
-            ).join("");
-        }
+    }
+    let others = TypedText.suffixShortcuts[lastWord];
+    if (others) {
+        html += others.map(x =>
+            `<br/><sub>${x} = </sub> ${TypedText.typingShortcuts[x]}`
+        ).join("");
+    }
+    if (html.length > 0) {
         suggestion.innerHTML = html;
         suggestion.style = "display: true";
-        return;
     }
+    if (scToText) { return; }
 
     scToText = TypedText.spellSpecialWords(lastWord);
     if (scToText != lastWord) {
