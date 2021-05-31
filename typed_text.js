@@ -14,6 +14,7 @@ And \w is defined as [A-Za-z0-9_]. So \w doesn’t match greek characters.
 */
 
 export var typingShortcuts = {};
+export var suffixShortcuts = {};
 
 const typingShortcutsRegex = new RegExp('(^|\\s)(?:' + 
 _shortcuts.split("\n").map(x => {
@@ -26,6 +27,12 @@ _shortcuts.split("\n").map(x => {
   
   if (typingShortcuts[k]) { 
     console.log("\n\n!!! WARNING", k, "shortcut is duplicated.\n\n"); 
+  }
+
+  if (k.length > 2) {
+    let prevSc = k.slice(0,-1);
+    suffixShortcuts[prevSc] = suffixShortcuts[prevSc] ?? [];
+    suffixShortcuts[prevSc].push(k);
   }
 
   typingShortcuts[k] = v;  

@@ -111,7 +111,16 @@ async function mapKeysForMe(event) {
     // Process shortcuts
     let scToText = TypedText.typingShortcuts[lastWord];
     if (scToText) {
-        suggestion.innerHTML = `<span class="default">${scToText}</span>`;
+        let html = `<sub><span class="default">${lastWord}</span> = </sub>
+             <span class="default">${scToText}</span>`;
+        let others = TypedText.suffixShortcuts[lastWord];
+        if (others) {
+            html += others.map(x =>
+                `<br/><sub><span class="default">${lastWord}</span>${x.replace(lastWord,"")} = </sub>
+                 ${TypedText.typingShortcuts[x]}`
+            ).join("");
+        }
+        suggestion.innerHTML = html;
         suggestion.style = "display: true";
         return;
     }
@@ -200,10 +209,10 @@ async function mapKeysForMe(event) {
                 ww = null;
             }
             matches.forEach((m, i)=> {
-                htmls.push(`<span class="${i==0?"default":""}">${i+1}. ${m}</span>`);
+                htmls.push(`<sub>${i+1}.</sub> <span class="${i==0?"default":""}">${m}</span>`);
             });
             if (ww != null) { 
-                htmls.push("<span>0. " + triWords.join(" ")) + "</span>"; 
+                htmls.push("<sub>0.</sub> " + triWords.join(" "));
             }
             suggestionRegex = new RegExp(`${triWords.join("\\s+")}`);
             // console.log(suggestionRegex);

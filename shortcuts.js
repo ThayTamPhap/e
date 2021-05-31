@@ -27,15 +27,14 @@ blm   ba-la-mật
 bm    biết mình
 bn    bao nhiêu
 bt    bản thân
+btm   bản thân mình
 btg   bình thường
 bth   bình thường
-btm   bản thân mình
 btr   bên trong
 bv    bởi vì
 bvl   bởi vì là
 bvs   bởi vì sao
 byg   bây giờ
-bđ    bắt đầu
 c1    có một
 c1c   có một cái
 cbg   chua bao giờ
@@ -53,7 +52,7 @@ cdo   cái đó
 cg    cảm giác
 cgd   cái gì đó
 ch    chúng
-ch0   chứ không
+chko  chứ không
 chc   chỉ cần
 chch  cho chúng
 chct  cho chúng ta
