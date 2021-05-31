@@ -132,6 +132,11 @@ export function changeMark(s, mark) {
     }
     let tone = _getTone(s);
     let unTone = _removeTone(s);
+
+    if (!"oaewz".includes(mark)) {
+        return changeTone(unTone + mark, tone);
+    }
+
     let naked = removeMarks(unTone, 'keep đ/Đ');
     if (mark === "z") return naked;
 
@@ -171,6 +176,7 @@ export function changeMark(s, mark) {
 
     return news !== s ? news : changeTone(naked, tone) + mark;
 }
+assertEqual(changeMark("xòa","i"), "xoài");
 assertEqual(changeMark("dể","d"), "để");
 assertEqual(changeMark("da","d"), "đa");
 assertEqual(changeMark("ye","e"), "yê");
@@ -230,7 +236,7 @@ export function telexFinalizeWord(w) {
         c = w[i];
         if ("sfrxj".includes(c)) {
             neww = changeTone(neww, c);
-        } else if ("daeow".includes(c)) {
+        } else if ("daeowiyu".includes(c)) {
             neww = changeMark(neww, c);
         } else {
             neww += c;
