@@ -186,6 +186,7 @@ nhng  nhiều người
 nhth  nhìn thấy
 nl    năng lượng
 nlt   ngay lập tức
+nh    nhưng
 nm    nhưng mà
 nr    nó rất
 nrl   nó rất là
