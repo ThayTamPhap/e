@@ -38,14 +38,14 @@ async function playSub(event) {
     // First click on sub
     CursorHelpers.saveLastCursor('playSub: First click on sub', 0);
     saveCurrSubIndex(index);
-    CursorHelpers.blinkCurPos(0);
     await loadCurrAdjustedDeltas();
     await CursorHelpers.playCurrSubIndex();
+    CursorHelpers.blinkCurPos(0);
   }  else { 
     // Click on current sub
     CursorHelpers.saveLastCursor('playSub: Click on current sub');
-    CursorHelpers.blinkCurPos();
     await CursorHelpers.playCurrPos();
+    CursorHelpers.blinkCurPos();
   }
 }
 

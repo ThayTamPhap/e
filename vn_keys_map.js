@@ -14,6 +14,7 @@
  nl___ năng lượng
  nta__ người ta
  nx___ những
+ nz___ nhưng
  pr___ phải
  rln__ rất là nhiều
  vc___ việc

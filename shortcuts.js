@@ -90,7 +90,6 @@ cvt   chính vì thế
 cx    cũng
 cxc   cảm xúc
 cy    chú ý
-d?    đúng không?
 dc    được
 dd    dễ duôi
 ddd   được điều đó
@@ -117,7 +116,6 @@ gl    gọi là
 gn    giống như
 gth   giải thích
 gtt   giải thoát
-h?    hiểu không?
 hb    hiểu biết
 hd    hành động
 hh    hồi hướng
@@ -128,7 +126,7 @@ hn    Hà Nội
 hp    hạnh phúc
 ht    hoàn toàn
 hth   hành thiền
-k     không
+ko    không
 kb    không biết
 kbg   không bao giờ
 kc    không có
@@ -177,27 +175,27 @@ ls    làm sao
 lsm   làm sao mà
 lt    lập tức
 lv    làm việc
-m     mình
 mct   mình có thể
 mcta  mà chúng ta
 mcx   mình cũng
 md    mình đang
+mf    mình
 mk    mình không
 mkb   mình không biết
 mm    mạnh mẽ
 mph   mình phải
-n     nhưng
 nc    nước
-ncn   nói chuyện
 nch   nói chuyện
+ncn   nói chuyện
 nco   nó có
 nd    nào đó
+nf    nhiều
 ng    người
+nz    nhưng
 ngkh  người khác
 ngt   người ta
 ngta  người ta  
 ngth  ngồi thiền
-nh    nhiều
 nhng  nhiều người
 nhth  nhìn thấy
 nlt   ngay lập tức
