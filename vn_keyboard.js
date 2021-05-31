@@ -89,6 +89,19 @@ async function mapKeysForMe(event) {
         matches = [];
     }
 
+    // Press space will auto-complete sent, double space to pause / play audio
+    // console.log("keyup", c1, c2);
+    if (c1 === 32 || c1 === 160) { // Android space char code is 160
+        if (c2 === 32 || c2 === 160) { // Double-space
+            console.log("> > > Double-space < < <");
+            CursorHelpers.pauseOrPlayCurrPos(); 
+        } else { // Mono-space            
+            console.log("> > Mono-space < <");
+            CursorHelpers.resetTextAndPos();
+        }
+        return;
+    }    
+
     // Process phrase level
     let triWords = l.trim().split(/\s+/).slice(-3);
     let lastWord = triWords[triWords.length - 1];
@@ -126,19 +139,6 @@ async function mapKeysForMe(event) {
                 CursorHelpers.setLastCursorFast(newl.length));
             l = newl;
         }
-    }
-
-    // Press space will auto-complete sent, double space to pause / play audio
-    // console.log("keyup", c1, c2);
-    if (c1 === 32 || c1 === 160) { // Android space char code is 160
-        if (c2 === 32 || c2 === 160) { // Double-space
-            console.log("> > > Double-space < < <");
-            CursorHelpers.pauseOrPlayCurrPos(); 
-        } else { // Mono-space            
-            console.log("> > Mono-space < <");
-            CursorHelpers.resetTextAndPos();
-        }
-        return;
     }
 
     // console.log(c1,c2,prevC);
