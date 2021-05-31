@@ -12,7 +12,10 @@ let www, suggestionRegex = null;
 let autoReplaced = false;
 let gram, matched;
 
-const controlKeys = "Tab,Enter,ControlLeft,AltLeft,ShiftLeft,AltRight";
+const controlKeys = "Tab,Capslock,Enter,"+
+    "ControlLeft,AltLeft,ShiftLeft,"+
+    "ControlRight,AltRight,ShiftRight,"+
+    "ArrowRight,ArrowLeft,ArrowUp,ArrowDown";
 
 async function mapKeysForMe(event) {
     CursorHelpers.saveLastCursor('mapKeysForMe');
@@ -24,8 +27,8 @@ async function mapKeysForMe(event) {
         prevC = null;
     }
     
-    // let logStr = `keyup: key='${event.key}' | code='${event.code}' | keyCode=${event.keyCode}`;
-    // console.log(logStr); // console.log(controlKeys.includes(event.code));
+    let logStr = `keyup: key='${event.key}' | code='${event.code}' | keyCode=${event.keyCode}`;
+    console.log(logStr); // console.log(controlKeys.includes(event.code));
 
     // Skip control keys
     if (event.code != "" && controlKeys.includes(event.code)) { 
@@ -97,10 +100,10 @@ async function mapKeysForMe(event) {
             CursorHelpers.pauseOrPlayCurrPos(); 
         } else { // Mono-space            
             console.log("> > Mono-space < <");
-            CursorHelpers.resetTextAndPos();
         }
+        CursorHelpers.resetTextAndPos();
         return;
-    }
+    }    
 
     // Process phrase level
     let triWords = l.trim().split(/\s+/).slice(-3);
@@ -111,7 +114,15 @@ async function mapKeysForMe(event) {
     // Process shortcuts
     let scToText = TypedText.typingShortcuts[lastWord];
     if (scToText) {
-        suggestion.innerHTML = `<span class="default">${scToText}</span>`;
+        let html = `<sub><span class="default">${lastWord}</span> = </sub>
+             <span class="default">${scToText}</span>`;
+        let others = TypedText.suffixShortcuts[lastWord];
+        if (others) {
+            html += others.map(x =>
+                `<br/><sub>${x} = </sub> ${TypedText.typingShortcuts[x]}`
+            ).join("");
+        }
+        suggestion.innerHTML = html;
         suggestion.style = "display: true";
         return;
     }
@@ -128,7 +139,8 @@ async function mapKeysForMe(event) {
     lastChar = event.code === "backspace" ? null 
         : lastWord.slice(-1) === lastChar ? lastChar : null;
     // console.log('lastChar',lastChar, lastWord.slice(-1), String.fromCharCode(c1));
-    if (c2 != 32 && c2 != 160 && lastChar) {
+    if (c2 != 32 && c2 != 160 && lastChar && 
+        (true || "dsfrxj aeow".includes(lastChar) || c1 === 160)) {
         let newWord = VnHelpers.telexFinalizeWord(lastWord);
         console.log('TELEX:',lastWord,'=>',newWord);
         if (newWord !== lastWord) {
@@ -199,10 +211,10 @@ async function mapKeysForMe(event) {
                 ww = null;
             }
             matches.forEach((m, i)=> {
-                htmls.push(`<span class="${i==0?"default":""}">${i+1}. ${m}</span>`);
+                htmls.push(`<sub>${i+1}.</sub> <span class="${i==0?"default":""}">${m}</span>`);
             });
             if (ww != null) { 
-                htmls.push("<span>0. " + triWords.join(" ")) + "</span>"; 
+                htmls.push("<sub>0.</sub> " + triWords.join(" "));
             }
             suggestionRegex = new RegExp(`${triWords.join("\\s+")}`);
             // console.log(suggestionRegex);

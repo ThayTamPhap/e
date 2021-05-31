@@ -78,13 +78,12 @@ export function resetTextAndPos() {
 
     // Add suffix first then normalize it
     let normText = currInnerText.substr(0, lastCurrPos);
-    // normText = VnHelpers.telexFinalize(normText);
     normText = TypedText.normalizeText(normText, false);
 
     let remain = currInnerText.substr(lastCurrPos,);
-    remain = TypedText.normalizeText(remain, false);
+    remain = TypedText.normalizeText(remain);
 
-    currInnerText = normText + remain;
+    currInnerText = (normText + remain);
     lastCurrPos = normText.length;
 
     if (autoCapitalizedFirstCharOf(currP, false)) {

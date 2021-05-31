@@ -18,7 +18,6 @@
 \\d+p    \\d+ phút
 \\d+t    \\d+ tiếng
 \\d+y    \\d+ năm
-ad    Ấn Độ
 alh   A-la-hán
 bc    bất cứ
 bd    bắt đầu
@@ -27,15 +26,13 @@ blm   ba-la-mật
 bm    biết mình
 bn    bao nhiêu
 bt    bản thân
-btg   bình thường
-bth   bình thường
 btm   bản thân mình
+bth   bình thường
 btr   bên trong
 bv    bởi vì
 bvl   bởi vì là
 bvs   bởi vì sao
 byg   bây giờ
-bđ    bắt đầu
 c1    có một
 c1c   có một cái
 cbg   chua bao giờ
@@ -46,14 +43,14 @@ cch   của chúng
 ccn   có chánh niệm
 ccta  của chúng ta
 cd    cuộc đời
-cdd   cái điều đó
+cdd   cái điều
 cdg   cúng dường
 cdl   cái đó là
 cdo   cái đó
 cg    cảm giác
 cgd   cái gì đó
 ch    chúng
-ch0   chứ không
+chko  chứ không
 chc   chỉ cần
 chch  cho chúng
 chct  cho chúng ta
@@ -92,25 +89,24 @@ cx    cũng
 cxc   cảm xúc
 cy    chú ý
 dc    được
+dcd   đắc đạo
 dd    dễ duôi
 ddd   được điều đó
-ddo   điều đó
+df    điều
+dfk   điều kiện
 dg    đơn giản
 dgl   đấy gọi là
 dk    đúng không
 dkh   đau khổ
-dl1   đấy là một
-dla   đấy là
+dlm   đấy là một
 dlc   đó là cái
 dmt   đủ mọi thứ
 dndn  dần dần
-dol   đó là
 dp    Đức Phật
 drl   đó rất là
 dt    đầu tiên
 dtg   đối tượng
 dvn   do vậy nên
-dđ    đắc đạo
 gc    gì cả
 gd    gì đó
 gl    gọi là
@@ -122,8 +118,6 @@ hd    hành động
 hh    hồi hướng
 hk    hiểu không
 hl    hoặc là
-hla   hoặc là
-hn    Hà Nội
 hp    hạnh phúc
 ht    hoàn toàn
 hth   hành thiền
@@ -167,8 +161,6 @@ lmp   là mình phải
 ln    lúc nào
 lng   là người
 lnh   là nhiều
-lnhu  là như
-lno   là nó
 lnx   là những
 lp    làm phước
 lpcd  làm phước cúng dường
@@ -195,7 +187,6 @@ nf    nhiều
 ng    người
 ngkh  người khác
 ngt   người ta
-ngta  người ta  
 ngth  ngồi thiền
 nhng  nhiều người
 nhth  nhìn thấy
@@ -206,12 +197,7 @@ nr    nó rất
 nrl   nó rất là
 ns    nó sẽ
 nt    như thế
-nta   người ta
-ntn   như thế nào
-ntno  như thế nào
-ntny  như thế này
 nts   nên tại sao
-ntt   như thế thì
 nv    như vậy
 nvl   như vậy là
 nx    những
@@ -222,14 +208,13 @@ nz    nhưng
 od    ở đây
 otr   ở trong
 p     Phật
-pb    phước báu
 pc    phước
+pb    phước báu
 ph    Pháp
 phr   phải
-phuoc phước
+pr    phải
 pl    phải là
 pn    phiền não
-pr    phải
 pt    phát triển
 pv    phục vụ
 qd    quyết định
@@ -239,7 +224,6 @@ rl    rất là
 rlk   rất là khó
 rln   rất là nhiều
 rn    rất nhiều
-rnng  rất nhiều người
 rnt   rất nhiều thứ
 rr    rõ ràng
 scy   sự chú ý
@@ -249,12 +233,12 @@ sn    suy nghĩ
 sp    số phận
 st    sự thật
 t     Tăng
-taco  ta có
 tact  ta có thể
 tacx  ta cũng
 tath  ta thấy
 tb    Tam Bảo
 tc    tất cả
+tcc   tích cực
 tcs   trong cuộc sống
 td    thay đổi
 tg    thời gian
@@ -275,7 +259,6 @@ trc   trước
 trt   trí tuệ
 ts    tại sao
 tse   ta sẽ
-tsm   tại sao mình
 tst   ta sẽ thấy
 tt    tinh tấn
 tte   thực tế
