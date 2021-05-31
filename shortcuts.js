@@ -18,7 +18,6 @@
 \\d+p    \\d+ phút
 \\d+t    \\d+ tiếng
 \\d+y    \\d+ năm
-ad    Ấn Độ
 alh   A-la-hán
 bc    bất cứ
 bd    bắt đầu
@@ -28,7 +27,6 @@ bm    biết mình
 bn    bao nhiêu
 bt    bản thân
 btm   bản thân mình
-btg   bình thường
 bth   bình thường
 btr   bên trong
 bv    bởi vì
@@ -194,7 +192,6 @@ nf    nhiều
 ng    người
 ngkh  người khác
 ngt   người ta
-ngta  người ta  
 ngth  ngồi thiền
 nhng  nhiều người
 nhth  nhìn thấy
@@ -205,12 +202,7 @@ nr    nó rất
 nrl   nó rất là
 ns    nó sẽ
 nt    như thế
-nta   người ta
-ntn   như thế nào
-ntno  như thế nào
-ntny  như thế này
 nts   nên tại sao
-ntt   như thế thì
 nv    như vậy
 nvl   như vậy là
 nx    những
@@ -221,14 +213,13 @@ nz    nhưng
 od    ở đây
 otr   ở trong
 p     Phật
-pb    phước báu
 pc    phước
+pb    phước báu
 ph    Pháp
 phr   phải
-phuoc phước
+pr    phải
 pl    phải là
 pn    phiền não
-pr    phải
 pt    phát triển
 pv    phục vụ
 qd    quyết định
@@ -238,7 +229,6 @@ rl    rất là
 rlk   rất là khó
 rln   rất là nhiều
 rn    rất nhiều
-rnng  rất nhiều người
 rnt   rất nhiều thứ
 rr    rõ ràng
 scy   sự chú ý
@@ -248,7 +238,6 @@ sn    suy nghĩ
 sp    số phận
 st    sự thật
 t     Tăng
-taco  ta có
 tact  ta có thể
 tacx  ta cũng
 tath  ta thấy
@@ -274,7 +263,6 @@ trc   trước
 trt   trí tuệ
 ts    tại sao
 tse   ta sẽ
-tsm   tại sao mình
 tst   ta sẽ thấy
 tt    tinh tấn
 tte   thực tế
