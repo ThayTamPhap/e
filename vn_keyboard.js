@@ -12,7 +12,10 @@ let www, suggestionRegex = null;
 let autoReplaced = false;
 let gram, matched;
 
-const controlKeys = "Tab,Enter,ControlLeft,AltLeft,ShiftLeft,AltRight";
+const controlKeys = "Tab,Capslock,Enter,"+
+    "ControlLeft,AltLeft,ShiftLeft,"+
+    "ControlRight,AltRight,ShiftRight,"+
+    "ArrowRight,ArrowLeft,ArrowUp,ArrowDown";
 
 async function mapKeysForMe(event) {
     CursorHelpers.saveLastCursor('mapKeysForMe');
@@ -24,8 +27,8 @@ async function mapKeysForMe(event) {
         prevC = null;
     }
     
-    // let logStr = `keyup: key='${event.key}' | code='${event.code}' | keyCode=${event.keyCode}`;
-    // console.log(logStr); // console.log(controlKeys.includes(event.code));
+    let logStr = `keyup: key='${event.key}' | code='${event.code}' | keyCode=${event.keyCode}`;
+    console.log(logStr); // console.log(controlKeys.includes(event.code));
 
     // Skip control keys
     if (event.code != "" && controlKeys.includes(event.code)) { 
