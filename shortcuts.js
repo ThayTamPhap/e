@@ -189,6 +189,7 @@ mph   mình phải
 n     nhưng
 nc    nước
 ncn   nói chuyện
+nch   nói chuyện
 nco   nó có
 nd    nào đó
 ng    người

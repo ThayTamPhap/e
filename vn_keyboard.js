@@ -112,6 +112,7 @@ async function mapKeysForMe(event) {
 
 
     // Not from a-z
+    // console.log(c1,c2,prevC);
     if (c1 < 97 || c1 > 122) { return; }
 
     // Process phrase level
@@ -124,18 +125,16 @@ async function mapKeysForMe(event) {
     lastChar = event.code === "backspace" ? null 
         : lastWord.slice(-1) === lastChar ? lastChar : null;
     // console.log('lastChar',lastChar, lastWord.slice(-1), String.fromCharCode(c1));
-
-    if (c2 != 32 && c2 != 160 && lastChar && "dsfrxjzaeow".includes(lastChar)) { // tone char
-
-        let newWord = "aeow".includes(lastChar) 
-            ? VnHelpers.changeMark(lastWord.slice(0,-1), lastChar)
-            : VnHelpers.changeTone(lastWord.slice(0,-1), lastChar);
-
-        newl = l.substr(0,l.length - lastWord.length) + newWord;
-        p.firstChild.textContent = newl + r;
-        CursorHelpers.collapse(s, p.firstChild, 
-            CursorHelpers.setLastCursorFast(newl.length));
-        l = newl;
+    if (c2 != 32 && c2 != 160 && lastChar) {
+        let newWord = VnHelpers.telexFinalizeWord(lastWord);
+        console.log('TELEX:',lastWord,'=>',newWord);
+        if (newWord !== lastWord) {
+            newl = l.substr(0,l.length - lastWord.length) + newWord;
+            p.firstChild.textContent = newl + r;
+            CursorHelpers.collapse(s, p.firstChild, 
+                CursorHelpers.setLastCursorFast(newl.length));
+            l = newl;
+        }
     }
 
     // Need at least two words to match to bi,tri-grams

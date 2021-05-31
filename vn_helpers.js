@@ -105,13 +105,15 @@ for (var k in tonesMap) {
 }
 
 export function changeTone(s, tone) {
-    let ss = _removeTone(s);
-    if (tone === 'z')return ss;
+    // console.log(s, tone);
     if (tone === 'd') {
-        if (s[0] == 'd') return 'đ' + ss.slice(1,);
-        if (s[0] == 'D') return 'Đ' + ss.slice(1,);
+        if (s[0] == 'd') return 'đ' + s.slice(1,);
+        if (s[0] == 'D') return 'Đ' + s.slice(1,);
         return s + tone;
     }
+    let ss = _removeTone(s);
+    if (tone === 'z')return ss;
+
     let sss, m = ss.match(_syllLeft);
     if (!m) return s + tone;
     // console.log(3, m[1], m[2], m[3]);
@@ -131,6 +133,8 @@ export function changeTone(s, tone) {
     // same tone will clear tone & return tone char
     return sss !== s ? sss : ss + tone;
 }
+
+assertEqual(changeTone("dể","d"), "để");
 assertEqual(changeTone("phai","r"), "phải");
 assertEqual(changeTone("hoan","f"), "hoàn");
 assertEqual(changeTone("nui","s"), "núi");
@@ -242,24 +246,28 @@ function _removeTone(s) {
 }
 
 const VN_SYLLABLE_REGEX = /[qwertyuiopasdfghjklzxcvbnmàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]+/gi;
-export function telexFinalize(s) {
-    var c;
-    return s.replace(VN_SYLLABLE_REGEX, w => {
-        c = w.slice(-1);
-        if ("dsfrxj".includes(c)) {
-            w = changeTone(w.slice(0,-1), c);
-        }
-
-        c = w.slice(-1);
-        if ("aeow".includes(c)) {
-            w = changeMark(w.slice(0,-1), c);
-        }
-
-        return w;
-    });
+export function telexFinalizeStr(s) {
+    return s.replace(VN_SYLLABLE_REGEX, w => telexFinalizeWord(w));
 }
-assertEqual(telexFinalize("tons"), "tón");
-assertEqual(telexFinalize("tonos mooj khôngr"), "tốn moọ khổng");
+
+export function telexFinalizeWord(w) {
+    let neww = w[0], i = 1, n = w.length, c;
+    for (; i < n; i++) {
+        c = w[i];
+        if ("dsfrxj".includes(c)) {
+            neww = changeTone(neww, c);
+        } else if ("aeow".includes(c)) {
+            neww = changeMark(neww, c);
+        } else {
+            neww += c;
+        }
+    }
+    return neww;
+}
+assertEqual(telexFinalizeWord("nièem"), "niềm");
+assertEqual(telexFinalizeWord("dadwngaf"), "đầng");
+assertEqual(telexFinalizeWord("nhieefu"), "nhiều");
+assertEqual(telexFinalizeStr("tonos mooj khôngr"), "tốn mộ khổng");
 
 export function removeMarks(str, keepDd=false) {
     // https://kipalog.com/posts/Mot-so-ki-thuat-xu-li-tieng-Viet-trong-Javascript
