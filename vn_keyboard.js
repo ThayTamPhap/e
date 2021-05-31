@@ -89,19 +89,6 @@ async function mapKeysForMe(event) {
         matches = [];
     }
 
-    // Press space will auto-complete sent, double space to pause / play audio
-    // console.log("keyup", c1, c2);
-    if (c1 === 32 || c1 === 160) { // Android space char code is 160
-        if (c2 === 32 || c2 === 160) { // Double-space
-            console.log("> > > Double-space < < <");
-            CursorHelpers.pauseOrPlayCurrPos(); 
-        } else { // Mono-space            
-            console.log("> > Mono-space < <");
-            CursorHelpers.resetTextAndPos();
-        }
-        return;
-    }
-
     // Process phrase level
     let triWords = l.trim().split(/\s+/).slice(-3);
     let lastWord = triWords[triWords.length - 1];
@@ -128,7 +115,8 @@ async function mapKeysForMe(event) {
     lastChar = event.code === "backspace" ? null 
         : lastWord.slice(-1) === lastChar ? lastChar : null;
     // console.log('lastChar',lastChar, lastWord.slice(-1), String.fromCharCode(c1));
-    if (c2 != 32 && c2 != 160 && lastChar) {
+    if (c2 != 32 && c2 != 160 && lastChar && 
+        (true || "dsfrxj aeow".includes(lastChar) || c1 === 160)) {
         let newWord = VnHelpers.telexFinalizeWord(lastWord);
         console.log('TELEX:',lastWord,'=>',newWord);
         if (newWord !== lastWord) {
@@ -138,6 +126,19 @@ async function mapKeysForMe(event) {
                 CursorHelpers.setLastCursorFast(newl.length));
             l = newl;
         }
+    }
+
+    // Press space will auto-complete sent, double space to pause / play audio
+    // console.log("keyup", c1, c2);
+    if (c1 === 32 || c1 === 160) { // Android space char code is 160
+        if (c2 === 32 || c2 === 160) { // Double-space
+            console.log("> > > Double-space < < <");
+            CursorHelpers.pauseOrPlayCurrPos(); 
+        } else { // Mono-space            
+            console.log("> > Mono-space < <");
+            CursorHelpers.resetTextAndPos();
+        }
+        return;
     }
 
     // console.log(c1,c2,prevC);

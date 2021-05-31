@@ -1,6 +1,7 @@
 import { _mappings } from "./vn_mappings.js"
 
 export const VN_PHRASE_BREAK_REGEX = /[^\sqwertyuiopasdfghjklzxcvbnmàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]+/gi;
+const VN_SYLLABLE_REGEX = /[qwertyuiopasdfghjklzxcvbnmàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]+/gi;
 
 export function makeUseOfBiTriGramsFrom(txt) {
     let phrases = txt.toLowerCase().split(VN_PHRASE_BREAK_REGEX);
@@ -80,11 +81,6 @@ for (var k in tonesMap) {
 
 export function changeTone(s, tone) {
     // console.log(s, tone);
-    if (tone === 'd') {
-        if (s[0] == 'd') return 'đ' + s.slice(1,);
-        if (s[0] == 'D') return 'Đ' + s.slice(1,);
-        return s + tone;
-    }
     let ss = _removeTone(s);
     if (tone === 'z')return ss;
 
@@ -108,11 +104,9 @@ export function changeTone(s, tone) {
     return sss !== s ? sss : ss + tone;
 }
 
-assertEqual(changeTone("dể","d"), "để");
 assertEqual(changeTone("phai","r"), "phải");
 assertEqual(changeTone("hoan","f"), "hoàn");
 assertEqual(changeTone("nui","s"), "núi");
-assertEqual(changeTone("da","d"), "đa");
 assertEqual(changeTone("quá","f"), "quà");
 assertEqual(changeTone("cua","f"), "cùa");
 assertEqual(changeTone("cửa","j"), "cựa");
@@ -132,6 +126,11 @@ assertEqual(changeTone("răng","f"),"rằng");
 
 
 export function changeMark(s, mark) {
+    if (mark === 'd') {
+        if (s[0] == 'd') return 'đ' + s.slice(1,);
+        if (s[0] == 'D') return 'Đ' + s.slice(1,);
+        return s + mark;
+    }
     let tone = _getTone(s);
     let unTone = _removeTone(s);
     let naked = removeMarks(unTone, 'keep đ/Đ');
@@ -173,6 +172,8 @@ export function changeMark(s, mark) {
 
     return news !== s ? news : changeTone(naked, tone) + mark;
 }
+assertEqual(changeMark("dể","d"), "để");
+assertEqual(changeMark("da","d"), "đa");
 assertEqual(changeMark("ye","e"), "yê");
 assertEqual(changeMark("đu","o"), "đuo");
 assertEqual(changeMark("à","o"), "ào");
@@ -219,18 +220,18 @@ function _removeTone(s) {
         replace(/[ỳýỵỷỹ]/g,  "y");
 }
 
-const VN_SYLLABLE_REGEX = /[qwertyuiopasdfghjklzxcvbnmàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]+/gi;
 export function telexFinalizeStr(s) {
     return s.replace(VN_SYLLABLE_REGEX, w => telexFinalizeWord(w));
 }
 
 export function telexFinalizeWord(w) {
+    if (w.match(VN_PHRASE_BREAK_REGEX)) { return w; }
     let neww = w[0], i = 1, n = w.length, c;
     for (; i < n; i++) {
         c = w[i];
-        if ("dsfrxj".includes(c)) {
+        if ("sfrxj".includes(c)) {
             neww = changeTone(neww, c);
-        } else if ("aeow".includes(c)) {
+        } else if ("daeow".includes(c)) {
             neww = changeMark(neww, c);
         } else {
             neww += c;
