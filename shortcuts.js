@@ -89,25 +89,24 @@ cx    cũng
 cxc   cảm xúc
 cy    chú ý
 dc    được
+dcd   đắc đạo
 dd    dễ duôi
 ddd   được điều đó
 ddo   điều đó
+df    điều
 dg    đơn giản
 dgl   đấy gọi là
 dk    đúng không
 dkh   đau khổ
-dl1   đấy là một
-dla   đấy là
+dlm   đấy là một
 dlc   đó là cái
 dmt   đủ mọi thứ
 dndn  dần dần
-dol   đó là
 dp    Đức Phật
 drl   đó rất là
 dt    đầu tiên
 dtg   đối tượng
 dvn   do vậy nên
-dđ    đắc đạo
 gc    gì cả
 gd    gì đó
 gl    gọi là
@@ -119,8 +118,6 @@ hd    hành động
 hh    hồi hướng
 hk    hiểu không
 hl    hoặc là
-hla   hoặc là
-hn    Hà Nội
 hp    hạnh phúc
 ht    hoàn toàn
 hth   hành thiền
@@ -164,8 +161,6 @@ lmp   là mình phải
 ln    lúc nào
 lng   là người
 lnh   là nhiều
-lnhu  là như
-lno   là nó
 lnx   là những
 lp    làm phước
 lpcd  làm phước cúng dường
@@ -243,6 +238,7 @@ tacx  ta cũng
 tath  ta thấy
 tb    Tam Bảo
 tc    tất cả
+tcc   tích cực
 tcs   trong cuộc sống
 td    thay đổi
 tg    thời gian
