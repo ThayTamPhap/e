@@ -1,5 +1,5 @@
 /* >200 counts tri-syllabels + >450 counts bi-syllabels
-/**/export let _shortcuts = `
+/**/export let _shortcuts = `,, [??]
 //    [??]
 1     một
 10    mười
@@ -19,6 +19,7 @@
 \\d+t    \\d+ tiếng
 \\d+y    \\d+ năm
 ad    Ấn Độ
+alh   A-la-hán
 bc    bất cứ
 bd    bắt đầu
 bg    bao giờ
@@ -96,7 +97,7 @@ ddd   được điều đó
 ddo   điều đó
 dg    đơn giản
 dgl   đấy gọi là
-dk    điều kiện
+dk    đúng không
 dkh   đau khổ
 dl1   đấy là một
 dla   đấy là
@@ -126,7 +127,6 @@ hn    Hà Nội
 hp    hạnh phúc
 ht    hoàn toàn
 hth   hành thiền
-ko    không
 kb    không biết
 kbg   không bao giờ
 kc    không có
@@ -138,8 +138,10 @@ kh    không hiểu
 kk    khó khăn
 km    khi mình
 kn    không nói
+ko    không
 kp    không phải
 kpl   không phải là
+kq    kết quả
 kt    không thể
 kth   không thể
 kti   kiếm tiền
@@ -191,19 +193,20 @@ nco   nó có
 nd    nào đó
 nf    nhiều
 ng    người
-nz    nhưng
 ngkh  người khác
 ngt   người ta
 ngta  người ta  
 ngth  ngồi thiền
 nhng  nhiều người
 nhth  nhìn thấy
+nl    năng lượng
 nlt   ngay lập tức
 nm    nhưng mà
 nr    nó rất
 nrl   nó rất là
 ns    nó sẽ
 nt    như thế
+nta   người ta
 ntn   như thế nào
 ntno  như thế nào
 ntny  như thế này
@@ -215,6 +218,7 @@ nx    những
 nxc   những cái
 nxng  những người
 nxth  những thứ
+nz    nhưng
 od    ở đây
 otr   ở trong
 p     Phật
@@ -225,6 +229,7 @@ phr   phải
 phuoc phước
 pl    phải là
 pn    phiền não
+pr    phải
 pt    phát triển
 pv    phục vụ
 qd    quyết định
@@ -279,6 +284,7 @@ ttj   tu tập
 ttm   trong tâm mình
 ttp   tu tập
 tuh   tu hành
+vc    việc
 vd    vấn đề
 vg    việc gì
 vid   ví dụ
@@ -287,6 +293,7 @@ vidnl ví dụ như là
 vn    vậy nên
 vq    vượt qua
 vt    vì thế
+vx    vẫn
 xd    xứng đáng
 yhn   y hệt như
 yo    yếu ớt

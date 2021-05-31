@@ -13,7 +13,8 @@ or followed by another word character (so .\b. is equal to \W\w and \w\W).
 And \w is defined as [A-Za-z0-9_]. So \w doesn’t match greek characters.
 */
 
-var typingShortcuts = {};
+export var typingShortcuts = {};
+
 const typingShortcutsRegex = new RegExp('(^|\\s)(?:' + 
 _shortcuts.split("\n").map(x => {
 
@@ -42,7 +43,6 @@ export function normalizeText(value, completeSent=true) {
   value = spellSpecialWords(value);
 
   value = value.replace(/[[{(]\s+/g, x => " "+x.replace(/\s+/g,""));
-  // ("  d { d f   fd !}  d ,   f .  H? ")==="d {d f fd!} d, f. Hiểu không?"
   value = value.replace(/\s+[\]})\,\.;:?\!…]/g, x => x.replace(/\s+/g,"")+" ");
   value = value.replace(/\s+[\]})\,\.;:?\!…]/g, x => x.replace(/\s+/g,"")+" ");
 
@@ -61,7 +61,7 @@ export function normalizeText(value, completeSent=true) {
 assertEqual(normalizeText("x .  x , x : x ] x } x )  x  …  x !  x ?  ") ,  "x. X, x: x] x} x) x… x! X?");
 assertEqual(normalizeText("g g.  hom nay") ,  "g g. Hom nay");
 assertEqual(normalizeText("  d  . ", false), " d. ");
-assertEqual(normalizeText("  d { d f   fd !}  d ,   f .  H? "), "d {d f fd!} d, f. Hiểu không?");
+assertEqual(normalizeText("  d { d f   fd !}  d ,   f .  Hk? "), "d {d f fd!} d, f. Hiểu không?");
 
 
 export function spellSpecialWords(txt) {

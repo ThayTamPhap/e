@@ -2,6 +2,7 @@ import * as CursorHelpers from "./cursor_helpers.js"
 import * as AudioPlayer from "./audio_player.js"
 import * as VnHelpers from "./vn_helpers.js"
 import { _mappings } from "./vn_mappings.js"
+import { typingShortcuts } from "./typed_text.js"
 
 document.addEventListener("keyup", mapKeysForMe);
 
@@ -40,18 +41,8 @@ async function mapKeysForMe(event) {
     let c2 = prevC;
     prevC = c1;
     
-    // mapKeys by default
     let l = t.substr(0, i);
     let r = t.substr(i,);
-    let newl = VnHelpers.mapKeys(l);
-
-    if (newl.slice(-2) != l.slice(-2)) {
-        p.firstChild.textContent = newl + r;
-        CursorHelpers.collapse(s, p.firstChild, 
-            CursorHelpers.setLastCursorFast(newl.length));
-        l = newl;
-        c1 = null;
-    }
 
     // Select from previous matches
     if (matches.length > 0) {
@@ -120,7 +111,15 @@ async function mapKeysForMe(event) {
     let triWords = lastPhrase.trim().split(/\s+/).slice(-3);
     let lastWord = triWords[triWords.length - 1];
 
-    // Process last syllable first
+    // Process shortcuts
+    let scToText = typingShortcuts[lastWord];
+    if (scToText) {
+        suggestion.innerHTML = `<span class="default">${scToText}</span>`;
+        suggestion.style = "display: true";
+        return;
+    }
+
+    // Process telex input method
     let lastChar = String.fromCharCode(c1);
     lastChar = event.code === "backspace" ? null 
         : lastWord.slice(-1) === lastChar ? lastChar : null;

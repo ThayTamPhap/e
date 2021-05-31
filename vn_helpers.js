@@ -1,21 +1,6 @@
-import { _keys_map } from "./vn_keys_map.js"
 import { _mappings } from "./vn_mappings.js"
 
 export const VN_PHRASE_BREAK_REGEX = /[^\sqwertyuiopasdfghjklzxcvbnmàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]+/gi;
-
-var keysMap = {};
-
-const keysMapRegex = new RegExp('(?:' + 
-_keys_map.split("\n").map(x => {
-
-  let splits = x.split(/_+/);
-  let k = splits[0];
-  let v = splits[1];
-  keysMap[k] = v;
-
-  return k;
-}).slice(1,).join("|")+')(?=$)', 'i'); // need to match end of string
-// console.log(keysMap, keysMapRegex);
 
 export function makeUseOfBiTriGramsFrom(txt) {
     let phrases = txt.toLowerCase().split(VN_PHRASE_BREAK_REGEX);
@@ -58,17 +43,6 @@ function makeUseOfGram(gram) {
         // console.log(_mappings[key]);
     }
 }
-
-export function mapKeys(sent) {
-  return sent.replace(keysMapRegex, k => {
-    let v = keysMap[k.toLowerCase()];
-    // console.log(`\n!! mapKeys: '${k}' => '${v}'`);
-    return v ?? k;
-  });
-}
-assertEqual(mapKeys(' nx'), ' những');
-assertEqual(mapKeys('nx'), 'nx');
-assertEqual(mapKeys('nx '), 'nx ');
 
  
 let vowelsMap = {
