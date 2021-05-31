@@ -2,7 +2,7 @@ import * as CursorHelpers from "./cursor_helpers.js"
 import * as AudioPlayer from "./audio_player.js"
 import * as VnHelpers from "./vn_helpers.js"
 import { _mappings } from "./vn_mappings.js"
-import { typingShortcuts } from "./typed_text.js"
+import * as TypedText from "./typed_text.js"
 
 document.addEventListener("keyup", mapKeysForMe);
 
@@ -109,7 +109,14 @@ async function mapKeysForMe(event) {
     console.log(triWords.length, triWords);
 
     // Process shortcuts
-    let scToText = typingShortcuts[lastWord];
+    let scToText = TypedText.typingShortcuts[lastWord];
+    if (scToText) {
+        suggestion.innerHTML = `<span class="default">${scToText}</span>`;
+        suggestion.style = "display: true";
+        return;
+    }
+
+    scToText = TypedText.spellSpecialWords(lastWord);
     if (scToText) {
         suggestion.innerHTML = `<span class="default">${scToText}</span>`;
         suggestion.style = "display: true";
