@@ -58,7 +58,7 @@ for (var k in vowelsMap) {
     vowelsMap[k.toUpperCase()] = vowelsMap[k].toUpperCase();
 }
 
-const _syllLeft = /(^|qu|[qrtpsdđghklxcvbnm]+)((?:uy|u|o|ư|i|y)?[aăâeêuưoơôiy])(.*)/i;
+const _syllLeft = /(^|qu|gi|[qrtpsdđghklxcvbnm]+)((?:uy|u|o|ư|i|y)?[aăâeêuưoơôiy])(.*)/i;
 
 let tonesMap = {
     "as":"á", "af":"à", "ax":"ã", "ar":"ả", "aj":"ạ",
@@ -102,6 +102,7 @@ export function changeTone(s, tone) {
     // same tone will clear tone & return tone char
     return sss !== s ? sss : ss + tone;
 }
+assertEqual(changeTone("gia","s"),"giá");
 assertEqual(changeTone("cưu","s"),"cứu");
 assertEqual(changeTone("phai","r"), "phải");
 assertEqual(changeTone("hoan","f"), "hoàn");

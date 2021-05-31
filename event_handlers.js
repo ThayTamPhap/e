@@ -171,7 +171,7 @@ async function adjust(x) {
     time = AudioPlayer.normalizeTime(time);
     saveTime(currSubIndex, time);
   } else {
-    time = (fastMode ? 2 : 1) * x;
+    time = (fastMode ? 2 : 1.2) * (x < 0 : -1 : 1.5);
     Estimators.adjustDeltas(time);
     time = _time + time;
     time = AudioPlayer.normalizeTime(time);
