@@ -13,8 +13,8 @@ let autoReplaced = false;
 let gram, matched;
 
 const controlKeys = "Tab,Capslock,Enter,"+
-    "ControlLeft,AltLeft,ShiftLeft,"+
-    "ControlRight,AltRight,ShiftRight,"+
+    "ControlLeft,AltLeft,ShiftLeft,OsLeft,MetaLeft"+
+    "ControlRight,AltRight,ShiftRight,OsRight,MetaRight"+
     "ArrowRight,ArrowLeft,ArrowUp,ArrowDown";
 
 async function mapKeysForMe(event) {
