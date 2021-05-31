@@ -117,7 +117,7 @@ async function mapKeysForMe(event) {
     }
 
     scToText = TypedText.spellSpecialWords(lastWord);
-    if (scToText) {
+    if (scToText != lastWord) {
         suggestion.innerHTML = `<span class="default">${scToText}</span>`;
         suggestion.style = "display: true";
         return;
