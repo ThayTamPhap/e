@@ -3,7 +3,7 @@
 âm tiết tiếng việt = ```
       phụ âm đầu (26) 2^5  tr|th|ph|ng|ngh|nh|kh|gh|ch|[bckqdđghlmnprstvx]
     + âm đệm     (02) 2^1  [uo]
-    | âm chính   (14) 2^4  [ieêưuoôơaăâ]|(?:iê|ia|yê)|(?:ươ,ưa)|(?:uô|ua)
+    | âm chính   (14) 2^4  iê|ia|yê|ươ|ưa|uô|ua|[ieêưuoôơaăâ]
     | âm cuối    (12) 2^4  nh|ng|ch|[ptcmniyuo]
     + thanh điệu (06) 2^3  sfrxj
 ```
