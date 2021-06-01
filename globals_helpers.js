@@ -4,6 +4,11 @@ const FROM_VIRTUAL_BUTTON = "FROM_VIRTUAL_BUTTON";
 const END_PHRASE_AND_SENT_REGEX = /(\s*(?:[,;:\n\\\.\?\!]\s*)+)/gm;
 const END_SENT_REGEX =            /(\s*(?:[\n\\\.\?\!]\s*)+)/gm;
 
+const controlKeys = "Tab,Capslock,Enter,"+
+    "ControlLeft,AltLeft,ShiftLeft,OsLeft,MetaLeft"+
+    "ControlRight,AltRight,ShiftRight,OsRight,MetaRight"+
+    "ArrowRight,ArrowLeft,ArrowUp,ArrowDown";
+
 // Global variables (app state)
 var currSubIndex, subsCount;
 let adjustedDeltas = [];

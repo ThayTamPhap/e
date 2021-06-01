@@ -157,6 +157,11 @@ async function handleKeyPress(event, from=null) {
       break;
 
     default:
+      // Skip control keys
+      if (event.code != "" && controlKeys.includes(event.code)) { 
+          console.log("controlKey found:", event.code);
+          return; 
+      }
       needToResetTextAndPos = true;
       if (await loadTime(currSubIndex) != 0) { AudioPlayer.pause(); }
   }

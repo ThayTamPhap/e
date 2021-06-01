@@ -1,5 +1,6 @@
 /* >200 counts tri-syllabels + >450 counts bi-syllabels
-/**/export let _shortcuts = `,, [??]
+/**/export let _shortcuts = `
+,,    [??]
 //    [??]
 1     một
 10    mười

@@ -12,11 +12,6 @@ let www, suggestionRegex = null;
 let autoReplaced = false;
 let gram, matched;
 
-const controlKeys = "Tab,Capslock,Enter,"+
-    "ControlLeft,AltLeft,ShiftLeft,OsLeft,MetaLeft"+
-    "ControlRight,AltRight,ShiftRight,OsRight,MetaRight"+
-    "ArrowRight,ArrowLeft,ArrowUp,ArrowDown";
-
 async function mapKeysForMe(event) {
     CursorHelpers.saveLastCursor('mapKeysForMe');
     suggestion.style.display = "none";
