@@ -12,14 +12,14 @@ phụ âm đầu      (26+1) 2^5
                         (03) oa|oă|oe|
                         (19) iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ]
 cuối + thanh    (66+0) 2^7
-                        (54) (?:nh|ng|[mniyuo])?[sfrxj]?
-                        (08) (?:ch|[ctp])[sj]
+                        (54) (nh|ng|[mniyuo])?[sfrxj]?
+                        (08) (ch|[ctp])[sj]
 
 [note] x+0,x+1 0: phải có, 1: có thể ko có, thì cần thêm 1 số đếm để ghi nhận
 ```
 tua, tai, tay, tau, tao
 
-=> Cần 17 bits (65535, uint16) để ghi riêng từng thành phần.
+=> Cần 17 bits để ghi riêng từng thành phần.
 
 => Dùng rule-based (hoặc FST) để dịch mã hoá thành văn bản thì sẽ ko cần
 phải lưu từ điển dưới dạng text, có lẽ sẽ tiết kiệm khoảng 1MB dữ liệu.
