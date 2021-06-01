@@ -11,15 +11,20 @@ phụ âm đầu      (26+1) 2^5
                         (05) uy|uâ|uê|uơ|uya|
                         (03) oa|oă|oe|
                         (19) iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ]
-cuối + thanh    (40+1) 2^5
+cuối + thanh    (40+1) 2^6
                         (32) (?:nh|ng|[mniyuo])[frx]?
                         (08) (?:ch|[ctp])[sj]
 
 [note] x+0,x+1 0: phải có, 1: có thể ko có, thì cần thêm 1 số đếm để ghi nhận
 ```
 
-=> cần 15 bits để ghi riêng từng thành phần.
-=> uint16 (65535) là đủ để mã hoá.
+=> Cần 16 bits (65535, uint16) để ghi riêng từng thành phần.
+=> 32 bits (uint32) đủ để lưu bi-gram.
+
+=> Dùng rule-based (hoặc FST) để dịch mã hoá thành văn bản thì sẽ ko cần
+phải lưu từ điển dưới dạng text, có lẽ sẽ tiết kiệm khoảng 1MB dữ liệu.
+
+=> Dùng cách tương tự để lưu và giải mã các file text nữa, vừa bảo mật vừa tiết kiệm.
 
 ### Âm cuối + thanh điệu
 ch,c,t,p chỉ đi với s,j
@@ -58,12 +63,6 @@ ch,c,t,p chỉ đi với s,j
 {uô} sau có âm cuối.        VD: muốn
 {ua} sau không có âm cuối.  VD: mua
 
-
-=> Dùng rule-based (hoặc FST) để dịch từ mã hoá thành văn bản sẽ ko cần
-phải lưu từ điển dưới dạng text, có lẽ sẽ tiết kiệm dc 1MB dữ liệu.
-
-=> Dùng cách tương tự để lưu và giải mã các file text nữa, vừa bảo mật vừa tiết kiệm.
-
 - - - - - - - - - - - -
 
 http://thtrungnguyen.vinhphuc.edu.vn/bai-viet-chuyen-mon/cau-tao-tieng-cau-tao-van-trong-tieng-viet-c7597-36557.aspx
@@ -73,23 +72,16 @@ http://thtrungnguyen.vinhphuc.edu.vn/bai-viet-chuyen-mon/cau-tao-tieng-cau-tao-v
 – 22 phụ âm : b, c (k,q), ch, d, đ, g (gh), h, kh, l, m, n, nh, ng (ngh), p, ph, r, s, t, tr, th, v, x.
 
 2. Vần gồm có 3 phần: âm đệm, âm chính, âm cuối.
-
 * Âm đệm:
 
 – Âm đệm được ghi bằng con chữ u và o.
-
 + Ghi bằng con chữ o khi đứng trước các nguyên âm: a, ă, e.
-
 + Ghi bằng con chữ u khi đứng trước các nguyên âm y, ê, ơ, â.
 
 – Âm đệm không xuất hiện sau các phụ âm b, m, v, ph, n, r, g. Trừ các trường hợp:
-
 + sau ph, b: thùng phuy, voan, ô tô buýt (là từ nước ngoài)
-
 + sau n: thê noa, noãn sào (2 từ Hán Việt)
-
 + sau r: roàn roạt (1 từ)
-
 + sau g: goá (1 từ)
 
 
