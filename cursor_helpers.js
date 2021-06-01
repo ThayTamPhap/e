@@ -157,7 +157,8 @@ export function blinkCurPos(pos) {
 }
 
 function capitalizeFirstCharOf(sent) {
-  return sent[0].toUpperCase() + sent.slice(1,);
+  if (typeof sent !== "string") { return " "; }
+  return (sent[0] ?? "").toUpperCase() + sent.slice(1,);
 }
 
 function autoCapitalizedFirstCharOf(p, auto=false) {

@@ -11,12 +11,13 @@ phụ âm đầu      (26+1) 2^5
                         (05) uy|uâ|uê|uơ|uya|
                         (03) oa|oă|oe|
                         (19) iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ]
-cuối + thanh    (40+1) 2^6
-                        (32) (?:nh|ng|[mniyuo])[frx]?
+cuối + thanh    (66+0) 2^7
+                        (54) (?:nh|ng|[mniyuo])?[sfrxj]?
                         (08) (?:ch|[ctp])[sj]
 
 [note] x+0,x+1 0: phải có, 1: có thể ko có, thì cần thêm 1 số đếm để ghi nhận
 ```
+tua, tai, tay, tau, tao
 
 => Cần 16 bits (65535, uint16) để ghi riêng từng thành phần.
 => 32 bits (uint32) đủ để lưu bi-gram.

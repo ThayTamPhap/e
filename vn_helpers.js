@@ -1,8 +1,35 @@
 import { _mappings } from "./vn_mappings.js"
 
 export const PHRASE_VALID_CHARS = " 1234567890qwertyuiopasdfghjklzxcvbnmàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđQWERTYUIOPASDFGHJKLZXCVBNMÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ";
+
 export const VN_PHRASE_BREAK_REGEX = /[^\sqwertyuiopasdfghjklzxcvbnmàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]+/gi;
+
 const VN_SYLLABLE_REGEX = /[qwertyuiopasdfghjklzxcvbnmàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]+/gi;
+
+const _syllLeft = /(^|qu|gi|[qrtpsdđghklxcvbnm]+)((?:uy|u|o|ư|i|y)?[aăâeêuưoơôiy])(.*)/i;
+const _syllFull = /^(tr|th|ph|ng|ngh|nh|kh|gh|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|uơ|uya|oa|oă|oe|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])((?:ch|c|t|p)[sj]|(?:nh|ng|[mniyuo])?[sfrxj]?z?)?$/ig;
+
+const tonesMap = {
+    "as":"á", "af":"à", "ax":"ã", "ar":"ả", "aj":"ạ",
+    "âs":"ấ", "âf":"ầ", "âx":"ẫ", "âr":"ẩ", "âj":"ậ",
+    "ăs":"ắ", "ăf":"ằ", "ăx":"ẵ", "ăr":"ẳ", "ăj":"ặ",
+    "es":"é", "ef":"è", "ex":"ẽ", "er":"ẻ", "ej":"ẹ",
+    "ês":"ế", "êf":"ề", "êx":"ễ", "êr":"ể", "êj":"ệ",
+    "os":"ó", "of":"ò", "ox":"õ", "or":"ỏ", "oj":"ọ",
+    "ôs":"ố", "ôf":"ồ", "ôx":"ỗ", "ôr":"ổ", "ôj":"ộ",
+    "ơs":"ớ", "ơf":"ờ", "ơx":"ỡ", "ơr":"ở", "ơj":"ợ",
+    "us":"ú", "uf":"ù", "ux":"ũ", "ur":"ủ", "uj":"ụ",
+    "ưs":"ứ", "ưf":"ừ", "ưx":"ữ", "ưr":"ử", "ưj":"ự",
+    "is":"í", "if":"ì", "ix":"ĩ", "ir":"ỉ", "ij":"ị",
+    "ys":"ý", "yf":"ỳ", "yx":"ỹ", "yr":"ỷ", "yj":"ỵ",
+};
+
+const vowelsMap = {
+    "aa":"â", "aw":"ă", 
+    "ee":"ê", 
+    "oo":"ô", "ow":"ơ",
+    "uw":"ư", 
+}
 
 export function makeUseOfBiTriGramsFrom(txt) {
     let phrases = txt.toLowerCase().split(VN_PHRASE_BREAK_REGEX);
@@ -46,36 +73,12 @@ function makeUseOfGram(gram) {
     }
 }
 
- 
-let vowelsMap = {
-    "aa":"â", "aw":"ă", 
-    "ee":"ê", 
-    "oo":"ô", "ow":"ơ",
-    "uw":"ư", 
-}
 for (var k in vowelsMap) {
     vowelsMap[k[0]+k[1].toUpperCase()] = vowelsMap[k];
     vowelsMap[k[0].toUpperCase()+k[1]] = vowelsMap[k].toUpperCase();
     vowelsMap[k.toUpperCase()] = vowelsMap[k].toUpperCase();
 }
 
-const _syllLeft = /(^|qu|gi|[qrtpsdđghklxcvbnm]+)((?:uy|u|o|ư|i|y)?[aăâeêuưoơôiy])(.*)/i;
-const _syllFull = /^(tr|th|ph|ng|ngh|nh|kh|gh|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|uơ|uya|oa|oă|oe|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])((?:ch|[ctp])[sj]|(?:nh|ng|[mniyuo])[frx]?)?$/i;
-
-let tonesMap = {
-    "as":"á", "af":"à", "ax":"ã", "ar":"ả", "aj":"ạ",
-    "âs":"ấ", "âf":"ầ", "âx":"ẫ", "âr":"ẩ", "âj":"ậ",
-    "ăs":"ắ", "ăf":"ằ", "ăx":"ẵ", "ăr":"ẳ", "ăj":"ặ",
-    "es":"é", "ef":"è", "ex":"ẽ", "er":"ẻ", "ej":"ẹ",
-    "ês":"ế", "êf":"ề", "êx":"ễ", "êr":"ể", "êj":"ệ",
-    "os":"ó", "of":"ò", "ox":"õ", "or":"ỏ", "oj":"ọ",
-    "ôs":"ố", "ôf":"ồ", "ôx":"ỗ", "ôr":"ổ", "ôj":"ộ",
-    "ơs":"ớ", "ơf":"ờ", "ơx":"ỡ", "ơr":"ở", "ơj":"ợ",
-    "us":"ú", "uf":"ù", "ux":"ũ", "ur":"ủ", "uj":"ụ",
-    "ưs":"ứ", "ưf":"ừ", "ưx":"ữ", "ưr":"ử", "ưj":"ự",
-    "is":"í", "if":"ì", "ix":"ĩ", "ir":"ỉ", "ij":"ị",
-    "ys":"ý", "yf":"ỳ", "yx":"ỹ", "yr":"ỷ", "yj":"ỵ",
-};
 // window.tonesMap = tonesMap;
 for (var k in tonesMap) {
     tonesMap[k[0].toUpperCase()+k[1]] = tonesMap[k].toUpperCase();
@@ -247,14 +250,13 @@ export function telexFinalizeWord(w) {
             neww += c;
         }
     }
-    if ("sfrxj".includes(w.slice(-1))) {
-        return neww;
-    }
-
-    let newNoTone = _removeTone(neww);
-    let matchNoTone = newNoTone.match(_syllFull);
-    console.log('FinalizeWord', w, neww, newNoTone, matchNoTone);
-    return  matchNoTone ? neww : w;
+    // if ("sfrxj".includes(w.slice(-1))) {
+    //     return neww;
+    // }
+    let newww = _removeTone(neww) + _getTone(neww);
+    let isVnSyllable = newww.match(_syllFull);
+    console.log('FinalizeWord', w, neww, newww, isVnSyllable);
+    return  isVnSyllable ? neww : w;
 }
 assertEqual(telexFinalizeWord("nièem"), "niềm");
 assertEqual(telexFinalizeWord("dadwngaf"), "đầng");
