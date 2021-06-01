@@ -1,18 +1,63 @@
 # Vietnamese Syllables
 
-âm tiết tiếng việt = ```
-      phụ âm đầu (26) 2^5  tr|th|ph|ng|ngh|nh|kh|gh|ch|[bckqdđghlmnprstvx]
-    + âm đệm     (02) 2^1  [uo]
-    | âm chính   (14) 2^4  iê|ia|yê|ươ|ưa|uô|ua|[ieêưuoôơaăâ]
-    | âm cuối    (12) 2^4  nh|ng|ch|[ptcmniyuo]
-    + thanh điệu (06) 2^3  sfrxj
+## Âm tiết Tiếng Việt
+```
+regex = /^(tr|th|ph|ng|ngh|nh|kh|gh|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|uơ|uya|oa|oă|oe|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])((?:ch|[ctp])[sj]|(?:nh|ng|[mniyuo])[frx]?)?$/i
+
+phụ âm đầu      (26+1) 2^5  
+                        (09) tr|th|ph|ng|ngh|nh|kh|gh|ch|
+                        (17) [bckqdđghlmnprstvx]
+đệm + âm chính  (27+0) 2^5
+                        (05) uy|uâ|uê|uơ|uya|
+                        (03) oa|oă|oe|
+                        (19) iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ]
+cuối + thanh    (40+1) 2^5
+                        (32) (?:nh|ng|[mniyuo])[frx]?
+                        (08) (?:ch|[ctp])[sj]
+
+[note] x+0,x+1 0: phải có, 1: có thể ko có, thì cần thêm 1 số đếm để ghi nhận
 ```
 
-=> cần 17 bits để ghi riêng từng thành phần.
-Và cần ít hơn nữa nếu dùng từ điển (22*2*14*12*6 = 44352 < 16 bits)
-Bỏ đi thanh điệu và dấu có lẽ cần khoảng 13 bit là đủ.
-
+=> cần 15 bits để ghi riêng từng thành phần.
 => uint16 (65535) là đủ để mã hoá.
+
+### Âm cuối + thanh điệu
+ch,c,t,p chỉ đi với s,j
+```
+32 (nh|ng|[mniyuo])[frx]?
+08 (ch|[ctp])[sj]
+--
+40
+```
+
+### Âm đệm + nguyên âm
+– Âm đệm được ghi bằng con chữ u và o.
++ Ghi bằng con chữ u khi đứng trước các nguyên âm: y, ê, ơ, â.
++ Ghi bằng con chữ o khi đứng trước các nguyên âm: a, ă, e.
+```
++ âm đệm     (03) 2^2  [uo]?
+| âm chính   (14) 2^4  iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ]
+=>
+05 uy|uâ|uê|uơ|uya|
+03 oa|oă|oe|
+19 (iê|ia|yê)|(ươ|ưa)|(uô|ua)|iyeêưuoôơaăâ
+--
+27
+```
++ {iê}:
+{ia} trước không có âm đệm, sau không có âm cuối.           VD: t{ia}, {ỉa}
+{yê} trước có âm đệm hoặc không có âm nào, sau có âm cuối.  VD: {yê}u, chu{yê}n
+{ya} trước có âm đệm, sau không có âm cuối.                 VD: khu{ya}
+{iê} khi phía trước có phụ âm đầu, phía sau có âm cuối.     VD: t{iê}n, k{iế}ng
+
++ {uơ}:
+{ươ} sau có âm cuối.       VD: mượn
+{ưa} sau không có âm cuối. VD: ưa
+
++ {uô}:
+{uô} sau có âm cuối.        VD: muốn
+{ua} sau không có âm cuối.  VD: mua
+
 
 => Dùng rule-based (hoặc FST) để dịch từ mã hoá thành văn bản sẽ ko cần
 phải lưu từ điển dưới dạng text, có lẽ sẽ tiết kiệm dc 1MB dữ liệu.
@@ -27,7 +72,7 @@ http://thtrungnguyen.vinhphuc.edu.vn/bai-viet-chuyen-mon/cau-tao-tieng-cau-tao-v
 
 – 22 phụ âm : b, c (k,q), ch, d, đ, g (gh), h, kh, l, m, n, nh, ng (ngh), p, ph, r, s, t, tr, th, v, x.
 
-2. Vần gồm có 3 phần : âm đệm, âm chính , âm cuối.
+2. Vần gồm có 3 phần: âm đệm, âm chính, âm cuối.
 
 * Âm đệm:
 
@@ -53,35 +98,19 @@ http://thtrungnguyen.vinhphuc.edu.vn/bai-viet-chuyen-mon/cau-tao-tieng-cau-tao-v
 – 11 nguyên âm đơn: i, e, ê, ư, u, o, ô, ơ, a, ă, â.
 – Có 3 nguyên âm đôi iê, uơ, uô. Được tách thành 8 cách ghi âm sau:
 
-+ IÊ:
++ {iê}:
+{ia} trước không có âm đệm, sau không có âm cuối.           VD: t{ia}, {ỉa}
+{yê} trước có âm đệm hoặc không có âm nào, sau có âm cuối.  VD: {yê}u, chu{yê}n
+{ya} trước có âm đệm, sau không có âm cuối.                 VD: khu{ya}
+{iê} khi phía trước có phụ âm đầu, phía sau có âm cuối.     VD: t{iê}n, k{iế}ng
 
-Ghi bằng IA khi phía trước không có âm đệm và phía sau không có âm cuối
-VD: mía, tia, kia
++ {uơ}:
+{ươ} sau có âm cuối.       VD: mượn
+{ưa} sau không có âm cuối. VD: ưa
 
-Ghi bằng YÊ khi phía trước có âm đệm hoặc không có âm nào, phía sau có âm cuối
-VD: yêu, chuyên
-
-Ghi bằng ya khi phía trước có âm đệm và phía sau không có âm cuối
-VD: khuya
-
-Ghi bằng IÊ khi phía trước có phụ âm đầu, phía sau có âm cuối
-VD: tiên, kiến
-
-+ UƠ:
-
-Ghi bằng ƯƠ khi sau nó có âm cuối
-VD: mượn
-
-Ghi bằng ƯA khi phía sau nó không có âm cuối
-VD: ưa
-
-+ UÔ:
-
-Ghi bằng UÔ khi sau nó có âm cuối
-VD: muốn
-
-Ghi bằng UA khi sau nó không có âm cuối
-VD: mua
++ {uô}:
+{uô} sau có âm cuối.        VD: muốn
+{ua} sau không có âm cuối.  VD: mua
 
 * 12 âm cuối:
 

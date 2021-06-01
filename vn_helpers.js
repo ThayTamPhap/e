@@ -59,7 +59,7 @@ for (var k in vowelsMap) {
 }
 
 const _syllLeft = /(^|qu|gi|[qrtpsdđghklxcvbnm]+)((?:uy|u|o|ư|i|y)?[aăâeêuưoơôiy])(.*)/i;
-const _syllFull = /^(tr|ng|gi|ngh|[cgknpt]h|[bckqdđghlmnprstvx])?([uo])?(iê|ia|yê|ươ|ưa|uô|ua|[ieêưuoôơaăâ])?(nh|ng|ch|[ptcmniyuo])?$/i;
+const _syllFull = /^(tr|th|ph|ng|ngh|nh|kh|gh|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|uơ|uya|oa|oă|oe|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])((?:ch|[ctp])[sj]|(?:nh|ng|[mniyuo])[frx]?)?$/i;
 
 let tonesMap = {
     "as":"á", "af":"à", "ax":"ã", "ar":"ả", "aj":"ạ",
