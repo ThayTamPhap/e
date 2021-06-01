@@ -173,6 +173,7 @@ mf    mình
 mk    mình không
 mkb   mình không biết
 mm    mạnh mẽ
+mng   mọi người
 mph   mình phải
 nc    nước
 nch   nói chuyện

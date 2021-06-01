@@ -59,7 +59,7 @@ for (var k in vowelsMap) {
 }
 
 const _syllLeft = /(^|qu|gi|[qrtpsdđghklxcvbnm]+)((?:uy|u|o|ư|i|y)?[aăâeêuưoơôiy])(.*)/i;
-const _syllFull = /^(tr|ng|ngh|[cgknpt]h|[bckqdđghlmnprstvx])?([uo])?(iê|ia|yê|ươ|ưa|uô|ua|[ieêưuoôơaăâ])?(nh|ng|ch|[ptcmniyuo])?$/i;
+const _syllFull = /^(tr|ng|gi|ngh|[cgknpt]h|[bckqdđghlmnprstvx])?([uo])?(iê|ia|yê|ươ|ưa|uô|ua|[ieêưuoôơaăâ])?(nh|ng|ch|[ptcmniyuo])?$/i;
 
 let tonesMap = {
     "as":"á", "af":"à", "ax":"ã", "ar":"ả", "aj":"ạ",
@@ -252,7 +252,7 @@ export function telexFinalizeWord(w) {
 
     let newNoTone = _removeTone(neww);
     let matchNoTone = newNoTone.match(_syllFull);
-    // console.log('FinalizeWord', w, neww, newNoTone, matchNoTone);
+    console.log('FinalizeWord', w, neww, newNoTone, matchNoTone);
     return  matchNoTone ? neww : w;
 }
 assertEqual(telexFinalizeWord("nièem"), "niềm");
