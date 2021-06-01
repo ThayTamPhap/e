@@ -1,7 +1,5 @@
 # Vietnamese Syllables
 
-http://thtrungnguyen.vinhphuc.edu.vn/bai-viet-chuyen-mon/cau-tao-tieng-cau-tao-van-trong-tieng-viet-c7597-36557.aspx
-
 âm tiết tiếng việt = ```
       phụ âm đầu (26) 2^5  tr|th|ph|ng|ngh|nh|kh|gh|ch|[bckqdđghlmnprstvx]
     + âm đệm     (02) 2^1  [uo]
@@ -13,7 +11,17 @@ http://thtrungnguyen.vinhphuc.edu.vn/bai-viet-chuyen-mon/cau-tao-tieng-cau-tao-v
 => cần 17 bits để ghi riêng từng thành phần.
 Và cần ít hơn nữa nếu dùng từ điển (22*2*14*12*6 = 44352 < 16 bits)
 Bỏ đi thanh điệu và dấu có lẽ cần khoảng 13 bit là đủ.
+
 => uint16 (65535) là đủ để mã hoá.
+
+=> Dùng rule-based (hoặc FST) để dịch từ mã hoá thành văn bản sẽ ko cần
+phải lưu từ điển dưới dạng text, có lẽ sẽ tiết kiệm dc 1MB dữ liệu.
+
+=> Dùng cách tương tự để lưu và giải mã các file text nữa, vừa bảo mật vừa tiết kiệm.
+
+- - - - - - - - - - - -
+
+http://thtrungnguyen.vinhphuc.edu.vn/bai-viet-chuyen-mon/cau-tao-tieng-cau-tao-van-trong-tieng-viet-c7597-36557.aspx
 
 1. Tiếng gồm 3 bộ phận: phụ âm đầu, vần và thanh điệu.
 
