@@ -27,7 +27,7 @@ async function mapKeysForMe(event) {
 
     // Skip control keys
     if (event.code != "" && controlKeys.includes(event.code)) { 
-        console.log("controlKey found:", event.code);
+        // console.log("controlKey found:", event.code);
         return; 
     }
 
@@ -87,14 +87,26 @@ async function mapKeysForMe(event) {
         matches = [];
     }
 
-    // Press space will auto-complete sent, double space to pause / play audio
+    // Press ,. or ., will remove the last phrase (to undo voice input)
     // console.log("keyup", c1, c2);
+    if ((c1 === 44 && c2 === 46) || 
+        (c2 === 44 && c1 === 46)) {
+
+        let n = l.length - 1, validChars = VnHelpers.PHRASE_VALID_CHARS;
+        while (n > 0 && !validChars.includes(l[n])) { n--; }
+        while (n > 0 &&  validChars.includes(l[n])) { n--; }
+
+        p.firstChild.textContent = l.substr(0, n === 0 ? 0 : ++n);
+        CursorHelpers.collapse(s, p.firstChild, 
+            CursorHelpers.setLastCursorFast(n));
+
+        return;
+    }
+
+    // Press space will auto-complete sent, double space to pause / play audio
     if (c1 === 32 || c1 === 160) { // Android space char code is 160
         if (c2 === 32 || c2 === 160) { // Double-space
-            console.log("> > > Double-space < < <");
             CursorHelpers.pauseOrPlayCurrPos(); 
-        } else { // Mono-space            
-            console.log("> > Mono-space < <");
         }
         CursorHelpers.resetTextAndPos();
         return;
@@ -104,7 +116,7 @@ async function mapKeysForMe(event) {
     let triWords = l.trim().split(/\s+/).slice(-3);
     let lastWord = triWords[triWords.length - 1];
 
-    console.log(triWords.length, triWords);
+    // console.log(triWords.length, triWords);
 
     // Process shortcuts
     var htmls = [];
@@ -141,7 +153,7 @@ async function mapKeysForMe(event) {
     if (c2 != 32 && c2 != 160 && lastChar && 
         (true || "dsfrxj aeow".includes(lastChar) || c1 === 160)) {
         let newWord = VnHelpers.telexFinalizeWord(lastWord);
-        console.log('TELEX:',lastWord,'=>',newWord);
+        // console.log('TELEX:',lastWord,'=>',newWord);
         if (newWord !== lastWord) {
             newl = l.substr(0,l.length - lastWord.length) + newWord;
             p.firstChild.textContent = newl + r;

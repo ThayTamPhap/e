@@ -29,6 +29,7 @@ function resetTextAndPos(suffix=false) {
 
 // Click a sub will call playSub()
 async function playSub(event) {
+  document.getElementById("suggestion").display = "none";
   let index = parseInt(this.id);
   // Click on not edited sub have no effect
   // , only enter can change sub's timing and make it edited 
