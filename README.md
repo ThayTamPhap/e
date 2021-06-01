@@ -19,8 +19,7 @@ cuối + thanh    (66+0) 2^7
 ```
 tua, tai, tay, tau, tao
 
-=> Cần 16 bits (65535, uint16) để ghi riêng từng thành phần.
-=> 32 bits (uint32) đủ để lưu bi-gram.
+=> Cần 17 bits (65535, uint16) để ghi riêng từng thành phần.
 
 => Dùng rule-based (hoặc FST) để dịch mã hoá thành văn bản thì sẽ ko cần
 phải lưu từ điển dưới dạng text, có lẽ sẽ tiết kiệm khoảng 1MB dữ liệu.
