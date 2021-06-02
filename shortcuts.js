@@ -174,6 +174,7 @@ mkb   mình không biết
 mm    mạnh mẽ
 mng   mọi người
 mph   mình phải
+nb    Niết Bàn
 nc    nước
 nch   nói chuyện
 nco   nó có
@@ -183,6 +184,7 @@ ng    người
 ngk   người khác
 ngt   người ta
 ngth  ngồi thiền
+nhc   nhớ chưa
 nhng  nhiều người
 nhth  nhìn thấy
 nl    năng lượng
