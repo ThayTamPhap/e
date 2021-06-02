@@ -7,7 +7,7 @@ export const VN_PHRASE_BREAK_REGEX = /[^\sqwertyuiopasdfghjklzxcvbnmàáạảã
 const VN_SYLLABLE_REGEX = /[qwertyuiopasdfghjklzxcvbnmàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]+/gi;
 
 const _syllLeft = /(^|qu|gi|[qrtpsdđghklxcvbnm]+)((?:uy|u|o|ư|i|y)?[aăâeêuưoơôiy])(.*)/i;
-const _syllFull = /^(tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|uơ|uya|oa|oă|oe|oo|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])((?:ch|c|t|p)[sj]|(?:nh|ng|[mniyuo])?[sfrxjz])$/i;
+const _syllFull = /^(tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|uơ|uyê|uya|oa|oă|oe|oo|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])((?:ch|c|t|p)[sj]|(?:nh|ng|[mniyuo])?[sfrxjz])$/i;
 
 const tonesMap = {
     "as":"á", "af":"à", "ax":"ã", "ar":"ả", "aj":"ạ",
@@ -273,7 +273,7 @@ export function isVietnamese(syllable) {
     if (amGiua === "ia" 
         && !(amCuoi.length === 0)) return false;
 
-    // {yê} trước có âm đệm, sau có âm cuối. VD: chu{yê}n
+    // {yê} trước có âm đệm, sau có âm cuối. VD: chu{yê}n, hu{yế}t
     if (amGiua === "uyê" 
         && !(amDau.length > 0 && amCuoi.length > 0)) return false;
 
@@ -305,6 +305,8 @@ export function isVietnamese(syllable) {
 
     return true;
 }
+
+assertEqual(isVietnamese("huyết"), true);
 assertEqual(isVietnamese("boong"), true);
 assertEqual(isVietnamese("niềm"), true);
 assertEqual(isVietnamese("iềm"), false);
@@ -335,6 +337,8 @@ export function telexFinalizeWord(w) {
     return  isVnSyllable ? 
         changeTone(_removeTone(neww),_getTone(neww)) : w;
 }
+
+assertEqual(telexFinalizeWord("huyetes"), "huyết");
 assertEqual(telexFinalizeWord("tòan"), "toàn");
 assertEqual(telexFinalizeWord("nièem"), "niềm");
 assertEqual(telexFinalizeWord("dadwngaf"), "đầng");
