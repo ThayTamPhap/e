@@ -301,11 +301,11 @@ export function isVietnamese(syllable) {
     if (amGiua === "uô" && !(amCuoi.length > 0)) return false;
 
     // {ua} sau không có âm cuối. VD: mua
-    if (amGiua === "ua" && !(amCuoi.length > 0)) return false;
+    if (amGiua === "ua" && !(amCuoi.length === 0)) return false;
 
     return true;
 }
-
+assertEqual(isVietnamese("của"), true);
 assertEqual(isVietnamese("huyết"), true);
 assertEqual(isVietnamese("boong"), true);
 assertEqual(isVietnamese("niềm"), true);
@@ -333,7 +333,7 @@ export function telexFinalizeWord(w) {
     }
 
     let isVnSyllable = isVietnamese(neww);
-    // console.log('FinalizeWord', w, neww, isVnSyllable);
+    console.log('FinalizeWord', w, neww, isVnSyllable);
     return  isVnSyllable ? 
         changeTone(_removeTone(neww),_getTone(neww)) : w;
 }
