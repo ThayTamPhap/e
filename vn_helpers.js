@@ -144,28 +144,35 @@ export function changeMark(s, mark) {
     }
 
     let naked = removeMarks(unTone, 'keep đ/Đ');
-    if (mark === "z") return naked;
+    if (mark === "z") { return naked; }
 
-    // console.log('changeMark:', s, tone, naked, mark); 
+    console.log('changeMark:', s, tone, naked, mark);
 
     let m = naked.match(_syllLeft);
-    if (!m) return s + mark;
+    if (!m) { return s + mark; }
 
-    // console.log(3, m[1], m[2], m[3]);
-
-    if (mark !== "w" && mark !== removeMarks(m[2].slice(-1))) 
+    // Invalid mark general checking
+    if (mark !== "w" && !m[2].includes(mark)) {
         return s + mark;
+    }
+
+    console.log(3, m[1], m[2], m[3]);
 
     var news, vowel;
 
-    if (m[2].length === 2 && m[2][1] === "a" //  ua
-            && mark !== "a" && !(mark === "w" && m[2][0] === "o")) { 
-            // cửa+a=cuẩ hoa+w=hoă
-
+    if (m[2].length === 2 && (false 
+            // trường hợp u, o không phải âm đệm mà là âm chính
+            || (m[2] === "ui") // cui+w
+            || (m[2] === "ua" && mark !== "a") // cua+w, not cua+a
+            || (m[2] === "oi") // hoi+o
+        )) {
+    
         vowel = m[2][0];
         vowel = vowelsMap[ vowel + mark ] ?? vowel;
         vowel = tonesMap[ vowel + tone ] ?? vowel;
         news = m[1] + vowel + m[2][1] + m[3];
+
+        console.log('Vowel 2:', m[2], vowel);
 
     } else if (m[2].toLowerCase() === "uo" && mark === "w") {
 
@@ -183,6 +190,7 @@ export function changeMark(s, mark) {
 
     return news !== s ? news : changeTone(naked, tone) + mark;
 }
+assertEqual(changeMark("ngoi","o"), "ngôi");
 assertEqual(changeMark("hoa","w"), "hoă");
 assertEqual(changeMark("xòa","i"), "xoài");
 assertEqual(changeMark("dể","d"), "để");
@@ -244,7 +252,7 @@ export function telexFinalizeWord(w) {
         c = w[i];
         if ("sfrxj".includes(c)) {
             neww = changeTone(neww, c);
-        } else if ("daeowiyu".includes(c)) {
+        } else if ("daeow".includes(c)) {
             neww = changeMark(neww, c);
         } else {
             neww += c;
