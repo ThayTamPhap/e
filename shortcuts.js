@@ -129,6 +129,7 @@ kh    không hiểu
 kn    không nói
 kp    không phải
 kpl   không phải là
+khh   kinh hành
 kth   kiến thức
 kcc   kích cỡ
 kct   kích thước
