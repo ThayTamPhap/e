@@ -146,7 +146,7 @@ export function changeMark(s, mark) {
     let naked = removeMarks(unTone, 'keep đ/Đ');
     if (mark === "z") { return naked; }
 
-    console.log('changeMark:', s, tone, naked, mark);
+    // console.log('changeMark:', s, tone, naked, mark);
 
     let m = naked.match(_syllLeft);
     if (!m) { return s + mark; }
@@ -156,7 +156,7 @@ export function changeMark(s, mark) {
         return s + mark;
     }
 
-    console.log(3, m[1], m[2], m[3]);
+    // console.log(3, m[1], m[2], m[3]);
 
     var news, vowel;
 
@@ -172,7 +172,7 @@ export function changeMark(s, mark) {
         vowel = tonesMap[ vowel + tone ] ?? vowel;
         news = m[1] + vowel + m[2][1] + m[3];
 
-        console.log('Vowel 2:', m[2], vowel);
+        // console.log('Vowel 2:', m[2], vowel);
 
     } else if (m[2].toLowerCase() === "uo" && mark === "w") {
 
