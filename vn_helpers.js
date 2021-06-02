@@ -7,7 +7,7 @@ export const VN_PHRASE_BREAK_REGEX = /[^\sqwertyuiopasdfghjklzxcvbnmàáạảã
 const VN_SYLLABLE_REGEX = /[qwertyuiopasdfghjklzxcvbnmàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]+/gi;
 
 const _syllLeft = /(^|qu|gi|[qrtpsdđghklxcvbnm]+)((?:uy|u|o|ư|i|y)?[aăâeêuưoơôiy])(.*)/i;
-const _syllFull = /^(tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|uơ|uya|oa|oă|oe|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])((?:ch|c|t|p)[sj]|(?:nh|ng|[mniyuo])?[sfrxjz])$/ig;
+const _syllFull = /^(tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|uơ|uya|oa|oă|oe|oo|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])((?:ch|c|t|p)[sj]|(?:nh|ng|[mniyuo])?[sfrxjz])$/i;
 
 const tonesMap = {
     "as":"á", "af":"à", "ax":"ã", "ar":"ả", "aj":"ạ",
@@ -241,9 +241,80 @@ function _removeTone(s) {
         replace(/[ỳýỵỷỹ]/g,  "y");
 }
 
-export function telexFinalizeStr(s) {
-    return s.replace(VN_SYLLABLE_REGEX, w => telexFinalizeWord(w));
+export function isVietnamese(syllable) {
+    let s = _removeTone(syllable) + _getTone(syllable);
+    let m = s.match(_syllFull);
+    console.log('isVietnamese', syllable, s, m);
+    if (!m) { return false; }
+
+    let amDau = m[1] ?? "";
+    let amGiua = m[2];
+    let amCuoi = m[3].slice(0, -1);
+    let tone = m[3].slice(-1);
+
+    /*
+    – Âm đệm được ghi bằng con chữ u và o.
+    + Ghi bằng con chữ o khi đứng trước các nguyên âm: a, ă, e.
+    + Ghi bằng con chữ u khi đứng trước các nguyên âm y, ê, ơ, â.
+
+    – Âm đệm không xuất hiện sau các phụ âm b, m, v, ph, n, r, g. Trừ các trường hợp:
+    + sau ph, b: thùng phuy, voan, ô tô buýt (là từ nước ngoài)
+    + sau n: thê noa, noãn sào (2 từ Hán Việt)
+    + sau r: roàn roạt (1 từ)
+    + sau g: goá (1 từ)
+
+    let coAmDem = "oa,oă,oe;y,uê,uơ,uâ".includes(amGiua.slice(0,2));
+    if (coAmDem) {
+
+    }
+    */
+
+    // {ia} trước không có âm đệm, sau không có âm cuối. VD: t{ia}, {ỉa}
+    if (amGiua === "ia" 
+        && !(amCuoi.length === 0)) return false;
+
+    // {yê} trước có âm đệm, sau có âm cuối. VD: chu{yê}n
+    if (amGiua === "uyê" 
+        && !(amDau.length > 0 && amCuoi.length > 0)) return false;
+
+    // {yê} trước không có âm nào, sau có âm cuối. VD: {yê}u
+    if (amGiua === "yê" 
+        && !(amDau.length === 0 && amCuoi.length > 0)) return false;
+
+    // {ya} trước có âm đệm, sau không có âm cuối. VD: khu{ya}
+    if (amGiua === "uya" 
+        && !(amCuoi.length === 0)) return false;
+
+    // {iê} trước có phụ âm đầu, sau có âm cuối. VD: t{iê}n, k{iế}ng
+    if (amGiua === "iê" 
+        && !(amDau.length > 0 && amCuoi.length > 0)) return false;
+
+
+    // {ươ} sau có âm cuối. VD: mượn
+    if (amGiua === "ươ" && !(amCuoi.length > 0)) return false;
+
+    // {ưa} sau không có âm cuối. VD: ưa
+    if (amGiua === "ưa" && !(amCuoi.length === 0)) return false;
+
+
+    // {uô} sau có âm cuối. VD: muốn
+    if (amGiua === "uô" && !(amCuoi.length > 0)) return false;
+
+    // {ua} sau không có âm cuối. VD: mua
+    if (amGiua === "ua" && !(amCuoi.length > 0)) return false;
+
+    return true;
 }
+assertEqual(isVietnamese("boong"), true);
+assertEqual(isVietnamese("niềm"), true);
+assertEqual(isVietnamese("iềm"), false);
+assertEqual(isVietnamese("iề"), false);
+assertEqual(isVietnamese( "yêu"),true);
+assertEqual(isVietnamese( "yê"),false);
+assertEqual(isVietnamese("tyêu"),false);
+assertEqual(isVietnamese("tyêu"),false);
+assertEqual(isVietnamese("ỉa"), true);
+assertEqual(isVietnamese("ỉam"), false);
 
 export function telexFinalizeWord(w) {
     if (w.match(VN_PHRASE_BREAK_REGEX)) { return w; }
@@ -258,18 +329,14 @@ export function telexFinalizeWord(w) {
             neww += c;
         }
     }
-    // if ("sfrxj".includes(w.slice(-1))) {
-    //     return neww;
-    // }
-    let newww = _removeTone(neww) + _getTone(neww);
-    let isVnSyllable = newww.match(_syllFull);
-    console.log('FinalizeWord', w, neww, newww, isVnSyllable);
+
+    let isVnSyllable = isVietnamese(neww);
+    // console.log('FinalizeWord', w, neww, isVnSyllable);
     return  isVnSyllable ? neww : w;
 }
 assertEqual(telexFinalizeWord("nièem"), "niềm");
 assertEqual(telexFinalizeWord("dadwngaf"), "đầng");
 assertEqual(telexFinalizeWord("nhieefu"), "nhiều");
-assertEqual(telexFinalizeStr("tonos mooj khôngr"), "tốn mộ khổng");
 
 export function removeMarks(str, keepDd=false) {
     // https://kipalog.com/posts/Mot-so-ki-thuat-xu-li-tieng-Viet-trong-Javascript

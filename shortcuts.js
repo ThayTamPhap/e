@@ -164,6 +164,7 @@ ln    lúc nào
 li    lợi ích
 ll    luôn luôn
 lt    lập tức
+ltj   liên tục
 mcth  mình có thể
 mct   mà chúng ta
 mcx   mình cũng

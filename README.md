@@ -7,10 +7,12 @@ regex = /^(tr|th|ph|ng|ngh|nh|kh|gh|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|uơ|uya
 phụ âm đầu      (27+1) 2^5  
                         (10) tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|
                         (17) [bckqdđghlmnprstvx]
-đệm + âm chính  (27+0) 2^5
-                        (05) uy|uâ|uê|uơ|uya|
-                        (03) oa|oă|oe|
-                        (19) iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ]
+âm giữa (đệm + chính)
+                (29+0) 2^5
+                        (06) uy|uâ|uê|uơ|uyê|uya|
+                        (04) oa|oă|oe|oo|
+                        (07) iê|ia|yê|ươ|ưa|uô|ua|
+                        (12) [iyeêưuoôơaăâ]
 cuối + thanh    (66+0) 2^7
                         (54) (nh|ng|[mniyuo])?[sfrxj]?|
                         (08) (ch|[ctp])[sj]
@@ -46,11 +48,11 @@ ch,c,t,p chỉ đi với s,j
 + âm đệm     (03) 2^2  [uo]?
 | âm chính   (14) 2^4  iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ]
 =>
-05 uy|uâ|uê|uơ|uya|
-03 oa|oă|oe|
+06 uy|uâ|uê|uơ|uyê|uya|
+04 oa|oă|oe|oo|
 19 (iê|ia|yê)|(ươ|ưa)|(uô|ua)|iyeêưuoôơaăâ
 --
-27
+29
 ```
 + {iê}:
 {ia} trước không có âm đệm, sau không có âm cuối.           VD: t{ia}, {ỉa}
@@ -97,7 +99,7 @@ http://thtrungnguyen.vinhphuc.edu.vn/bai-viet-chuyen-mon/cau-tao-tieng-cau-tao-v
 {ia} trước không có âm đệm, sau không có âm cuối.           VD: t{ia}, {ỉa}
 {yê} trước có âm đệm hoặc không có âm nào, sau có âm cuối.  VD: {yê}u, chu{yê}n
 {ya} trước có âm đệm, sau không có âm cuối.                 VD: khu{ya}
-{iê} khi phía trước có phụ âm đầu, phía sau có âm cuối.     VD: t{iê}n, k{iế}ng
+{iê} trước có phụ âm đầu, sau có âm cuối.                   VD: t{iê}n, k{iế}ng
 
 + {uơ}:
 {ươ} sau có âm cuối.       VD: mượn
