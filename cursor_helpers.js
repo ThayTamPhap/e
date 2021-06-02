@@ -76,14 +76,14 @@ export function resetTextAndPos() {
 
     let isEndOfSent = lastCurrPos >= currInnerText.length;
 
-    // Add suffix first then normalize it
     let normText = currInnerText.substr(0, lastCurrPos);
+    normText = VnHelpers.telexifyLastWord(normText);
     normText = TypedText.normalizeText(normText, false);
 
     let remain = currInnerText.substr(lastCurrPos,);
     remain = TypedText.normalizeText(remain);
 
-    currInnerText = (normText + remain);
+    currInnerText = normText + remain;
     lastCurrPos = normText.length;
 
     if (autoCapitalizedFirstCharOf(currP, false)) {
@@ -127,7 +127,7 @@ export function blinkCurPos(pos) {
   
 
   let range = new Range();  
-  range.setStart(currP.firstChild, b == 0 ? 0 : b+1);
+  range.setStart(currP.firstChild, b);
   range.setEnd(currP.firstChild, e);
   sel.removeAllRanges();
   sel.addRange(range);

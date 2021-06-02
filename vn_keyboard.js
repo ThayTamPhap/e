@@ -152,7 +152,7 @@ async function mapKeysForMe(event) {
     // console.log('lastChar',lastChar, lastWord.slice(-1), String.fromCharCode(c1));
     if (c2 != 32 && c2 != 160 && lastChar && 
         (true || "dsfrxj aeow".includes(lastChar) || c1 === 160)) {
-        let newWord = VnHelpers.telexFinalizeWord(lastWord);
+        let newWord = VnHelpers.telexifyWord(lastWord);
         // console.log('TELEX:',lastWord,'=>',newWord);
         if (newWord !== lastWord) {
             newl = l.substr(0,l.length - lastWord.length) + newWord;

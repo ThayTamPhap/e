@@ -1,6 +1,8 @@
 import { _mappings } from "./vn_mappings.js"
 
-export const PHRASE_VALID_CHARS = " 1234567890qwertyuiopasdfghjklzxcvbnmàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđQWERTYUIOPASDFGHJKLZXCVBNMÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ";
+const WORD_VALID_CHARS = "1234567890qwertyuiopasdfghjklzxcvbnmàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđQWERTYUIOPASDFGHJKLZXCVBNMÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ";
+
+export const PHRASE_VALID_CHARS = WORD_VALID_CHARS + " ";
 
 export const VN_PHRASE_BREAK_REGEX = /[^\sqwertyuiopasdfghjklzxcvbnmàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]+/gi;
 
@@ -244,7 +246,7 @@ function _removeTone(s) {
 export function isVietnamese(syllable) {
     let s = _removeTone(syllable) + _getTone(syllable);
     let m = s.match(_syllFull);
-    console.log('isVietnamese', syllable, s, m);
+    // console.log('isVietnamese', syllable, s, m);
     if (!m) { return false; }
 
     let amDau = m[1] ?? "";
@@ -318,7 +320,28 @@ assertEqual(isVietnamese("tyêu"),false);
 assertEqual(isVietnamese("ỉa"), true);
 assertEqual(isVietnamese("ỉam"), false);
 
-export function telexFinalizeWord(w) {
+export function telexifyLastWord(sent) {
+    // console.log("telexifyLastWord", sent);
+    if (sent.length < 2) { return sent; }
+
+    let e = sent.length - 1;
+    while (e > 0 && !WORD_VALID_CHARS.includes(sent[e])) { e--; }
+    if (e === 0) { return sent; }
+
+    let b = e - 1;
+    while (b >= 0 && WORD_VALID_CHARS.includes(sent[b])) { b--; }
+
+    let lastWord = sent.substr(b + 1, e - b);
+    let newLastWord = telexifyWord(lastWord);
+    
+    // console.log("telexifyLastWord", lastWord, newLastWord);
+
+    return sent.substr(0, b + 1) + newLastWord + sent.substr(e + 1);
+}
+assertEqual(telexifyLastWord("fdg, huyetes . "), "fdg, huyết . ");
+
+
+export function telexifyWord(w) {
     if (w.match(VN_PHRASE_BREAK_REGEX)) { return w; }
     let neww = w[0], i = 1, n = w.length, c;
     for (; i < n; i++) {
@@ -333,16 +356,16 @@ export function telexFinalizeWord(w) {
     }
 
     let isVnSyllable = isVietnamese(neww);
-    console.log('FinalizeWord', w, neww, isVnSyllable);
+    console.log('telexifyWord', w, neww, isVnSyllable);
     return  isVnSyllable ? 
         changeTone(_removeTone(neww),_getTone(neww)) : w;
 }
 
-assertEqual(telexFinalizeWord("huyetes"), "huyết");
-assertEqual(telexFinalizeWord("tòan"), "toàn");
-assertEqual(telexFinalizeWord("nièem"), "niềm");
-assertEqual(telexFinalizeWord("dadwngaf"), "đầng");
-assertEqual(telexFinalizeWord("nhieefu"), "nhiều");
+assertEqual(telexifyWord("huyetes"), "huyết");
+assertEqual(telexifyWord("tòan"), "toàn");
+assertEqual(telexifyWord("nièem"), "niềm");
+assertEqual(telexifyWord("dadwngaf"), "đầng");
+assertEqual(telexifyWord("nhieefu"), "nhiều");
 
 export function removeMarks(str, keepDd=false) {
     // https://kipalog.com/posts/Mot-so-ki-thuat-xu-li-tieng-Viet-trong-Javascript
