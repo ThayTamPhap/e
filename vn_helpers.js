@@ -332,8 +332,10 @@ export function telexFinalizeWord(w) {
 
     let isVnSyllable = isVietnamese(neww);
     // console.log('FinalizeWord', w, neww, isVnSyllable);
-    return  isVnSyllable ? neww : w;
+    return  isVnSyllable ? 
+        changeTone(_removeTone(neww),_getTone(neww)) : w;
 }
+assertEqual(telexFinalizeWord("tòan"), "toàn");
 assertEqual(telexFinalizeWord("nièem"), "niềm");
 assertEqual(telexFinalizeWord("dadwngaf"), "đầng");
 assertEqual(telexFinalizeWord("nhieefu"), "nhiều");

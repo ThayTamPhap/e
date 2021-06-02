@@ -24,7 +24,11 @@ tanh, tang, tam, tan,
 tai, tay, tau, tao,
 tách, tác, tát, táp
 
-=> Cần 17 bits để ghi riêng từng thành phần.
+=> Cần 17 bits để ghi riêng từng thành phần. 
+- Dùng bảng mã ASCII cần 3 ký tự          2^7 = 128
+- Dùng hệ thập phân cần tối đa 6 ký tự.  2^17 = 131072
+- Dùng Octal number syntax cần 7 ký tự. var n = 0000755; // 493
+- Dùng Hexadecimal number  cần 7 ký tự.         0x0000A; // 10
 
 => Dùng rule-based (hoặc FST) để dịch mã hoá thành văn bản thì sẽ ko cần
 phải lưu từ điển dưới dạng text, có lẽ sẽ tiết kiệm khoảng 1MB dữ liệu.

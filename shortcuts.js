@@ -96,12 +96,13 @@ dg    đơn giản
 dgl   đấy gọi là
 dk    đúng không
 dkh   đau khổ
+dl    đấy là
 dlm   đấy là một
 dlc   đó là cái
+drl   đó rất là
 dmt   đủ mọi thứ
 dfd   dần dần
 dp    Đức Phật
-drl   đó rất là
 dt    đầu tiên
 dtg   đối tượng
 dvn   do vậy nên
