@@ -106,6 +106,7 @@ async function mapKeysForMe(event) {
     // Press space will auto-complete sent, double space to pause / play audio
     if (c1 === 32 || c1 === 160) { // Android space char code is 160
         if (c2 === 32 || c2 === 160) { // Double-space
+            console.log(" > > Double spaces < <");
             CursorHelpers.pauseOrPlayCurrPos(); 
         }
         CursorHelpers.resetTextAndPos();
