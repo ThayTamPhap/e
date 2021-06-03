@@ -9,7 +9,7 @@ export const VN_PHRASE_BREAK_REGEX = /[^\sqwertyuiopasdfghjklzxcvbnmàáạảã
 const VN_SYLLABLE_REGEX = /[qwertyuiopasdfghjklzxcvbnmàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]+/gi;
 
 const _syllLeft = /(^|qu|gi|[qrtpsdđghklxcvbnm]+)((?:uy|u|o|ư|i|y)?[aăâeêuưoơôiy])(.*)/i;
-const _syllFull = /^(tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|uơ|uyê|uya|oa|oă|oe|oo|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])((?:ch|c|t|p)[sj]|(?:nh|ng|[mniyuo])?[sfrxjz])$/i;
+const _syllFull = /^(tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|ue|uơ|uyê|uya|oa|oă|oe|oo|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])((?:ch|c|t|p)[sj]|(?:nh|ng|[mniyuo])?[sfrxjz])$/i;
 
 const tonesMap = {
     "as":"á", "af":"à", "ax":"ã", "ar":"ả", "aj":"ạ",
@@ -246,7 +246,9 @@ function _removeTone(s) {
 export function isVietnamese(syllable) {
     let s = _removeTone(syllable) + _getTone(syllable);
     let m = s.match(_syllFull);
-    // console.log('isVietnamese', syllable, s, m);
+
+    console.log('isVietnamese', syllable, s, m);
+
     if (!m) { return false; }
 
     let amDau = m[1] ?? "";
@@ -258,6 +260,7 @@ export function isVietnamese(syllable) {
     – Âm đệm được ghi bằng con chữ u và o.
     + Ghi bằng con chữ o khi đứng trước các nguyên âm: a, ă, e.
     + Ghi bằng con chữ u khi đứng trước các nguyên âm y, ê, ơ, â.
+    + Quét ?? Âm đệm u đi với e?
 
     – Âm đệm không xuất hiện sau các phụ âm b, m, v, ph, n, r, g. Trừ các trường hợp:
     + sau ph, b: thùng phuy, voan, ô tô buýt (là từ nước ngoài)
@@ -265,7 +268,7 @@ export function isVietnamese(syllable) {
     + sau r: roàn roạt (1 từ)
     + sau g: goá (1 từ)
 
-    let coAmDem = "oa,oă,oe;y,uê,uơ,uâ".includes(amGiua.slice(0,2));
+    let coAmDem = "oa,oă,oe;y,ue,uê,uơ,uâ".includes(amGiua.slice(0,2));
     if (coAmDem) {
 
     }
@@ -360,11 +363,12 @@ export function telexifyWord(w) {
     }
 
     let isVnSyllable = isVietnamese(neww);
-    console.log('telexifyWord', w, neww, isVnSyllable);
+    console.log('Telexify:', w, neww, isVnSyllable);
     return  isVnSyllable ? 
         changeTone(_removeTone(neww),_getTone(neww)) : w;
 }
 
+assertEqual(telexifyWord("quets"), "quét");
 assertEqual(telexifyWord("huyetes"), "huyết");
 assertEqual(telexifyWord("tòan"), "toàn");
 assertEqual(telexifyWord("nièem"), "niềm");

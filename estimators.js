@@ -109,9 +109,10 @@ export async function getCurrDelta(wholeSent = false) {
     wholeSentDelta = delta;
     console.log(wholeSent, words.length, delta1, delta2, delta);
   } else {
-    console.log('currSub:',currSubIndex,'words',words.length,'delta1',delta1,'wordsCount',
-      wordsCount,'delta2',delta2,'currPos',currPos,'adjustedDeltas',adjustedDeltas.length,
-      'delta',delta);
+    console.log('currSub:',currSubIndex,'words',words.length,'delta1',delta1,'delta2',delta2,'delta',delta);
+    // console.log('currSub:',currSubIndex,'words',words.length,'delta1',delta1,'wordsCount',
+    //   wordsCount,'delta2',delta2,'currPos',currPos,'adjustedDeltas',adjustedDeltas.length,
+    //   'delta',delta);
   }
 
   // Ensure delta always > 0 and return it
