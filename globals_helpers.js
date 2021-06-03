@@ -67,3 +67,6 @@ function secondsToTime(s) {
 }
 // assertEqual(secondsToTime(61.545563).toString(), "61.545");
 assertEqual(secondsToTime(61.543).toString(), "01:01,54");
+
+
+var isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);

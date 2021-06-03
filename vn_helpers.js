@@ -321,6 +321,8 @@ assertEqual(isVietnamese("ỉa"), true);
 assertEqual(isVietnamese("ỉam"), false);
 
 export function telexifyLastWord(sent) {
+    if (isMobileDevice) { return sent; }
+
     // console.log("telexifyLastWord", sent);
     if (sent.length < 2) { return sent; }
 
@@ -342,6 +344,8 @@ assertEqual(telexifyLastWord("fdg, huyetes . "), "fdg, huyết . ");
 
 
 export function telexifyWord(w) {
+    if (isMobileDevice) { return w; }
+
     if (w.match(VN_PHRASE_BREAK_REGEX)) { return w; }
     let neww = w[0], i = 1, n = w.length, c;
     for (; i < n; i++) {
