@@ -2,20 +2,27 @@
 
 ## Âm tiết Tiếng Việt
 ```
-regex = /^(tr|th|ph|ng|ngh|nh|kh|gh|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|uơ|uya|oa|oă|oe|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])((?:ch|[ctp])[sj]|(?:nh|ng|[mniyuo])[frx]?)?$/i
+regex = /^(tr|th|ph|ng|ngh|nh|kh|gh|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|uya|oa|oă|oe|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])((?:ch|[ctp])[sj]|(?:nh|ng|[mniyuo])[frx]?)?$/i
 
 phụ âm đầu      (27+1) 2^5  
                         (10) tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|
                         (17) [bckqdđghlmnprstvx]
+
 âm giữa (đệm + chính)
                 (29+0) 2^5
-                        (06) uy|uâ|uê|uơ|uyê|uya|
+                        (06) uy|uâ|uê|ue|uyê|uya|
                         (04) oa|oă|oe|oo|
                         (07) iê|ia|yê|ươ|ưa|uô|ua|
                         (12) [iyeêưuoôơaăâ]
+
 cuối + thanh    (66+0) 2^7
                         (54) (nh|ng|[mniyuo])?[sfrxj]?|
                         (08) (ch|[ctp])[sj]
+       - OR -
+cuối            (12+1) 2^4
+                        (12) nh|ng|ch|[ctpmniyuo]
+thanh           (05+1) 2^3
+                        (05) [sfrxj]?
 
 [note] x+0,x+1 0: phải có, 1: có thể ko có, thì cần thêm 1 số đếm để ghi nhận
 ```
@@ -46,13 +53,13 @@ ch,c,t,p chỉ đi với s,j
 
 ### Âm đệm + nguyên âm
 – Âm đệm được ghi bằng con chữ u và o.
-+ Ghi bằng con chữ u khi đứng trước các nguyên âm: y, ê, ơ, â.
++ Ghi bằng con chữ u khi đứng trước các nguyên âm: y, ê, e, â.
 + Ghi bằng con chữ o khi đứng trước các nguyên âm: a, ă, e.
 ```
 + âm đệm     (03) 2^2  [uo]?
 | âm chính   (14) 2^4  iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ]
 =>
-06 uy|uâ|uê|uơ|uyê|uya|
+06 uy|uâ|uê|ue|uyê|uya|
 04 oa|oă|oe|oo|
 19 (iê|ia|yê)|(ươ|ưa)|(uô|ua)|iyeêưuoôơaăâ
 --
