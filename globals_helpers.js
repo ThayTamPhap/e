@@ -15,7 +15,7 @@ let adjustedDeltas = [];
 
 var phapname = location.search.replace("?","").split("&")[0].split(".")[0];
 if (phapname === "") {
-  phapname = "phaps/Tinh-Tan-fix";
+  phapname = "phaps/20200704";
 } console.log('phapname', phapname);
 
 function keepTwoDigitsAfterPeriod(f) {

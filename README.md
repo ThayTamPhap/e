@@ -2,7 +2,7 @@
 
 ## Âm tiết Tiếng Việt
 ```
-regex = /^(tr|th|ph|ng|ngh|nh|kh|gh|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|uya|oa|oă|oe|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])((?:ch|[ctp])[sj]|(?:nh|ng|[mniyuo])[frx]?)?$/i
+/^(tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|ue|uyê|uya|oa|oă|oe|oo|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])(nh|ng|ch|[ctpmniyuo])?[sfrxj]?$/i;
 
 phụ âm đầu      (27+1) 2^5  
                         (10) tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|
@@ -42,6 +42,12 @@ phải lưu từ điển dưới dạng text, có lẽ sẽ tiết kiệm khoả
 
 => Dùng cách tương tự để lưu và giải mã các file text nữa, vừa bảo mật vừa tiết kiệm.
 
+### 22 phụ âm:
+b, c (k,q), ch, d, đ, g (gh), h, kh, l, m, n, nh, ng (ngh), p, ph, r, s, t, tr, th, v, x.
+```
+[bdđhlmnprstvx]|[ckq]|ch|(:?g|gh)|kh|nh|(:?ng:ngh)|ph|tr|th
+```
+
 ### Âm cuối + thanh điệu
 ch,c,t,p chỉ đi với s,j
 ```
@@ -51,7 +57,7 @@ ch,c,t,p chỉ đi với s,j
 40
 ```
 
-### Âm đệm + nguyên âm
+### Âm đệm + âm chính
 – Âm đệm được ghi bằng con chữ u và o.
 + Ghi bằng con chữ u khi đứng trước các nguyên âm: y, ê, e, â.
 + Ghi bằng con chữ o khi đứng trước các nguyên âm: a, ă, e.
@@ -85,7 +91,7 @@ http://thtrungnguyen.vinhphuc.edu.vn/bai-viet-chuyen-mon/cau-tao-tieng-cau-tao-v
 
 1. Tiếng gồm 3 bộ phận: phụ âm đầu, vần và thanh điệu.
 
-– 22 phụ âm : b, c (k,q), ch, d, đ, g (gh), h, kh, l, m, n, nh, ng (ngh), p, ph, r, s, t, tr, th, v, x.
+– 22 phụ âm: b, c (k,q), ch, d, đ, g (gh), h, kh, l, m, n, nh, ng (ngh), p, ph, r, s, t, tr, th, v, x.
 
 2. Vần gồm có 3 phần: âm đệm, âm chính, âm cuối.
 * Âm đệm:

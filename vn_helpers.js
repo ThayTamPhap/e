@@ -9,7 +9,7 @@ export const VN_PHRASE_BREAK_REGEX = /[^\sqwertyuiopasdfghjklzxcvbnmàáạảã
 const VN_SYLLABLE_REGEX = /[qwertyuiopasdfghjklzxcvbnmàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]+/gi;
 
 const _syllLeft = /(^|qu|gi|[qrtpsdđghklxcvbnm]+)((?:uy|u|o|ư|i|y)?[aăâeêuưoơôiy])(.*)/i;
-const _syllFull = /^(tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|ue|uyê|uya|oa|oă|oe|oo|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])((?:ch|c|t|p)[sj]|(?:nh|ng|[mniyuo])?[sfrxjz])$/i;
+const _syllNoTone = /^(tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|ue|uyê|uya|oa|oă|oe|oo|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])(nh|ng|ch|[ctpmniyuo])?$/i;
 
 const tonesMap = {
     "as":"á", "af":"à", "ax":"ã", "ar":"ả", "aj":"ạ",
@@ -244,17 +244,17 @@ function _removeTone(s) {
 }
 
 export function isVietnamese(syllable) {
-    let s = _removeTone(syllable) + _getTone(syllable);
-    let m = s.match(_syllFull);
+    let s = _removeTone(syllable);
+    let tone = _getTone(syllable);
+    let m = s.match(_syllNoTone);
 
-    console.log('isVietnamese', syllable, s, m);
+    console.log('isVietnamese', syllable, s, m, tone);
 
     if (!m) { return false; }
 
-    let amDau = m[1] ?? "";
+    let amDau = m[1];
     let amGiua = m[2];
-    let amCuoi = m[3].slice(0, -1);
-    let tone = m[3].slice(-1);
+    let amCuoi = m[3];
 
     /*
     – Âm đệm được ghi bằng con chữ u và o.
@@ -267,51 +267,49 @@ export function isVietnamese(syllable) {
     + sau n: thê noa, noãn sào (2 từ Hán Việt)
     + sau r: roàn roạt (1 từ)
     + sau g: goá (1 từ)
-
+    /* */
     let coAmDem = "oa,oă,oe;y,ue,uê,uơ,uâ".includes(amGiua.slice(0,2));
     if (coAmDem) {
 
     }
-    */
-
+    
+    /* Âm chính là nguyên âm đôi */
     // {ia} trước không có âm đệm, sau không có âm cuối. VD: t{ia}, {ỉa}
-    if (amGiua === "ia" 
-        && !(amCuoi.length === 0)) return false;
+    if (amGiua === "ia" && amCuoi) return false;
 
     // {yê} trước có âm đệm, sau có âm cuối. VD: chu{yê}n, hu{yế}t
-    if (amGiua === "uyê" 
-        && !(amDau.length > 0 && amCuoi.length > 0)) return false;
+    if (amGiua === "uyê" && !(amDau && amCuoi)) return false;
 
     // {yê} trước không có âm nào, sau có âm cuối. VD: {yê}u
-    if (amGiua === "yê" 
-        && !(amDau.length === 0 && amCuoi.length > 0)) return false;
+    if (amGiua === "yê" && !(!amDau && amCuoi)) return false;
 
     // {ya} trước có âm đệm, sau không có âm cuối. VD: khu{ya}
-    if (amGiua === "uya" 
-        && !(amCuoi.length === 0)) return false;
+    if (amGiua === "uya" && !amCuoi) return false;
 
     // {iê} trước có phụ âm đầu, sau có âm cuối. VD: t{iê}n, k{iế}ng
-    if (amGiua === "iê" 
-        && !(amDau.length > 0 && amCuoi.length > 0)) return false;
-
+    if (amGiua === "iê" && !(amDau && amCuoi)) return false;
 
     // {ươ} sau có âm cuối. VD: mượn
-    if (amGiua === "ươ" && !(amCuoi.length > 0)) return false;
+    if (amGiua === "ươ" && !amCuoi) return false;
 
     // {ưa} sau không có âm cuối. VD: ưa
-    if (amGiua === "ưa" && !(amCuoi.length === 0)) return false;
-
+    if (amGiua === "ưa" && amCuoi) return false;
 
     // {uô} sau có âm cuối. VD: muốn
-    if (amGiua === "uô" && !(amCuoi.length > 0)) return false;
+    if (amGiua === "uô" && !amCuoi) return false;
 
     // {ua} sau không có âm cuối. VD: mua
-    if (amGiua === "ua" && !(amCuoi.length === 0)) return false;
+    if (amGiua === "ua" && amCuoi) return false;
+
+    /* Các âm cuối c,ch,t,p chỉ đi với thanh s, j */
+    if (amCuoi && "c,ch,t,p".includes(amCuoi) 
+        && !(tone === "s" || tone === "j")) return false;
 
     return true;
 }
 assertEqual(isVietnamese("của"), true);
 assertEqual(isVietnamese("huyết"), true);
+assertEqual(isVietnamese("huyêt"), false);
 assertEqual(isVietnamese("boong"), true);
 assertEqual(isVietnamese("niềm"), true);
 assertEqual(isVietnamese("iềm"), false);
