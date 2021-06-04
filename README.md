@@ -1,5 +1,11 @@
 # Vietnamese Syllables
 
+## Dùng wasm để mã hoá và tối ưu lưu trữ bi,tri-grams
+
+...
+
+[ DONE ]
+
 ## Âm tiết Tiếng Việt
 ```
 /^(tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|ue|uyê|uya|oa|oă|oe|oo|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])(nh|ng|ch|[ctpmniyuo])?[sfrxj]?$/i;
@@ -131,11 +137,6 @@ http://thtrungnguyen.vinhphuc.edu.vn/bai-viet-chuyen-mon/cau-tao-tieng-cau-tao-v
 – 8 phụ âm cuối vần: p, t, c, ch, m, n, ng, nh
 – 4 bán âm cuối vần: i, y, u, o
 
-## Get more text to gen bi,tri-grams
-
-https://sutamphap.com/category/thu-thay-tro/
-
-[ DONE ]
 
 ## Auto-masking (add tones and marks)
 
