@@ -1,4 +1,4 @@
-import * as Words from './words.js';
+// import * as Words from './words.js';
 import * as CursorHelpers from './cursor_helpers.js';
 
 const defaultSecondsPerWord = 0.3;
@@ -23,19 +23,19 @@ export async function getCurrDelta(wholeSent = false) {
 
   if (wholeSent) {
     // estimate whole sentence duration in seconds
-    // Last sub, play for 1 min
+    // Last sub, play for 1.5 min
     if (currSubIndex == subsCount - 1) {
-      return 60;
-    } // seconds
+      return 90;// seconds
+    }
 
     // Get all the text of current sub to estimate duration
     q = document.getElementById(currSubIndex).innerText;
     currPos = q.length;
 
-    // Too short text (hard to estimate) also play for 1 min
+    // Too short text (hard to estimate) also play for 1.5 min
     if (currPos < 10) {
-      return 60;
-    } // seconds
+      return 90;// seconds
+    }
 
     // Don't re-estimate if only 10% diff from the last estimation
     var ratio = currPos / wholeSentLength;
@@ -57,7 +57,7 @@ export async function getCurrDelta(wholeSent = false) {
   // Est beginning of a sent (normally when switch sub) will reset wholeSentLength to force it re-estimated
   if (currPos < 5) wholeSentLength = -1;
 
-  // Estimate delta2 based on number of words and duration of the previous sent
+  // Estimate delta based on number of words and duration of the previous sent
   q = q.toLocaleLowerCase();
   var words = q.split(notWordRegex);
   var breakCount1 = q.split(END_PHRASE_AND_SENT_REGEX).length - 1;
@@ -72,8 +72,9 @@ export async function getCurrDelta(wholeSent = false) {
   if (words.length > 20) wordsCount -= words.length / 10;
   if (words.length > 40) wordsCount -= words.length / 20;
   wordsCount += breakCount1 * 0.3 + breakCount2 * 0.5;
-  var delta2 = wordsCount * (await estimateSecondsPerWord(currSubIndex));
+  var delta = wordsCount * (await estimateSecondsPerWord(currSubIndex));
 
+  /* 
   // Estimate delta1 based-on avg duration of force-aligned audios
   var delta1 = 0;
   if (words.length > 0) {
@@ -82,7 +83,9 @@ export async function getCurrDelta(wholeSent = false) {
   }
 
   // Final delta will be avg of delta1 and delta2
-  var delta = (delta1 + delta2) / 2;
+  // var delta = (delta1 + delta2) / 2;
+  /**/
+
 
   // Take into account of adjustedDeltas (by press '<<', '>>' button manually)
   var ad, i, n = adjustedDeltas.length - 1;
@@ -99,20 +102,16 @@ export async function getCurrDelta(wholeSent = false) {
 
   // Keep only two last digits after period to easier to read in console.log
   delta = keepTwoDigitsAfterPeriod(delta);
-  delta1 = keepTwoDigitsAfterPeriod(delta1);
-  delta2 = keepTwoDigitsAfterPeriod(delta2);
 
   if (wholeSent) {
     // Buffer more to ensure to reach next sent for whole sent estimation case
     delta = keepTwoDigitsAfterPeriod(delta * 1.35 + 3.5);
     // Remember newly estimated wholeSentDelta to use for the next case
     wholeSentDelta = delta;
-    console.log(wholeSent, words.length, delta1, delta2, delta);
+    console.log(wholeSent, words.length, delta);
   } else {
-    console.log('currSub:',currSubIndex,'words',words.length,'delta1',delta1,'delta2',delta2,'delta',delta);
-    // console.log('currSub:',currSubIndex,'words',words.length,'delta1',delta1,'wordsCount',
-    //   wordsCount,'delta2',delta2,'currPos',currPos,'adjustedDeltas',adjustedDeltas.length,
-    //   'delta',delta);
+    console.log('currSub:',currSubIndex,'words',words.length,'delta',delta);
+    // console.log('wordsCount', wordsCount,'currPos',currPos,'adjustedDeltas',adjustedDeltas.length, 'delta',delta);
   }
 
   // Ensure delta always > 0 and return it
