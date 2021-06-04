@@ -9,6 +9,7 @@ var needToResetTextAndPos = true;
 document.addEventListener("keydown", handleKeyPress);
 
 window.addEventListener("click", function(event) {
+  // Click anywhere to hide suggession box, most use on mobile
   document.getElementById("suggestion").display = "none";
 });
 
