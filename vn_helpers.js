@@ -248,7 +248,7 @@ export function isVietnamese(syllable) {
     let tone = _getTone(syllable);
     let m = s.match(_syllNoTone);
 
-    console.log('isVietnamese', syllable, s, m, tone);
+    // console.log('isVietnamese', syllable, s, m, tone);
 
     if (!m) { return false; }
 
@@ -324,14 +324,14 @@ assertEqual(isVietnamese("boong"), true);
 assertEqual(isVietnamese("niềm"), true);
 assertEqual(isVietnamese("iềm"), false);
 assertEqual(isVietnamese("iề"), false);
-assertEqual(isVietnamese( "yêu"),true);
-assertEqual(isVietnamese( "yê"),false);
-assertEqual(isVietnamese("tyêu"),false);
-assertEqual(isVietnamese("tyêu"),false);
+assertEqual(isVietnamese( "yêu"), true);
+assertEqual(isVietnamese( "yê"), false);
+assertEqual(isVietnamese("tyêu"), false);
 assertEqual(isVietnamese("ỉa"), true);
 assertEqual(isVietnamese("ỉam"), false);
-"doạ,dóa,duệ,duyên,duyệt,duy".split(",").forEach(x => {
-    assertEqual(isVietnamese("x"), false);
+"gioạ,gióa,giuệ,giuyên,giuyệt,giuy".split(",").forEach(x => {
+    assertEqual(isVietnamese(x), false);
+    assertEqual(isVietnamese(x.replace("gi","d")), true);
 });
 
 export function telexifyLastWord(sent) {

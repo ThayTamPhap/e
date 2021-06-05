@@ -4,13 +4,20 @@
 
 ...
 
+- - - - - - - - - - - -
+
+
+https://hoatieu.vn/quy-tac-chinh-ta-phan-biet-l-n-ch-tr-x-s-gi-d-c-q-k-i-y-163648
+
+
+
 [ DONE ]
 
 ## Âm tiết Tiếng Việt
 ```js
 /^(tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|ue|uyê|uya|oa|oă|oe|oo|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])(nh|ng|ch|[ctpmniyuo])?[sfrxj]?$/i;
 ```
-```txt
+```regex
 phụ âm đầu      (27+1) 2^5  
                         (10) tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|
                         (17) [bckqdđghlmnprstvx]
@@ -35,7 +42,9 @@ cuối + thanh    (66+0) 2^7
                         (54) (nh|ng|[mniyuo])?[sfrxj]?|
                         (08) (ch|[ctp])[sj]
 
-[note] x+0,x+1 0: phải có, 1: có thể ko có, thì cần thêm 1 số đếm để ghi nhận
+[note] 
+    x+0, phải có
+    x+1, có thể ko có, nên cần thêm 1 số đếm để ghi nhận
 ```
 toa, ta
 tanh, tang, tam, tan,
@@ -49,28 +58,24 @@ phải lưu từ điển dưới dạng text, có lẽ sẽ tiết kiệm khoả
 
 => Dùng cách tương tự để lưu và giải mã các file text nữa, vừa bảo mật vừa tiết kiệm.
 
+
+- - - - - - - - - - - -
+
+http://thtrungnguyen.vinhphuc.edu.vn/bai-viet-chuyen-mon/cau-tao-tieng-cau-tao-van-trong-tieng-viet-c7597-36557.aspx
+
 ### 22 phụ âm:
 b, c (k,q), ch, d (gi), đ, g (gh), h, kh, l, m, n, nh, ng (ngh), p, ph, r, s, t, tr, th, v, x.
 
 ```js
 /[bđhlmnprstvx]|(?:d|gi)|[ckq]|ch|(:?g|gh)|kh|nh|(:?ng|ngh)|ph|tr|th/i
 ```
-https://vietnamnet.vn/vn/giao-duc/hien-tuong-tu-vung-tieng-viet-am-dau-d-gi-244065.html
-
-### Âm cuối + thanh điệu
-ch,c,t,p chỉ đi với s,j
-```
-32 (nh|ng|[mniyuo])[frx]?
-08 (ch|[ctp])[sj]
---
-40
-```
 
 ### Âm đệm + âm chính
 – Âm đệm được ghi bằng con chữ u và o.
 + Ghi bằng con chữ u khi đứng trước các nguyên âm: y, ê, e, â.
 + Ghi bằng con chữ o khi đứng trước các nguyên âm: a, ă, e.
-```
+
+```regex
 + âm đệm     (03) 2^2  [uo]?
 | âm chính   (14) 2^4  iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ]
 =>
@@ -80,66 +85,31 @@ ch,c,t,p chỉ đi với s,j
 --
 29
 ```
+
 + {iê}:
-{ia} trước không có âm đệm, sau không có âm cuối.           VD: t{ia}, {ỉa}
-{yê} trước có âm đệm hoặc không có âm nào, sau có âm cuối.  VD: {yê}u, chu{yê}n
-{ya} trước có âm đệm, sau không có âm cuối.                 VD: khu{ya}
-{iê} khi phía trước có phụ âm đầu, phía sau có âm cuối.     VD: t{iê}n, k{iế}ng
+
+{ia} trước không có âm đệm, sau không có âm cuối.
+VD: t{ia}, {ỉa}
+
+{yê} trước có âm đệm hoặc không có âm nào, sau có âm cuối.
+VD: {yê}u, chu{yê}n
+
+{ya} trước có âm đệm, sau không có âm cuối.
+VD: khu{ya}
+
+{iê} khi phía trước có phụ âm đầu, phía sau có âm cuối.
+VD: t{iê}n, k{iế}ng
 
 + {uơ}:
-{ươ} sau có âm cuối.       VD: mượn
-{ưa} sau không có âm cuối. VD: ưa
+{ươ} sau có âm cuối.        VD: mượn
+{ưa} sau không có âm cuối.  VD: ưa
 
 + {uô}:
-{uô} sau có âm cuối.        VD: muốn
-{ua} sau không có âm cuối.  VD: mua
+{uô} sau có âm cuối.        VD: m{uố}n
+{ua} sau không có âm cuối.  VD: m{ua}
+
 
 - - - - - - - - - - - -
-
-http://thtrungnguyen.vinhphuc.edu.vn/bai-viet-chuyen-mon/cau-tao-tieng-cau-tao-van-trong-tieng-viet-c7597-36557.aspx
-
-1. Tiếng gồm 3 bộ phận: phụ âm đầu, vần và thanh điệu.
-
-– 22 phụ âm: b, c (k,q), ch, d, đ, g (gh), h, kh, l, m, n, nh, ng (ngh), p, ph, r, s, t, tr, th, v, x.
-
-2. Vần gồm có 3 phần: âm đệm, âm chính, âm cuối.
-* Âm đệm:
-
-– Âm đệm được ghi bằng con chữ u và o.
-+ Ghi bằng con chữ o khi đứng trước các nguyên âm: a, ă, e.
-+ Ghi bằng con chữ u khi đứng trước các nguyên âm y, ê, ơ, â.
-
-– Âm đệm không xuất hiện sau các phụ âm b, m, v, ph, n, r, g. Trừ các trường hợp:
-+ sau ph, b: thùng phuy, voan, ô tô buýt (là từ nước ngoài)
-+ sau n: thê noa, noãn sào (2 từ Hán Việt)
-+ sau r: roàn roạt (1 từ)
-+ sau g: goá (1 từ)
-
-
-* Âm chính:
-
-– 11 nguyên âm đơn: i, e, ê, ư, u, o, ô, ơ, a, ă, â.
-– Có 3 nguyên âm đôi iê, uơ, uô. Được tách thành 8 cách ghi âm sau:
-
-+ {iê}:
-{ia} trước không có âm đệm, sau không có âm cuối.           VD: t{ia}, {ỉa}
-{yê} trước có âm đệm hoặc không có âm nào, sau có âm cuối.  VD: {yê}u, chu{yê}n
-{ya} trước có âm đệm, sau không có âm cuối.                 VD: khu{ya}
-{iê} trước có phụ âm đầu, sau có âm cuối.                   VD: t{iê}n, k{iế}ng
-
-+ {uơ}:
-{ươ} sau có âm cuối.       VD: mượn
-{ưa} sau không có âm cuối. VD: ưa
-
-+ {uô}:
-{uô} sau có âm cuối.        VD: muốn
-{ua} sau không có âm cuối.  VD: mua
-
-* 12 âm cuối:
-
-– 8 phụ âm cuối vần: p, t, c, ch, m, n, ng, nh
-– 4 bán âm cuối vần: i, y, u, o
-
 
 ## Auto-masking (add tones and marks)
 
