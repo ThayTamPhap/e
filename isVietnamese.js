@@ -1,4 +1,4 @@
-import * as VnHelpers from "./vn_helpers.js"
+import {_removeTone, _getTone} as VnHelpers from "./vn_helpers.js"
 
 const _syllNoTone = /^(tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|ue|uyê|uya|oa|oă|oe|oo|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])(nh|ng|ch|[ctpmniyuo])?$/i;
 
@@ -100,6 +100,7 @@ export function isVietnamese(syllable) {
 
     return true;
 }
+
 assertEqual(isVietnamese("của"), true);
 assertEqual(isVietnamese("huyết"), true);
 assertEqual(isVietnamese("huyêt"), false);
@@ -112,6 +113,7 @@ assertEqual(isVietnamese( "yê"), false);
 assertEqual(isVietnamese("tyêu"), false);
 assertEqual(isVietnamese("ỉa"), true);
 assertEqual(isVietnamese("ỉam"), false);
+
 "gioạ,gióa,giuệ,giuyên,giuyệt,giuy".split(",").forEach(x => {
     assertEqual(isVietnamese(x), false);
     assertEqual(isVietnamese(x.replace("gi","d")), true);

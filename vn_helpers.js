@@ -1,5 +1,5 @@
 import { _mappings } from "./vn_mappings.js"
-import * as VnSyllable from "./vn_syllable.js"
+import { isVietnamese } from "./vn_syllable.js"
 
 const WORD_VALID_CHARS = "1234567890qwertyuiopasdfghjklzxcvbnmàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđQWERTYUIOPASDFGHJKLZXCVBNMÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ";
 
@@ -283,7 +283,7 @@ export function telexifyWord(w) {
         }
     }
 
-    let isVnSyllable = VnSyllable.isVietnamese(neww);
+    let isVnSyllable = isVietnamese(neww);
     console.log('Telexify:', w, neww, isVnSyllable);
     return  isVnSyllable ? 
         changeTone(_removeTone(neww),_getTone(neww)) : w;
