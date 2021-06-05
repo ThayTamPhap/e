@@ -255,6 +255,17 @@ export function isVietnamese(syllable) {
     let amDau = m[1];
     let amGiua = m[2];
     let amCuoi = m[3];
+    let coAmDem = /^o[oaăe]|u[yeêơâ]$/i.test(amGiua.slice(0,2));
+
+    /*
+    https://vietnamnet.vn/vn/giao-duc/hien-tuong-tu-vung-tieng-viet-am-dau-d-gi-244065.html
+    
+    - Âm đầu “gi” không bao giờ kết hợp với âm đệm, tức là không đứng trước các vần oa, oă, uâ, uê, uy, nên khi gặp những vần nay thì viết “d” như doạ nạt, nổi dóa, hậu duệ, vô duyên, kiểm duyệt, duy trì…
+
+    ý kiến của GS.TS Đoàn Thiện Thuật (1999, Ngữ âm tiếng Việt): “Cách ghi D và GI khác nhau trong những từ cụ thể, không thể đúc rút thành quy luật chính tả được vì nó là vấn đề từ vựng học và có lí do lịch sử của nó. Những từ được ghi bằng D có lẽ vào thời kì chữ quốc ngữ được xây dựng có cách phát âm khác với những từ được ghi bằng GI ở bộ phận âm đầu. Những từ được ghi bằng GI như gia, giang, giáo… thường là những từ Hán Việt và theo cách phát âm cổ của chúng trước kia...”
+    /* */
+
+    if (amDau === "gi" && coAmDem) return false;
 
     /*
     – Âm đệm được ghi bằng con chữ u và o.
@@ -268,9 +279,8 @@ export function isVietnamese(syllable) {
     + sau r: roàn roạt (1 từ)
     + sau g: goá (1 từ)
     /* */
-    let coAmDem = "oa,oă,oe;y,ue,uê,uơ,uâ".includes(amGiua.slice(0,2));
     if (coAmDem) {
-
+        // ...
     }
     
     /* Âm chính là nguyên âm đôi */
@@ -320,6 +330,9 @@ assertEqual(isVietnamese("tyêu"),false);
 assertEqual(isVietnamese("tyêu"),false);
 assertEqual(isVietnamese("ỉa"), true);
 assertEqual(isVietnamese("ỉam"), false);
+"doạ,dóa,duệ,duyên,duyệt,duy".split(",").forEach(x => {
+    assertEqual(isVietnamese("x"), false);
+});
 
 export function telexifyLastWord(sent) {
     if (isMobileDevice) { return sent; }

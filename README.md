@@ -7,28 +7,33 @@
 [ DONE ]
 
 ## Âm tiết Tiếng Việt
-```
+```js
 /^(tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|ue|uyê|uya|oa|oă|oe|oo|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])(nh|ng|ch|[ctpmniyuo])?[sfrxj]?$/i;
-
+```
+```txt
 phụ âm đầu      (27+1) 2^5  
                         (10) tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|
                         (17) [bckqdđghlmnprstvx]
 
-âm giữa (đệm + chính)
+âm giữa (âm đệm + nguyên âm)
+
                 (29+0) 2^5
                         (06) uy|uâ|uê|ue|uyê|uya|
                         (04) oa|oă|oe|oo|
                         (07) iê|ia|yê|ươ|ưa|uô|ua|
                         (12) [iyeêưuoôơaăâ]
 
+âm cuối         (12+1) 2^4
+                        (12) nh|ng|ch|[ctpmniyuo]
+
+thanh điệu      (05+1) 2^3
+                        (05) [sfrxj]?
+
+       - OR -
+
 cuối + thanh    (66+0) 2^7
                         (54) (nh|ng|[mniyuo])?[sfrxj]?|
                         (08) (ch|[ctp])[sj]
-       - OR -
-cuối            (12+1) 2^4
-                        (12) nh|ng|ch|[ctpmniyuo]
-thanh           (05+1) 2^3
-                        (05) [sfrxj]?
 
 [note] x+0,x+1 0: phải có, 1: có thể ko có, thì cần thêm 1 số đếm để ghi nhận
 ```
@@ -38,10 +43,6 @@ tai, tay, tau, tao,
 tách, tác, tát, táp
 
 => Cần 17 bits để ghi riêng từng thành phần. 
-- Dùng bảng mã ASCII cần 3 ký tự          2^7 = 128
-- Dùng hệ thập phân cần tối đa 6 ký tự.  2^17 = 131072
-- Dùng Octal number syntax cần 7 ký tự. var n = 0000755; // 493
-- Dùng Hexadecimal number  cần 7 ký tự.         0x0000A; // 10
 
 => Dùng rule-based (hoặc FST) để dịch mã hoá thành văn bản thì sẽ ko cần
 phải lưu từ điển dưới dạng text, có lẽ sẽ tiết kiệm khoảng 1MB dữ liệu.
@@ -49,10 +50,12 @@ phải lưu từ điển dưới dạng text, có lẽ sẽ tiết kiệm khoả
 => Dùng cách tương tự để lưu và giải mã các file text nữa, vừa bảo mật vừa tiết kiệm.
 
 ### 22 phụ âm:
-b, c (k,q), ch, d, đ, g (gh), h, kh, l, m, n, nh, ng (ngh), p, ph, r, s, t, tr, th, v, x.
+b, c (k,q), ch, d (gi), đ, g (gh), h, kh, l, m, n, nh, ng (ngh), p, ph, r, s, t, tr, th, v, x.
+
+```js
+/[bđhlmnprstvx]|(?:d|gi)|[ckq]|ch|(:?g|gh)|kh|nh|(:?ng|ngh)|ph|tr|th/i
 ```
-[bdđhlmnprstvx]|[ckq]|ch|(:?g|gh)|kh|nh|(:?ng:ngh)|ph|tr|th
-```
+https://vietnamnet.vn/vn/giao-duc/hien-tuong-tu-vung-tieng-viet-am-dau-d-gi-244065.html
 
 ### Âm cuối + thanh điệu
 ch,c,t,p chỉ đi với s,j
