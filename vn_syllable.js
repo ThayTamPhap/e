@@ -1,13 +1,38 @@
-import {_removeTone, _getTone} from "./vn_helpers.js"
+export function _getTone(s) {
+    if (s.match(/á|ắ|ấ|ó|ớ|ố|ú|ứ|é|ế|í|ý/i)) return 's';
+    if (s.match(/à|ằ|ầ|ò|ờ|ồ|ù|ừ|è|ề|ì|ỳ/i)) return 'f';
+    if (s.match(/ả|ẳ|ẩ|ỏ|ở|ổ|ủ|ử|ẻ|ể|ỉ|ỷ/i)) return 'r';
+    if (s.match(/ã|ẵ|ẫ|õ|ỡ|ỗ|ũ|ữ|ẽ|ễ|ĩ|ỹ/i)) return 'x';
+    if (s.match(/ạ|ặ|ậ|ọ|ợ|ộ|ụ|ự|ẹ|ệ|ị|ỵ/i)) return 'j';
+    return 'z';
+}
+assertEqual(_getTone("an"),"z");
+assertEqual(_getTone("ẩn"),"r");
+
+export function _removeTone(s) {
+    return s.
+        replace(/[àáạảã]/g , "a").
+        replace(/[âầấậẩẫ]/g, "â").
+        replace(/[ăằắặẳẵ]/g, "ă").
+        replace(/[èéẹẻẽ]/g , "e").
+        replace(/[êềếệểễ]/g, "ê").
+        replace(/[òóọỏõ]/g,  "o").
+        replace(/[ôồốộổỗ]/g, "ô").
+        replace(/[ơờớợởỡ]/g, "ơ").
+        replace(/[ùúụủũ]/g,  "u").
+        replace(/[ưừứựửữ]/g, "ư").
+        replace(/[ìíịỉĩ]/g,  "i").
+        replace(/[ỳýỵỷỹ]/g,  "y");
+}
 
 const _syllNoTone = /^(tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|ue|uyê|uya|oa|oă|oe|oo|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])(nh|ng|ch|[ctpmniyuo])?$/i;
 
-export function isVietnamese(syllable) {
+export function _isVietnamese(syllable) {
     let s = _removeTone(syllable);
     let tone = _getTone(syllable);
     let m = s.match(_syllNoTone);
 
-    // console.log('isVietnamese', syllable, s, m, tone);
+    // console.log('_isVietnamese', syllable, s, m, tone);
 
     if (!m) { return false; }
 
@@ -101,20 +126,20 @@ export function isVietnamese(syllable) {
     return true;
 }
 
-assertEqual(isVietnamese("của"), true);
-assertEqual(isVietnamese("huyết"), true);
-assertEqual(isVietnamese("huyêt"), false);
-assertEqual(isVietnamese("boong"), true);
-assertEqual(isVietnamese("niềm"), true);
-assertEqual(isVietnamese("iềm"), false);
-assertEqual(isVietnamese("iề"), false);
-assertEqual(isVietnamese( "yêu"), true);
-assertEqual(isVietnamese( "yê"), false);
-assertEqual(isVietnamese("tyêu"), false);
-assertEqual(isVietnamese("ỉa"), true);
-assertEqual(isVietnamese("ỉam"), false);
+assertEqual(_isVietnamese("của"), true);
+assertEqual(_isVietnamese("huyết"), true);
+assertEqual(_isVietnamese("huyêt"), false);
+assertEqual(_isVietnamese("boong"), true);
+assertEqual(_isVietnamese("niềm"), true);
+assertEqual(_isVietnamese("iềm"), false);
+assertEqual(_isVietnamese("iề"), false);
+assertEqual(_isVietnamese( "yêu"), true);
+assertEqual(_isVietnamese( "yê"), false);
+assertEqual(_isVietnamese("tyêu"), false);
+assertEqual(_isVietnamese("ỉa"), true);
+assertEqual(_isVietnamese("ỉam"), false);
 
 "gioạ,gióa,giuệ,giuyên,giuyệt,giuy".split(",").forEach(x => {
-    assertEqual(isVietnamese(x), false);
-    assertEqual(isVietnamese(x.replace("gi","d")), true);
+    assertEqual(_isVietnamese(x), false);
+    assertEqual(_isVietnamese(x.replace("gi","d")), true);
 });

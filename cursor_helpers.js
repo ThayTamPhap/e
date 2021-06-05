@@ -1,7 +1,7 @@
 import * as AudioPlayer from "./audio_player.js";
 import * as Estimators from "./estimators.js";
 import * as TypedText from "./typed_text.js"
-import * as VnHelpers from "./vn_helpers.js"
+import * as VnTelex from "./vn_telex.js"
 
 var lastCurrPos = 0;
 var selectedText = "";
@@ -77,7 +77,7 @@ export function resetTextAndPos() {
     let isEndOfSent = lastCurrPos >= currInnerText.length;
 
     let normText = currInnerText.substr(0, lastCurrPos);
-    normText = VnHelpers.telexifyLastWord(normText);
+    normText = VnTelex.telexifyLastWord(normText);
     normText = TypedText.normalizeText(normText, false);
 
     let remain = currInnerText.substr(lastCurrPos,);

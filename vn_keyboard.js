@@ -1,8 +1,11 @@
 import * as CursorHelpers from "./cursor_helpers.js"
 import * as AudioPlayer from "./audio_player.js"
-import * as VnHelpers from "./vn_helpers.js"
-import { _mappings } from "./vn_mappings.js"
+
 import * as TypedText from "./typed_text.js"
+import * as VnTelex from "./vn_telex.js"
+
+import * as VnGrams from "./vn_grams.js"
+import { _mappings } from "./vn_mappings.js"
 
 document.addEventListener("keyup", mapKeysForMe);
 
@@ -92,7 +95,7 @@ async function mapKeysForMe(event) {
     if ((c1 === 44 && c2 === 46) || 
         (c2 === 44 && c1 === 46)) {
 
-        let n = l.length - 1, validChars = VnHelpers.PHRASE_VALID_CHARS;
+        let n = l.length - 1, validChars = VnGrams.PHRASE_VALID_CHARS;
         while (n > 0 && !validChars.includes(l[n])) { n--; }
         while (n > 0 &&  validChars.includes(l[n])) { n--; }
 
@@ -153,7 +156,7 @@ async function mapKeysForMe(event) {
     // console.log('lastChar',lastChar, lastWord.slice(-1), String.fromCharCode(c1));
     if (c2 != 32 && c2 != 160 && lastChar && 
         (true || "dsfrxj aeow".includes(lastChar) || c1 === 160)) {
-        let newWord = VnHelpers.telexifyWord(lastWord);
+        let newWord = VnTelex.telexifyWord(lastWord);
         // console.log('TELEX:',lastWord,'=>',newWord);
         if (newWord !== lastWord) {
             newl = l.substr(0,l.length - lastWord.length) + newWord;
@@ -173,7 +176,7 @@ async function mapKeysForMe(event) {
         return;
     }
     gram = triWords.join(" ").toLowerCase();
-    gram = VnHelpers.removeMarks(gram);
+    gram = VnTelex.removeMarks(gram);
     matched = _mappings[gram];
 
     // console.log(triWords, gram, matched);
@@ -181,7 +184,7 @@ async function mapKeysForMe(event) {
     if (!matched && triWords.length > 2) {
         triWords.shift();
         gram = triWords.join(" ").toLowerCase();
-        gram = VnHelpers.removeMarks(gram);
+        gram = VnTelex.removeMarks(gram);
         matched = _mappings[gram];
     }
 
@@ -216,7 +219,7 @@ async function mapKeysForMe(event) {
             let htmls = [];
             matches = matches.sort((a,b) => b[1] - a[1]).map(x => x[0]);
             let lastWord = triWords[triWords.length-1];
-            if (VnHelpers.removeMarks(lastWord) !== lastWord) {
+            if (VnTelex.removeMarks(lastWord) !== lastWord) {
                 // console.log('len la len', www);
                 matches = matches.filter(m => m !== www);
                 matches.unshift(www);
@@ -243,7 +246,7 @@ function okok(w1, w2, autoReplaced=false) {
     w1 = w1.toLowerCase();
     w2 = w2.toLowerCase();
     if (w1 == w2) return true;
-    let w0 = VnHelpers.removeMarks(w1);
-    if (w0 == VnHelpers.removeMarks(w2)) return true;
+    let w0 = VnTelex.removeMarks(w1);
+    if (w0 == VnTelex.removeMarks(w2)) return true;
     return false;
 }

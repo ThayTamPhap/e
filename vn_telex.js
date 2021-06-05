@@ -1,17 +1,5 @@
-import { _mappings } from "./vn_mappings.js"
-import { isVietnamese } from "./isVietnamese.js"
-
-const VN_CHARS = "qwertyuiopasdfghjklzxcvbnmàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ";
-
-const WORD_VALID_CHARS =
-    "1234567890" + VN_CHARS + VN_CHARS.toUpperCase();
-
-export const PHRASE_VALID_CHARS = WORD_VALID_CHARS + " ";
-
-export const VN_PHRASE_BREAK_REGEX =
-    new RegExp(`[^\s${VN_CHARS}]+`,"gi");
-
-const VN_SYLLABLE_REGEX = new RegExp(`[${VN_CHARS}]+`,"gi");
+import { _isVietnamese, _removeTone, _getTone } from "./vn_syllable.js"
+import { WORD_VALID_CHARS, VN_PHRASE_BREAK_REGEX } from "./vn_grams.js"
 
 const _syllLeft = /(^|qu|gi|[qrtpsdđghklxcvbnm]+)((?:uy|u|o|ư|i|y)?[aăâeêuưoơôiy])(.*)/i;
 
@@ -37,48 +25,6 @@ const vowelsMap = {
     "uw":"ư", 
 }
 
-export function makeUseOfBiTriGramsFrom(txt) {
-    let phrases = txt.toLowerCase().split(VN_PHRASE_BREAK_REGEX);
-    phrases.forEach((phrase) => {
-        extractBiTriGrams(phrase);
-    });
-}
-
-function extractBiTriGrams(phrase) {
-    var w0 = "_", w1 = "_", s2, s3;
-    var words = phrase.trim().split(/\s+/);
-    words.forEach(w2 => {
-        s2 = `${w1} ${w2}`;
-        s3 = `${w0} ${s2}`;
-        w0 = w1; w1 = w2;
-        makeUseOfGram(s2);
-        makeUseOfGram(s3);
-    });
-}
-
-function makeUseOfGram(gram) {
-    if (gram.includes("_")) return;
-    // console.log(gram);
-    let key = removeMarks(gram);
-    let value = _mappings[key];
-    if (value && value.includes(gram)) {
-        // console.log(gram);
-        // console.log("=>", value);
-        value = value.replace(gram, "").replace("||","|").replace(/\|$/,"");
-        if (value.length === 0) {
-            _mappings[key] = gram;
-        } else {    
-            _mappings[key] = gram + "|" + value;
-        }
-            
-    } else {
-         value = value ? gram + "|" + value : gram;
-         value.replace(/\|$/,"");
-         _mappings[key] = value;
-        // console.log(_mappings[key]);
-    }
-}
-
 for (var k in vowelsMap) {
     vowelsMap[k[0]+k[1].toUpperCase()] = vowelsMap[k];
     vowelsMap[k[0].toUpperCase()+k[1]] = vowelsMap[k].toUpperCase();
@@ -89,6 +35,7 @@ for (var k in vowelsMap) {
 for (var k in tonesMap) {
     tonesMap[k[0].toUpperCase()+k[1]] = tonesMap[k].toUpperCase();
 }
+
 
 export function changeTone(s, tone) {
     // console.log(s, tone);
@@ -177,34 +124,6 @@ export function changeMark(s, mark) {
 }
 
 
-export function _getTone(s) {
-    if (s.match(/á|ắ|ấ|ó|ớ|ố|ú|ứ|é|ế|í|ý/i)) return 's';
-    if (s.match(/à|ằ|ầ|ò|ờ|ồ|ù|ừ|è|ề|ì|ỳ/i)) return 'f';
-    if (s.match(/ả|ẳ|ẩ|ỏ|ở|ổ|ủ|ử|ẻ|ể|ỉ|ỷ/i)) return 'r';
-    if (s.match(/ã|ẵ|ẫ|õ|ỡ|ỗ|ũ|ữ|ẽ|ễ|ĩ|ỹ/i)) return 'x';
-    if (s.match(/ạ|ặ|ậ|ọ|ợ|ộ|ụ|ự|ẹ|ệ|ị|ỵ/i)) return 'j';
-    return 'z';
-}
-assertEqual(_getTone("an"),"z");
-assertEqual(_getTone("ẩn"),"r");
-
-export function _removeTone(s) {
-    return s.
-        replace(/[àáạảã]/g , "a").
-        replace(/[âầấậẩẫ]/g, "â").
-        replace(/[ăằắặẳẵ]/g, "ă").
-        replace(/[èéẹẻẽ]/g , "e").
-        replace(/[êềếệểễ]/g, "ê").
-        replace(/[òóọỏõ]/g,  "o").
-        replace(/[ôồốộổỗ]/g, "ô").
-        replace(/[ơờớợởỡ]/g, "ơ").
-        replace(/[ùúụủũ]/g,  "u").
-        replace(/[ưừứựửữ]/g, "ư").
-        replace(/[ìíịỉĩ]/g,  "i").
-        replace(/[ỳýỵỷỹ]/g,  "y");
-}
-
-
 export function telexifyLastWord(sent) {
     if (isMobileDevice) { return sent; }
 
@@ -244,7 +163,7 @@ export function telexifyWord(w) {
         }
     }
 
-    let isVnSyllable = isVietnamese(neww);
+    let isVnSyllable = _isVietnamese(neww);
     console.log('Telexify:', w, neww, isVnSyllable);
     return  isVnSyllable ? 
         changeTone(_removeTone(neww),_getTone(neww)) : w;

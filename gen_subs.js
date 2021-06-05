@@ -1,5 +1,5 @@
 import * as TypedText from "./typed_text.js"
-import * as VnHelpers from "./vn_helpers.js"
+import * as VnGrams from "./vn_grams.js"
 
 const IDEAL_LINE_CHARS = 45*5;
 const MAX_LINE_CHARS = 60*5;
@@ -157,7 +157,7 @@ async function genSubs() {
     }
     
     p.innerHTML = TypedText.spellSpecialWords(text);
-    VnHelpers.makeUseOfBiTriGramsFrom(p.innerText);
+    VnGrams.makeUseOfBiTriGramsFrom(p.innerText);
 
     p.id = i;
     if (await isEditedIndex(i) || i <= 1) {
