@@ -2,6 +2,18 @@
 
 ## Dùng wasm để mã hoá và và giải mã âm tiết tiếng Việt
 
+### Một cách mã hoá khác là dùng ngay ký tự a-y làm từ điển để lưu mã telex
+
+không  => khoong
+khuyến => khuyeens
+thường => thuowngf
+
+Một âm tiết ko dấu dùng tối đa 8 ký tự a-y.
+Cần 4-bits để mã hoá 25 chữ cái a-z
+=> 4 x 8 = 32-bits để mã hoá 1 syllable
+
+Vì đằng nào khi lưu trữ ở json hoặc js ko thể xài binary nên cần làm tròn 17-bits thành 32-bits để lưu trữ.
+
 ### Nhỏ nhất là bẻ syllable thành 4 phần âm đầu, âm giữa, âm cuối và thanh điệu. Lưu 4 từ điển nhỏ của 4 phần đó, mapping từng phần rồi ghép lại
 
 Phần code để giải mã lưu trong wasm luôn
