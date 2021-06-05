@@ -20,7 +20,7 @@ export function isVietnamese(syllable) {
     let coNguyenAmDiVoiK = /[eê]|i[êa]/.test(nguyenAm);
 
     /*
-    https://hoatieu.vn/quy-tac-chinh-ta-phan-biet-l-n-ch-tr-x-s-gi-d-c-q-k-i-y-163648#mcetoc_1d9bloqng0
+    https://hoatieu.vn/quy-tac-chinh-ta-phan-biet-l-n-ch-tr-x-s-gi-d-c-q-k-i-y-163648
     
     5- Quy tắc viết phụ âm đầu “cờ”:
     Âm đầu “cờ” được ghi bằng các chữ cái c, k, q.

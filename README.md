@@ -7,10 +7,6 @@
 - - - - - - - - - - - -
 
 
-https://hoatieu.vn/quy-tac-chinh-ta-phan-biet-l-n-ch-tr-x-s-gi-d-c-q-k-i-y-163648
-
-
-
 [ DONE ]
 
 ## Âm tiết Tiếng Việt
