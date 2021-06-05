@@ -5,6 +5,9 @@ import * as VnHelpers from "./vn_helpers.js"
 
 var fastMode = false;
 var needToResetTextAndPos = true;
+let forwardButton = document.getElementById("forwardButton");
+let backwardButton = document.getElementById("backwardButton");
+
 
 document.addEventListener("keydown", handleKeyPress);
 
@@ -70,8 +73,8 @@ async function handleKeyPress(event, from=null) {
   if (event.key == 'Enter' || event.keyCode == 13) { 
     event.preventDefault();
     fastMode = !fastMode;
-    document.getElementById("forwardButton").innerHTML = fastMode ? ">>>" : ">>";
-    document.getElementById("backwardButton").innerHTML = fastMode ? "<<<" : "<<";
+    forwardButton.innerHTML = fastMode ? ">>>" : ">>";
+    backwardButton.innerHTML = fastMode ? "<<<" : "<<";
     AudioPlayer.setPlaybackRate(fastMode);
     AudioPlayer.seekAndPlay(-0.8);
     return;
@@ -85,9 +88,10 @@ async function handleKeyPress(event, from=null) {
       break;
 
     case 'Backspace':
+    let p = document.getElementById(currSubIndex);
       if (currSubIndex > 0 && currSubIndex == subsCount - 1 
-        && document.getElementById(currSubIndex).innerText.length === 0) {
-        document.body.removeChild(document.getElementById(currSubIndex).parentNode);
+        && p.innerText.length===0) {
+        document.body.removeChild(p.parentNode);
         document.getElementById(--currSubIndex).focus();
         saveSubsCount(--subsCount);
         saveTime(subsCount, 0);
