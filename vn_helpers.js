@@ -109,27 +109,6 @@ export function changeTone(s, tone) {
     // same tone will clear tone & return tone char
     return sss !== s ? sss : ss + tone;
 }
-assertEqual(changeTone("gia","s"),"giá");
-assertEqual(changeTone("cưu","s"),"cứu");
-assertEqual(changeTone("phai","r"), "phải");
-assertEqual(changeTone("hoan","f"), "hoàn");
-assertEqual(changeTone("nui","s"), "núi");
-assertEqual(changeTone("quá","f"), "quà");
-assertEqual(changeTone("cua","f"), "cùa");
-assertEqual(changeTone("cửa","j"), "cựa");
-assertEqual(changeTone("luấ","j"), "luậ");
-assertEqual(changeTone("tuyền","x"), "tuyễn");
-assertEqual(changeTone("tuyền","f"), "tuyênf");
-assertEqual(changeTone("thuổng","s"), "thuống");
-assertEqual(changeTone("kiếm","j"), "kiệm");
-assertEqual(changeTone("thươngx","x"), "thưỡngx");
-assertEqual(changeTone("kiếm","z"), "kiêm");
-assertEqual(changeTone("ươ","r"), "ưở");
-assertEqual(changeTone("khuâng","r"), "khuẩng");
-assertEqual(changeTone("ươi","f"),"ười");
-assertEqual(changeTone("vit","j"),"vịt");
-assertEqual(changeTone("khong","f"),"khòng");
-assertEqual(changeTone("răng","f"),"rằng");
 
 
 export function changeMark(s, mark) {
@@ -192,28 +171,6 @@ export function changeMark(s, mark) {
 
     return news !== s ? news : changeTone(naked, tone) + mark;
 }
-assertEqual(changeMark("ngoi","o"), "ngôi");
-assertEqual(changeMark("hoa","w"), "hoă");
-assertEqual(changeMark("xòa","i"), "xoài");
-assertEqual(changeMark("dể","d"), "để");
-assertEqual(changeMark("da","d"), "đa");
-assertEqual(changeMark("ye","e"), "yê");
-assertEqual(changeMark("đu","o"), "đuo");
-assertEqual(changeMark("à","o"), "ào");
-assertEqual(changeMark("a","a"), "â");
-assertEqual(changeMark("a","w"), "ă");
-assertEqual(changeMark("quá","a"), "quấ");
-assertEqual(changeMark("cua","w"), "cưa");
-assertEqual(changeMark("cửa","a"), "cuẩ");
-assertEqual(changeMark("tuyền","e"), "tuyène");
-assertEqual(changeMark("thuổng","w"), "thưởng");
-assertEqual(changeMark("thuổng","z"), "thuong");
-assertEqual(changeMark("kiếm","e"), "kiéme");
-assertEqual(changeMark("thương","o"), "thuông");
-assertEqual(changeMark("kiếm","z"), "kiem");
-assertEqual(changeMark("khuang","w"), "khưang");
-assertEqual(changeMark("ươi","w"),"uoiw");
-assertEqual(changeMark("khong","o"),"không");
 
 
 export function _getTone(s) {
@@ -316,3 +273,50 @@ export function removeMarks(str, keepDd=false) {
     }
     return str;
 }
+
+
+assertEqual(changeTone("gia","s"),"giá");
+assertEqual(changeTone("cưu","s"),"cứu");
+assertEqual(changeTone("phai","r"), "phải");
+assertEqual(changeTone("hoan","f"), "hoàn");
+assertEqual(changeTone("nui","s"), "núi");
+assertEqual(changeTone("quá","f"), "quà");
+assertEqual(changeTone("cua","f"), "cùa");
+assertEqual(changeTone("cửa","j"), "cựa");
+assertEqual(changeTone("luấ","j"), "luậ");
+assertEqual(changeTone("tuyền","x"), "tuyễn");
+assertEqual(changeTone("tuyền","f"), "tuyênf");
+assertEqual(changeTone("thuổng","s"), "thuống");
+assertEqual(changeTone("kiếm","j"), "kiệm");
+assertEqual(changeTone("thươngx","x"), "thưỡngx");
+assertEqual(changeTone("kiếm","z"), "kiêm");
+assertEqual(changeTone("ươ","r"), "ưở");
+assertEqual(changeTone("khuâng","r"), "khuẩng");
+assertEqual(changeTone("ươi","f"),"ười");
+assertEqual(changeTone("vit","j"),"vịt");
+assertEqual(changeTone("khong","f"),"khòng");
+assertEqual(changeTone("răng","f"),"rằng");
+
+
+assertEqual(changeMark("ngoi","o"), "ngôi");
+assertEqual(changeMark("hoa","w"), "hoă");
+assertEqual(changeMark("xòa","i"), "xoài");
+assertEqual(changeMark("dể","d"), "để");
+assertEqual(changeMark("da","d"), "đa");
+assertEqual(changeMark("ye","e"), "yê");
+assertEqual(changeMark("đu","o"), "đuo");
+assertEqual(changeMark("à","o"), "ào");
+assertEqual(changeMark("a","a"), "â");
+assertEqual(changeMark("a","w"), "ă");
+assertEqual(changeMark("quá","a"), "quấ");
+assertEqual(changeMark("cua","w"), "cưa");
+assertEqual(changeMark("cửa","a"), "cuẩ");
+assertEqual(changeMark("tuyền","e"), "tuyène");
+assertEqual(changeMark("thuổng","w"), "thưởng");
+assertEqual(changeMark("thuổng","z"), "thuong");
+assertEqual(changeMark("kiếm","e"), "kiéme");
+assertEqual(changeMark("thương","o"), "thuông");
+assertEqual(changeMark("kiếm","z"), "kiem");
+assertEqual(changeMark("khuang","w"), "khưang");
+assertEqual(changeMark("ươi","w"),"uoiw");
+assertEqual(changeMark("khong","o"),"không");
