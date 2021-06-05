@@ -1,11 +1,81 @@
 # Vietnamese Syllables
 
-## Dùng wasm để mã hoá và tối ưu lưu trữ bi,tri-grams
+## Dùng wasm để mã hoá và và giải mã âm tiết tiếng Việt
 
+### Nhỏ nhất là bẻ syllable thành 4 phần âm đầu, âm giữa, âm cuối và thanh điệu. Lưu 4 từ điển nhỏ của 4 phần đó, mapping từng phần rồi ghép lại
+
+Phần code để giải mã lưu trong wasm luôn
+
+Mỗi âm tiết TV viết thường, có dấu, sau khi tách làm 4 phần cần 17-bits để lưu. Làm tròn thành 32-bits (int32) sẽ dư ra 15-bits, có thể dùng để mã hoá thêm các thông tin phụ như chữ cái nào viết hoa hay viết thường vì âm tiết dài nhất trong TV chỉ có khoảng 6 chữ cái thôi. Còn dư thêm 9 bits để làm trò gì đó nữa.
+
+### Nhanh, dễ nhất là dùng dict để map syllable thành int32, và map int32 thành syllables
+
+```js
+indexToSyllable = ["s1", "s2"];
+syllableToIndex = {"s1":0, "s2":1}; // dựng lại từ indexToSyllable
+```
+
+Để mã hoá thì ẩn vào wasm binary code
+https://www.assemblyscript.org/stdlib/map.html
+```ts
+var indexToSyllable = new Array<string>(3200)
+var syllableToIndex = new Map<string,i32>() // dựng lại từ indexToSyllable
 ...
+```
+ 
+[ SKIP ]
+
+Phức tạp ko cần thiết trong khi độ ứng dụng ko cao.
+- Phải lưu bi,tri-gram ko dấu, bi-tri-gram có dấu
+- Phải viết hàm mã hoá, hàm giải mã cho syllable ko dấu, syllable có dấu
+
+## Dùng JavaScript ArrayBuffer để mã hoá n-grams
+
+```js
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer
+
+// one byte = 8 bit => 17 bits need 3 bytes
+let vnSyllable = new ArrayBuffer(3);
+
+// => 4 syllables need 12 bytes
+// 12 bytes * 8 (bits / bytes) = 96 bits
+// 96 bits / 32 (bits / Uint32) = 3 Uint32
+
+// 3 syllables need 9 bytes
+let vn3Gram = new ArrayBuffer(9);
+vn3Gram.byteLength
+
+const sylls = new DataView(vn3Gram);
+const syll0 = new DataView(vn3Gram, 0, 3); // from byte 0-2
+const syll1 = new DataView(vn3Gram, 3, 3); // from byte 3-5
+const syll2 = new DataView(vn3Gram, 6, 3); // from byte 6-8
+
+// let vn4Gram = new ArrayBuffer(12);
+// const syll3 = new DataView(vn4Gram, 9, 3); // from byte 9-11
+// let x = new Uint32Array(vn4Gram);
+```
+
+## Âm tiết Tiếng Việt không dấu, không thanh
+```js
+/^(tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|[bckqdghlmnprstvx])?(uy|ua|ue|uye|uya|oa|oe|oo|ie|ia|ye|uo|[iyeuoa])(nh|ng|ch|[ctpmniyuo])?$/i;
+```
+```regex
+phụ âm đầu      (26+1) 2^5
+                        (10) tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|
+                        (16) [bckqdghlmnprstvx]
+
+âm giữa (âm đệm + nguyên âm)
+
+                (18+0) 2^5
+                        (05) uy|ua|ue|uye|uya|
+                        (07) oa|oe|oo|ie|ia|ye|uo|
+                        (06) [iyeuoa]
+
+âm cuối         (12+1) 2^4
+                        (12) nh|ng|ch|[ctpmniyuo]
+```
 
 - - - - - - - - - - - -
-
 
 [ DONE ]
 
