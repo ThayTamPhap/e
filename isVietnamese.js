@@ -1,10 +1,10 @@
-import {_removeTone, _getTone} as VnHelpers from "./vn_helpers.js"
+import {_removeTone, _getTone} from "./vn_helpers.js"
 
 const _syllNoTone = /^(tr|th|ph|ng|ngh|nh|kh|gh|gi|ch|[bckqdđghlmnprstvx])?(uy|uâ|uê|ue|uyê|uya|oa|oă|oe|oo|iê|ia|yê|ươ|ưa|uô|ua|[iyeêưuoôơaăâ])(nh|ng|ch|[ctpmniyuo])?$/i;
 
 export function isVietnamese(syllable) {
-    let s = VnHelpers._removeTone(syllable);
-    let tone = VnHelpers._getTone(syllable);
+    let s = _removeTone(syllable);
+    let tone = _getTone(syllable);
     let m = s.match(_syllNoTone);
 
     // console.log('isVietnamese', syllable, s, m, tone);
