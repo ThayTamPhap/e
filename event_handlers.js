@@ -3,7 +3,6 @@ import * as AudioPlayer from "./audio_player.js";
 import * as Estimators from "./estimators.js";
 import * as VnGrams from "./vn_grams.js"
 
-var fastMode = false;
 var needToResetTextAndPos = true;
 let forwardButton = document.getElementById("forwardButton");
 let backwardButton = document.getElementById("backwardButton");

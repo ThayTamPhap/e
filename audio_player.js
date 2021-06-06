@@ -3,13 +3,25 @@ var maxPlayTime = ap.duration;
 // Suppose to use goingToPause to smoothen transition between play & pause
 // Not implemented yet but keep it there for reference
 var goingToPause = false;
+let timeDisp = document.getElementById('playPauseBtn')
 
-ap.ontimeupdate = function() {
+ap.ontimeupdate = async function() {
+  // Update player timer (on screen)
   let a = secondsToMinutesAndSecondsAndRemains(ap.currentTime);
-  let timeDisp = document.getElementById('playPauseBtn')
   timeDisp.innerHTML = `${twoDigitsFmt(a[0])}:${twoDigitsFmt(a[1])}`;
-  if (ap.currentTime > maxPlayTime) {
-    ap.pause();
+  
+  // Pause when needed
+  if (!fastMode && ap.currentTime > maxPlayTime) {ap.pause(); }
+  
+  // Find the right currSubIndex
+  if (fastMode) {
+    while ( currSubIndex < subsCount - 1 &&
+      await loadTime(currSubIndex+1) < ap.currentTime ) { 
+      currSubIndex++;
+    }
+    let p = document.getElementById(currSubIndex);
+    p.focus();
+    p.parentNode.scrollIntoView();
   }
 };
 

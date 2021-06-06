@@ -13,6 +13,10 @@ var isMobileDevice =
   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.
     test(navigator.userAgent);
 
+// Play audio fast forward 1.3x,
+// in this mode, sub will change arcording to it's time index
+var fastMode = false;
+
 // Global variables (app state)
 var currSubIndex, subsCount;
 let adjustedDeltas = [];
