@@ -86,9 +86,16 @@ export function resetTextAndPos() {
     currInnerText = normText + remain;
     lastCurrPos = normText.length;
 
-    if (autoCapitalizedFirstCharOf(currP, false)) {
-      currInnerText = capitalizeFirstCharOf(currInnerText);
+    if (shouldCapitalizedFirstCharOf(currP)) {
+      currInnerText = currInnerText[0].toUpperCase() + currInnerText.slice(1,);
     }
+    function shouldCapitalizedFirstCharOf(p) {
+      if (p.id === "0") { return true; }
+      let pp = p.parentNode.previousSibling.lastChild;
+      return pp.firstChild.textContent 
+        && pp.firstChild.textContent.match(/[.?!\\/]\s*$/);
+    }
+
 
     let n = currInnerText.length;
     if (isEndOfSent || lastCurrPos > n) {
@@ -156,20 +163,3 @@ export function blinkCurPos(pos) {
   }, 50);
 }
 
-function capitalizeFirstCharOf(sent) {
-  if (typeof sent !== "string") { return " "; }
-  return (sent[0] ?? "").toUpperCase() + sent.slice(1,);
-}
-
-function autoCapitalizedFirstCharOf(p, auto=false) {
-  let yesDoIt = (p.id == "0");
-  if (yesDoIt === false) {
-    let pp = p.parentNode.previousSibling.lastChild;
-    yesDoIt = pp.firstChild.textContent && pp.firstChild.textContent.match(/[.?!\\/]\s*$/);
-  }
-  // console.log('yesDoIt', yesDoIt);
-  if (auto && yesDoIt) {
-    p.firstChild.textContent = capitalizeFirstCharOf(p.innerText);
-  }
-  return yesDoIt;
-}
