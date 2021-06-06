@@ -9,6 +9,8 @@ const controlKeys = "Tab,Capslock,Enter,"+
     "ControlRight,AltRight,ShiftRight,OsRight,MetaRight"+
     "ArrowRight,ArrowLeft,ArrowUp,ArrowDown";
 
+var isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
 // Global variables (app state)
 var currSubIndex, subsCount;
 let adjustedDeltas = [];
@@ -18,9 +20,7 @@ if (phapname === "") {
   phapname = "phaps/20200704";
 } console.log('phapname', phapname);
 
-function keepTwoDigitsAfterPeriod(f) {
-  return Math.round(f * 100) / 100;
-}
+
 
 // So it works on other platform
 if (!console.assert) console.assert = function (x) {
@@ -35,6 +35,10 @@ function assertEqual(x, y) {
     console.log(x, "!==", y);
   }
 };
+
+function keepTwoDigitsAfterPeriod(f) {
+  return Math.round(f * 100) / 100;
+}
 
 function twoDigitsFmt(d) {
   return `${d <= 9 ? '0' : ''}${d}`
@@ -68,5 +72,20 @@ function secondsToTime(s) {
 // assertEqual(secondsToTime(61.545563).toString(), "61.545");
 assertEqual(secondsToTime(61.543).toString(), "01:01,54");
 
+function capitalizeFirstCharOf(sent) {
+  if (typeof sent !== "string") { return " "; }
+  return (sent[0] ?? "").toUpperCase() + sent.slice(1,);
+}
 
-var isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+function autoCapitalizedFirstCharOf(p, auto=false) {
+  let yesDoIt = (p.id == "0");
+  if (yesDoIt === false) {
+    let pp = p.parentNode.previousSibling.lastChild;
+    yesDoIt = pp.firstChild.textContent && pp.firstChild.textContent.match(/[.?!\\/]\s*$/);
+  }
+  // console.log('yesDoIt', yesDoIt);
+  if (auto && yesDoIt) {
+    p.firstChild.textContent = capitalizeFirstCharOf(p.innerText);
+  }
+  return yesDoIt;
+}
