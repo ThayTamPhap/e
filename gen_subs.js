@@ -19,6 +19,8 @@ export function run() {
     } else {
 
       var xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("GET", `/${phapname}.lab`, true);
+      xmlhttp.send();
       xmlhttp.onreadystatechange = function () {
         if (this.status == 404) {
           if (!textGridLoaded) loadTextGrid();
@@ -27,8 +29,6 @@ export function run() {
           initSubs(this.responseText).then(genSubs);
         }
       };
-      xmlhttp.open("GET", `/${phapname}.lab`, true);
-      xmlhttp.send();
     }
   });
 }
@@ -37,14 +37,14 @@ function loadTextGrid() {
   textGridLoaded = true;
   console.log("Load TextGrid ...")
   var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("GET", `/${phapname}.txt`, true);
+  xmlhttp.send();
   xmlhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       let txt = this.responseText;
       initTextGrid(txt).then(genSubs);
     }
   };
-  xmlhttp.open("GET", `/${phapname}.txt`, true);
-  xmlhttp.send();
 }
 
 async function initTextGrid(txt) {

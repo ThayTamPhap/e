@@ -1,10 +1,28 @@
 const ap = document.getElementById("audioPlayer");
 var maxPlayTime = ap.duration;
+// Suppose to use goingToPause to smoothen transition between play & pause
+// Not implemented yet but keep it there for reference
 var goingToPause = false;
 
+ap.ontimeupdate = function() {
+  let a = secondsToMinutesAndSecondsAndRemains(ap.currentTime);
+  let timeDisp = document.getElementById('playPauseBtn')
+  timeDisp.innerHTML = `${twoDigitsFmt(a[0])}:${twoDigitsFmt(a[1])}`;
+  if (ap.currentTime > maxPlayTime) {
+    ap.pause();
+  }
+};
+
 export function initSource(phapname) {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
+    var request = new XMLHttpRequest();
+    request.open(
+      "GET", 
+      "https://thaytamphap.github.io/assets/audios.json", 
+      true
+    );
+    request.send();
+    
+    request.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         let phaps = JSON.parse(this.responseText).phaps;
         for (var n = phaps.length, i = 0; i < n; i++) {
@@ -17,8 +35,6 @@ export function initSource(phapname) {
         }
       }
     };
-    xmlhttp.open("GET", 'https://thaytamphap.github.io/assets/audios.json', true);
-    xmlhttp.send();
 }
 
 export function setPlaybackRate(fastMode) {
@@ -75,12 +91,3 @@ export function pauseOrSeekAndPlay(delta) {
     pause();
   };
 }
-
-ap.ontimeupdate = function() {
-  let a = secondsToMinutesAndSecondsAndRemains(ap.currentTime);
-  let timeDisp = document.getElementById('playPauseBtn')
-  timeDisp.innerHTML = `${twoDigitsFmt(a[0])}:${twoDigitsFmt(a[1])}`;
-  if (ap.currentTime > maxPlayTime) {
-    ap.pause();
-  }
-};
