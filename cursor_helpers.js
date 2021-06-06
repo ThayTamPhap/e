@@ -162,4 +162,3 @@ export function blinkCurPos(pos) {
     }
   }, 50);
 }
-
