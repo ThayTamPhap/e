@@ -80,9 +80,6 @@
 <script src="./storage.js"></script>
 
 <script type="module">
-    import "./vn_keyboard.js";
-    import "./event_handlers.js";
-
     // Feed the audio player media file
     import * as AudioPlayer from "./audio_player.js";
     AudioPlayer.initSource(phapname);
@@ -90,7 +87,8 @@
     import * as GenSubs from "./gen_subs.js";
     GenSubs.run();
 
+    import "./event_handlers.js";
+    import "./vn_keyboard.js";
     import "./download.js";
-
 </script>
 </html>
