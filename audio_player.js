@@ -15,8 +15,9 @@ ap.ontimeupdate = async function() {
   
   // Find the right currSubIndex
   if (fastMode) {
-    while ( currSubIndex < subsCount - 1 &&
-      await loadTime(currSubIndex+1) < ap.currentTime ) { 
+    let t;
+    while ( currSubIndex < subsCount - 1 && (t = await loadTime(currSubIndex+1))
+       && t > 0 && t < ap.currentTime) { 
       currSubIndex++;
     }
     let p = document.getElementById(currSubIndex);
