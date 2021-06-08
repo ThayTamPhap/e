@@ -102,7 +102,7 @@ export function _isVietnamese(syllable) {
     if (amGiua === "yê" && !(!amDau && amCuoi)) return false;
 
     // {ya} trước có âm đệm, sau không có âm cuối. VD: khu{ya}
-    if (amGiua === "uya" && !amCuoi) return false;
+    if (amGiua === "uya" && amCuoi) return false;
 
     // {iê} trước có phụ âm đầu, sau có âm cuối. VD: t{iê}n, k{iế}ng
     if (amGiua === "iê" && !(amDau && amCuoi)) return false;
